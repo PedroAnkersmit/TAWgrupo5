@@ -1,4 +1,4 @@
-package com.grupo5.grupo5;
+package com.grupo5.grupo5.entity;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

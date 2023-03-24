@@ -1,4 +1,4 @@
-package com.grupo5.grupo5;
+package com.grupo5.grupo5.entity;
 
 import jakarta.persistence.*;
 
