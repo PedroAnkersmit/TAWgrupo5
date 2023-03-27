@@ -1,4 +1,4 @@
-<%@ page import="com.grupo5.grupo5.entity.ClienteEntity" %>
+<%@ page import="com.taw.grupo5.entity.ClienteEntity" %>
 <%@ page import="java.util.List" %>
 
 

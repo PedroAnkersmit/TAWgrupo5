@@ -1,6 +1,6 @@
-package com.grupo5.grupo5.dao;
+package com.taw.grupo5.dao;
 
-import com.grupo5.grupo5.entity.ClienteEntity;
+import com.taw.grupo5.entity.ClienteEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

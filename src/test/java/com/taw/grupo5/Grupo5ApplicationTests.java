@@ -1,4 +1,4 @@
-package com.grupo5.grupo5;
+package com.taw.grupo5;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

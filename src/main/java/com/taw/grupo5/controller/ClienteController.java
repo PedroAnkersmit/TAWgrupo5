@@ -1,8 +1,9 @@
-package com.grupo5.grupo5.controller;
+package com.taw.grupo5.controller;
 
-import com.grupo5.grupo5.dao.ClienteRepository;
-import com.grupo5.grupo5.entity.ClienteEntity;
-import jakarta.servlet.http.HttpSession;
+import javax.servlet.http.HttpSession;
+
+import com.taw.grupo5.dao.ClienteRepository;
+import com.taw.grupo5.entity.ClienteEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,18 +12,22 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping
+@RequestMapping("/cliente")
 public class ClienteController {
 
+
     @Autowired
-    protected ClienteRepository clienteRepository;
+    private ClienteRepository clienteRepository;
 
 
     @GetMapping("/")
     public String doListar(Model model, HttpSession session){
         String urlto = "clientes";
 
+
         List<ClienteEntity> lista = this.clienteRepository.findAll();
+
+
         model.addAttribute("clientes", lista);
 
         return urlto;
@@ -32,7 +37,7 @@ public class ClienteController {
     public String doFiltrar (@RequestParam("filtro") String filtro, Model model){
         List<ClienteEntity> lista = this.clienteRepository.buscarPorNombre(filtro);
         model.addAttribute("clientes", lista);
-        return "customers";
+        return "clientes";
     }
 
     @GetMapping("/editar")
@@ -40,7 +45,7 @@ public class ClienteController {
         ClienteEntity cliente = this.clienteRepository.findById(idcliente).orElse(null);
         model.addAttribute("cliente", cliente);
 
-        return "customer";
+        return "clientes";
     }
     @PostMapping("/guardar")
     public String doGuardar(@ModelAttribute("cliente") ClienteEntity cliente){
