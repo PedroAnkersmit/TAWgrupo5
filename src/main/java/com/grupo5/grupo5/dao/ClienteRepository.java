@@ -10,6 +10,6 @@ import java.util.List;
 public interface ClienteRepository extends JpaRepository<ClienteEntity, Integer>{
 
     @Query("select c from ClienteEntity  c where c.nombre like CONCAT('%', :filtro, '%') or c.email like CONCAT('%', :filtro, '%')")
-    public List<ClienteEntity> buscarPorNombre (@Param("filtro") String filtro);
+    List<ClienteEntity> buscarPorNombre (@Param("filtro") String filtro);
 
 }

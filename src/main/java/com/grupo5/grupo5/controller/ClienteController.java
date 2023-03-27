@@ -32,7 +32,7 @@ public class ClienteController {
     public String doFiltrar (@RequestParam("filtro") String filtro, Model model){
         List<ClienteEntity> lista = this.clienteRepository.buscarPorNombre(filtro);
         model.addAttribute("clientes", lista);
-        return "customers";
+        return "clientes";
     }
 
     @GetMapping("/editar")
