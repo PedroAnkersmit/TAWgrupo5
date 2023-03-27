@@ -9,10 +9,10 @@ import java.sql.Date;
 public class ClienteEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "ID_Cliente")
+    @Column(name = "id_cliente")
     private int idCliente;
     @Basic
-    @Column(name = "ID_Conversacion")
+    @Column(name = "id_conversacion")
     private Integer idConversacion;
     @Basic
     @Column(name = "nombre")

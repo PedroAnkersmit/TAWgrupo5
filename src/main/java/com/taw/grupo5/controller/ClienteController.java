@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/cliente")
+@RequestMapping("/clientes")
 public class ClienteController {
 
 
@@ -24,9 +24,7 @@ public class ClienteController {
     public String doListar(Model model, HttpSession session){
         String urlto = "clientes";
 
-
         List<ClienteEntity> lista = this.clienteRepository.findAll();
-
 
         model.addAttribute("clientes", lista);
 

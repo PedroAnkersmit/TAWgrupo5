@@ -7,7 +7,7 @@ import javax.persistence.*;
 public class CambiodivisaEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "ID_Operacion")
+    @Column(name = "id_operacion")
     private int idOperacion;
     @Basic
     @Column(name = "monedaVenta")
