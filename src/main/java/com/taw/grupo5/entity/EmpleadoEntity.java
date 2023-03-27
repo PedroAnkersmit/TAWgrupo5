@@ -1,6 +1,6 @@
-package com.grupo5.grupo5.entity;
+package com.taw.grupo5.entity;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "empleado", schema = "grupo5", catalog = "")

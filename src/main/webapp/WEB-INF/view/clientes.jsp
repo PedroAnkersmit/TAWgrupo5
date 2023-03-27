@@ -1,4 +1,4 @@
-<%@ page import="com.grupo5.grupo5.entity.ClienteEntity" %>
+<%@ page import="com.taw.grupo5.entity.ClienteEntity" %>
 <%@ page import="java.util.List" %>
 
 
@@ -22,7 +22,7 @@
 
 <h1>Listado de clientes</h1>
 
-<form action="/cliente/filtrar" method="post">
+<form action="/clientes/filtrar" method="post">
 Buscar por: <input type="text" name="filtro">
 <button>Filtrar</button>
 </form>
@@ -46,8 +46,8 @@ Buscar por: <input type="text" name="filtro">
         <td><%= cliente.getEmail()%></td>
         <td><%= cliente.getTelefono()%></td>
         <td><%= cliente.getFechaInicio()%></td>
-        <td><a href="/cliente/editar?id=<%= cliente.getIdCliente()%>"> Editar</a></td>
-        <td><a herf="/cliente/borrar?id=<%=cliente.getIdCliente()%>"> Borrar</a></td>
+        <td><a href="/clientes/editar?id=<%= cliente.getIdCliente()%>"> Editar</a></td>
+        <td><a herf="/clientes/borrar?id=<%=cliente.getIdCliente()%>"> Borrar</a></td>
     </tr>
 <%
     }

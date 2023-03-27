@@ -1,6 +1,6 @@
-package com.grupo5.grupo5.entity;
+package com.taw.grupo5.entity;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 
 import java.math.BigDecimal;
 import java.sql.Date;
@@ -10,7 +10,7 @@ import java.sql.Date;
 public class CuentaEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "ID_Cuenta")
+    @Column(name = "id_cuenta")
     private int idCuenta;
     @Basic
     @Column(name = "numeroCuenta")

@@ -1,6 +1,6 @@
-package com.grupo5.grupo5.entity;
+package com.taw.grupo5.entity;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 
 import java.sql.Date;
 
@@ -9,10 +9,10 @@ import java.sql.Date;
 public class ClienteEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "ID_Cliente")
+    @Column(name = "id_cliente")
     private int idCliente;
     @Basic
-    @Column(name = "ID_Conversacion")
+    @Column(name = "id_conversacion")
     private Integer idConversacion;
     @Basic
     @Column(name = "nombre")
@@ -24,7 +24,7 @@ public class ClienteEntity {
     @Column(name = "telefono")
     private String telefono;
     @Basic
-    @Column(name = "fechaInicio")
+    @Column(name = "fechainicio")
     private Date fechaInicio;
 
     public int getIdCliente() {

@@ -1,13 +1,13 @@
-package com.grupo5.grupo5.entity;
+package com.taw.grupo5.entity;
 
-import jakarta.persistence.*;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "cambiodivisa", schema = "grupo5", catalog = "")
 public class CambiodivisaEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "ID_Operacion")
+    @Column(name = "id_operacion")
     private int idOperacion;
     @Basic
     @Column(name = "monedaVenta")
