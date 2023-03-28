@@ -35,7 +35,6 @@ Buscar por: <input type="text" name="filtro">
         <th>TELEFONO</th>
         <th>FECHA_INICIO</th>
     </tr>
-</table>
 <%
     for (ClienteEntity cliente: lista){
 %>
