@@ -8,8 +8,8 @@ import java.util.List;
 public class ConversacionEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "ID_Conversacion", nullable = false)
-    private Integer idconversacion;
+    @Column(name = "idconversacion", nullable = false)
+    private Integer idConversacion;
     @Basic
     @Column(name = "asunto", nullable = true, length = 100)
     private String asunto;
@@ -17,20 +17,20 @@ public class ConversacionEntity {
     @Column(name = "abierto", nullable = true)
     private Byte abierto;
     @ManyToOne
-    @JoinColumn(name = "ID_Empleado", referencedColumnName = "ID_Empleado", nullable = false)
-    private EmpleadoEntity empleadobyidempleado;
+    @JoinColumn(name = "idempleado", referencedColumnName = "idempleado", nullable = false)
+    private EmpleadoEntity empleadoByIdEmpleado;
     @ManyToOne
-    @JoinColumn(name = "ID_Cliente", referencedColumnName = "ID_Cliente", nullable = false)
+    @JoinColumn(name = "idcliente", referencedColumnName = "idcliente", nullable = false)
     private ClienteEntity clientebyidcliente;
     @OneToMany(mappedBy = "conversacionbyidconversacion")
     private List<MensajeEntity> mensajesbyidconversacion;
 
-    public Integer getIdconversacion() {
-        return idconversacion;
+    public Integer getIdConversacion() {
+        return idConversacion;
     }
 
-    public void setIdconversacion(Integer idConversacion) {
-        this.idconversacion = idConversacion;
+    public void setIdConversacion(Integer idConversacion) {
+        this.idConversacion = idConversacion;
     }
 
     public String getAsunto() {
@@ -56,7 +56,7 @@ public class ConversacionEntity {
 
         ConversacionEntity that = (ConversacionEntity) o;
 
-        if (idconversacion != null ? !idconversacion.equals(that.idconversacion) : that.idconversacion != null)
+        if (idConversacion != null ? !idConversacion.equals(that.idConversacion) : that.idConversacion != null)
             return false;
         if (asunto != null ? !asunto.equals(that.asunto) : that.asunto != null) return false;
         if (abierto != null ? !abierto.equals(that.abierto) : that.abierto != null) return false;
@@ -66,18 +66,18 @@ public class ConversacionEntity {
 
     @Override
     public int hashCode() {
-        int result = idconversacion != null ? idconversacion.hashCode() : 0;
+        int result = idConversacion != null ? idConversacion.hashCode() : 0;
         result = 31 * result + (asunto != null ? asunto.hashCode() : 0);
         result = 31 * result + (abierto != null ? abierto.hashCode() : 0);
         return result;
     }
 
-    public EmpleadoEntity getEmpleadobyidempleado() {
-        return empleadobyidempleado;
+    public EmpleadoEntity getEmpleadoByIdEmpleado() {
+        return empleadoByIdEmpleado;
     }
 
-    public void setEmpleadobyidempleado(EmpleadoEntity empleadoByIdEmpleado) {
-        this.empleadobyidempleado = empleadoByIdEmpleado;
+    public void setEmpleadoByIdEmpleado(EmpleadoEntity empleadoByIdEmpleado) {
+        this.empleadoByIdEmpleado = empleadoByIdEmpleado;
     }
 
     public ClienteEntity getClientebyidcliente() {

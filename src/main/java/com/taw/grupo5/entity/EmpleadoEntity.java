@@ -8,20 +8,20 @@ import java.util.List;
 public class EmpleadoEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "ID_Empleado", nullable = false)
-    private Integer idempleado;
+    @Column(name = "idempleado", nullable = false)
+    private Integer idEmpleado;
     @OneToMany(mappedBy = "empleadobyidempleado")
-    private List<ConversacionEntity> conversacionsByIdEmpleado;
+    private List<ConversacionEntity> conversacionesByIdEmpleado;
     @ManyToOne
-    @JoinColumn(name = "ID_TipoEmpleado", referencedColumnName = "ID_TipoEmpleado", nullable = false)
-    private TipoempleadoEntity tipoempleadobyidtipoempleado;
+    @JoinColumn(name = "idtipoempleado", referencedColumnName = "idtipoempleado", nullable = false)
+    private TipoempleadoEntity tipoempleadoByIdTipoempleado;
 
-    public Integer getIdempleado() {
-        return idempleado;
+    public Integer getIdEmpleado() {
+        return idEmpleado;
     }
 
-    public void setIdempleado(Integer idEmpleado) {
-        this.idempleado = idEmpleado;
+    public void setIdEmpleado(Integer idEmpleado) {
+        this.idEmpleado = idEmpleado;
     }
 
     @Override
@@ -31,29 +31,29 @@ public class EmpleadoEntity {
 
         EmpleadoEntity that = (EmpleadoEntity) o;
 
-        if (idempleado != null ? !idempleado.equals(that.idempleado) : that.idempleado != null) return false;
+        if (idEmpleado != null ? !idEmpleado.equals(that.idEmpleado) : that.idEmpleado != null) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        return idempleado != null ? idempleado.hashCode() : 0;
+        return idEmpleado != null ? idEmpleado.hashCode() : 0;
     }
 
-    public List<ConversacionEntity> getConversacionsByIdEmpleado() {
-        return conversacionsByIdEmpleado;
+    public List<ConversacionEntity> getConversacionesByIdEmpleado() {
+        return conversacionesByIdEmpleado;
     }
 
-    public void setConversacionsByIdEmpleado(List<ConversacionEntity> conversacionsByIdEmpleado) {
-        this.conversacionsByIdEmpleado = conversacionsByIdEmpleado;
+    public void setConversacionesByIdEmpleado(List<ConversacionEntity> conversacionsByIdEmpleado) {
+        this.conversacionesByIdEmpleado = conversacionsByIdEmpleado;
     }
 
-    public TipoempleadoEntity getTipoempleadobyidtipoempleado() {
-        return tipoempleadobyidtipoempleado;
+    public TipoempleadoEntity getTipoempleadoByIdTipoempleado() {
+        return tipoempleadoByIdTipoempleado;
     }
 
-    public void setTipoempleadobyidtipoempleado(TipoempleadoEntity tipoempleadoByIdTipoEmpleado) {
-        this.tipoempleadobyidtipoempleado = tipoempleadoByIdTipoEmpleado;
+    public void setTipoempleadoByIdTipoempleado(TipoempleadoEntity tipoempleadoByIdTipoEmpleado) {
+        this.tipoempleadoByIdTipoempleado = tipoempleadoByIdTipoEmpleado;
     }
 }

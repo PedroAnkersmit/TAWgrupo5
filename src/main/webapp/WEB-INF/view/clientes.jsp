@@ -39,14 +39,14 @@
         for (ClienteEntity cliente: lista){
     %>
     <tr>
-        <td><%= cliente.getIdcliente()%></td>
-        <td><%= cliente.getIdconversacion()%></td>
+        <td><%= cliente.getIdCliente()%></td>
+        <td><%= cliente.getIdConversacion()%></td>
         <td><%= cliente.getNombre()%></td>
         <td><%= cliente.getEmail()%></td>
         <td><%= cliente.getTelefono()%></td>
-        <td><%= cliente.getFechainicio()%></td>
-        <td><a href="/clientes/editar?id=<%= cliente.getIdcliente()%>"> Editar</a></td>
-        <td><a herf="/clientes/borrar?id=<%=cliente.getIdcliente()%>"> Borrar</a></td>
+        <td><%= cliente.getFechaInicio()%></td>
+        <td><a href="/clientes/editar?id=<%= cliente.getIdCliente()%>"> Editar</a></td>
+        <td><a herf="/clientes/borrar?id=<%=cliente.getIdCliente()%>"> Borrar</a></td>
     </tr>
     <%
         }

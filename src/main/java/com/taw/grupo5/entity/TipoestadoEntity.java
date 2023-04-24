@@ -8,20 +8,20 @@ import java.util.List;
 public class TipoestadoEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "ID_TipoEstado", nullable = false)
-    private Integer idtipoestado;
+    @Column(name = "idtipoEstado", nullable = false)
+    private Integer idTipoEstado;
     @Basic
     @Column(name = "nombre", nullable = false, length = 45)
     private String nombre;
     @OneToMany(mappedBy = "tipoestadobyidestado")
-    private List<CuentaEntity> cuentasbyidtipoestado;
+    private List<CuentaEntity> cuentasByIdTipoestado;
 
-    public Integer getIdtipoestado() {
-        return idtipoestado;
+    public Integer getIdTipoEstado() {
+        return idTipoEstado;
     }
 
-    public void setIdtipoestado(Integer idTipoEstado) {
-        this.idtipoestado = idTipoEstado;
+    public void setIdTipoEstado(Integer idTipoEstado) {
+        this.idTipoEstado = idTipoEstado;
     }
 
     public String getNombre() {
@@ -39,7 +39,7 @@ public class TipoestadoEntity {
 
         TipoestadoEntity that = (TipoestadoEntity) o;
 
-        if (idtipoestado != null ? !idtipoestado.equals(that.idtipoestado) : that.idtipoestado != null) return false;
+        if (idTipoEstado != null ? !idTipoEstado.equals(that.idTipoEstado) : that.idTipoEstado != null) return false;
         if (nombre != null ? !nombre.equals(that.nombre) : that.nombre != null) return false;
 
         return true;
@@ -47,16 +47,16 @@ public class TipoestadoEntity {
 
     @Override
     public int hashCode() {
-        int result = idtipoestado != null ? idtipoestado.hashCode() : 0;
+        int result = idTipoEstado != null ? idTipoEstado.hashCode() : 0;
         result = 31 * result + (nombre != null ? nombre.hashCode() : 0);
         return result;
     }
 
-    public List<CuentaEntity> getCuentasbyidtipoestado() {
-        return cuentasbyidtipoestado;
+    public List<CuentaEntity> getCuentasByIdTipoestado() {
+        return cuentasByIdTipoestado;
     }
 
-    public void setCuentasbyidtipoestado(List<CuentaEntity> cuentasByIdTipoEstado) {
-        this.cuentasbyidtipoestado = cuentasByIdTipoEstado;
+    public void setCuentasByIdTipoestado(List<CuentaEntity> cuentasByIdTipoEstado) {
+        this.cuentasByIdTipoestado = cuentasByIdTipoEstado;
     }
 }
