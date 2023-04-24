@@ -65,7 +65,7 @@
         %>
         <tr>
             <td><%=empresaEntity.getIdempresa()%></td>
-            <td><%=empresaEntity.getNombre()%></td>
+            <td><a href="/gestor/empresa?id=<%=empresaEntity.getIdempresa()%>"><%=empresaEntity.getNombre()%></a></td>
             <td><%=empresaEntity.getFechacierre()%></td>
         </tr>
         <%
