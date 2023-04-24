@@ -1,26 +1,35 @@
 package com.taw.grupo5.entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "conversacion", schema = "grupo5", catalog = "")
 public class ConversacionEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "id_conversacion")
-    private int idConversacion;
+    @Column(name = "ID_Conversacion", nullable = false)
+    private Integer idConversacion;
     @Basic
-    @Column(name = "asunto")
+    @Column(name = "asunto", nullable = true, length = 100)
     private String asunto;
     @Basic
-    @Column(name = "abierto")
+    @Column(name = "abierto", nullable = true)
     private Byte abierto;
+    @ManyToOne
+    @JoinColumn(name = "ID_Empleado", referencedColumnName = "ID_Empleado", nullable = false)
+    private EmpleadoEntity empleadoByIdEmpleado;
+    @ManyToOne
+    @JoinColumn(name = "ID_Cliente", referencedColumnName = "ID_Cliente", nullable = false)
+    private ClienteEntity clienteByIdCliente;
+    @OneToMany(mappedBy = "conversacionByIdConversacion")
+    private List<MensajeEntity> mensajesByIdConversacion;
 
-    public int getIdConversacion() {
+    public Integer getIdConversacion() {
         return idConversacion;
     }
 
-    public void setIdConversacion(int idConversacion) {
+    public void setIdConversacion(Integer idConversacion) {
         this.idConversacion = idConversacion;
     }
 
@@ -47,7 +56,8 @@ public class ConversacionEntity {
 
         ConversacionEntity that = (ConversacionEntity) o;
 
-        if (idConversacion != that.idConversacion) return false;
+        if (idConversacion != null ? !idConversacion.equals(that.idConversacion) : that.idConversacion != null)
+            return false;
         if (asunto != null ? !asunto.equals(that.asunto) : that.asunto != null) return false;
         if (abierto != null ? !abierto.equals(that.abierto) : that.abierto != null) return false;
 
@@ -56,9 +66,33 @@ public class ConversacionEntity {
 
     @Override
     public int hashCode() {
-        int result = idConversacion;
+        int result = idConversacion != null ? idConversacion.hashCode() : 0;
         result = 31 * result + (asunto != null ? asunto.hashCode() : 0);
         result = 31 * result + (abierto != null ? abierto.hashCode() : 0);
         return result;
+    }
+
+    public EmpleadoEntity getEmpleadoByIdEmpleado() {
+        return empleadoByIdEmpleado;
+    }
+
+    public void setEmpleadoByIdEmpleado(EmpleadoEntity empleadoByIdEmpleado) {
+        this.empleadoByIdEmpleado = empleadoByIdEmpleado;
+    }
+
+    public ClienteEntity getClienteByIdCliente() {
+        return clienteByIdCliente;
+    }
+
+    public void setClienteByIdCliente(ClienteEntity clienteByIdCliente) {
+        this.clienteByIdCliente = clienteByIdCliente;
+    }
+
+    public List<MensajeEntity> getMensajesByIdConversacion() {
+        return mensajesByIdConversacion;
+    }
+
+    public void setMensajesByIdConversacion(List<MensajeEntity> mensajesByIdConversacion) {
+        this.mensajesByIdConversacion = mensajesByIdConversacion;
     }
 }

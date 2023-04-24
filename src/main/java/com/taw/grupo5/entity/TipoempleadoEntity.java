@@ -1,23 +1,26 @@
 package com.taw.grupo5.entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Table(name = "tipoempleado", schema = "grupo5", catalog = "")
 public class TipoempleadoEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "ID_TipoEmpleado")
-    private int idTipoEmpleado;
+    @Column(name = "ID_TipoEmpleado", nullable = false)
+    private Integer idTipoEmpleado;
     @Basic
-    @Column(name = "puesto")
+    @Column(name = "puesto", nullable = false, length = 50)
     private String puesto;
+    @OneToMany(mappedBy = "tipoempleadoByIdTipoEmpleado")
+    private List<EmpleadoEntity> empleadosByIdTipoEmpleado;
 
-    public int getIdTipoEmpleado() {
+    public Integer getIdTipoEmpleado() {
         return idTipoEmpleado;
     }
 
-    public void setIdTipoEmpleado(int idTipoEmpleado) {
+    public void setIdTipoEmpleado(Integer idTipoEmpleado) {
         this.idTipoEmpleado = idTipoEmpleado;
     }
 
@@ -36,7 +39,8 @@ public class TipoempleadoEntity {
 
         TipoempleadoEntity that = (TipoempleadoEntity) o;
 
-        if (idTipoEmpleado != that.idTipoEmpleado) return false;
+        if (idTipoEmpleado != null ? !idTipoEmpleado.equals(that.idTipoEmpleado) : that.idTipoEmpleado != null)
+            return false;
         if (puesto != null ? !puesto.equals(that.puesto) : that.puesto != null) return false;
 
         return true;
@@ -44,8 +48,16 @@ public class TipoempleadoEntity {
 
     @Override
     public int hashCode() {
-        int result = idTipoEmpleado;
+        int result = idTipoEmpleado != null ? idTipoEmpleado.hashCode() : 0;
         result = 31 * result + (puesto != null ? puesto.hashCode() : 0);
         return result;
+    }
+
+    public List<EmpleadoEntity> getEmpleadosByIdTipoEmpleado() {
+        return empleadosByIdTipoEmpleado;
+    }
+
+    public void setEmpleadosByIdTipoEmpleado(List<EmpleadoEntity> empleadosByIdTipoEmpleado) {
+        this.empleadosByIdTipoEmpleado = empleadosByIdTipoEmpleado;
     }
 }

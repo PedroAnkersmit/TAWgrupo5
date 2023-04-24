@@ -1,7 +1,6 @@
 package com.taw.grupo5.entity;
 
 import javax.persistence.*;
-
 import java.math.BigDecimal;
 import java.sql.Date;
 
@@ -10,23 +9,26 @@ import java.sql.Date;
 public class TransferenciaEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "ID_Operacion")
-    private int idOperacion;
+    @Column(name = "ID_Operacion", nullable = false)
+    private Integer idOperacion;
     @Basic
-    @Column(name = "cantidad")
+    @Column(name = "cantidad", nullable = true, precision = 2)
     private BigDecimal cantidad;
     @Basic
-    @Column(name = "fechaInstruccion")
+    @Column(name = "fechaInstruccion", nullable = true)
     private Date fechaInstruccion;
     @Basic
-    @Column(name = "fechaEjecucion")
+    @Column(name = "fechaEjecucion", nullable = true)
     private Date fechaEjecucion;
+    @OneToOne
+    @JoinColumn(name = "ID_Operacion", referencedColumnName = "ID_Operacion", nullable = false)
+    private OperacionEntity operacionByIdOperacion;
 
-    public int getIdOperacion() {
+    public Integer getIdOperacion() {
         return idOperacion;
     }
 
-    public void setIdOperacion(int idOperacion) {
+    public void setIdOperacion(Integer idOperacion) {
         this.idOperacion = idOperacion;
     }
 
@@ -61,7 +63,7 @@ public class TransferenciaEntity {
 
         TransferenciaEntity that = (TransferenciaEntity) o;
 
-        if (idOperacion != that.idOperacion) return false;
+        if (idOperacion != null ? !idOperacion.equals(that.idOperacion) : that.idOperacion != null) return false;
         if (cantidad != null ? !cantidad.equals(that.cantidad) : that.cantidad != null) return false;
         if (fechaInstruccion != null ? !fechaInstruccion.equals(that.fechaInstruccion) : that.fechaInstruccion != null)
             return false;
@@ -73,10 +75,18 @@ public class TransferenciaEntity {
 
     @Override
     public int hashCode() {
-        int result = idOperacion;
+        int result = idOperacion != null ? idOperacion.hashCode() : 0;
         result = 31 * result + (cantidad != null ? cantidad.hashCode() : 0);
         result = 31 * result + (fechaInstruccion != null ? fechaInstruccion.hashCode() : 0);
         result = 31 * result + (fechaEjecucion != null ? fechaEjecucion.hashCode() : 0);
         return result;
+    }
+
+    public OperacionEntity getOperacionByIdOperacion() {
+        return operacionByIdOperacion;
+    }
+
+    public void setOperacionByIdOperacion(OperacionEntity operacionByIdOperacion) {
+        this.operacionByIdOperacion = operacionByIdOperacion;
     }
 }

@@ -7,29 +7,32 @@ import javax.persistence.*;
 public class CambiodivisaEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "id_operacion")
-    private int idOperacion;
+    @Column(name = "ID_Operacion", nullable = false)
+    private Integer idOperacion;
     @Basic
-    @Column(name = "monedaVenta")
+    @Column(name = "monedaVenta", nullable = true, length = 50)
     private String monedaVenta;
     @Basic
-    @Column(name = "monedaCompra")
+    @Column(name = "monedaCompra", nullable = true, length = 50)
     private String monedaCompra;
     @Basic
-    @Column(name = "cantidadCompra")
+    @Column(name = "cantidadCompra", nullable = true, length = 50)
     private String cantidadCompra;
     @Basic
-    @Column(name = "cantidadVenta")
+    @Column(name = "cantidadVenta", nullable = true, length = 50)
     private String cantidadVenta;
     @Basic
-    @Column(name = "comision")
+    @Column(name = "comision", nullable = true, length = 50)
     private String comision;
+    @OneToOne
+    @JoinColumn(name = "ID_Operacion", referencedColumnName = "ID_Operacion", nullable = false)
+    private OperacionEntity operacionByIdOperacion;
 
-    public int getIdOperacion() {
+    public Integer getIdOperacion() {
         return idOperacion;
     }
 
-    public void setIdOperacion(int idOperacion) {
+    public void setIdOperacion(Integer idOperacion) {
         this.idOperacion = idOperacion;
     }
 
@@ -80,7 +83,7 @@ public class CambiodivisaEntity {
 
         CambiodivisaEntity that = (CambiodivisaEntity) o;
 
-        if (idOperacion != that.idOperacion) return false;
+        if (idOperacion != null ? !idOperacion.equals(that.idOperacion) : that.idOperacion != null) return false;
         if (monedaVenta != null ? !monedaVenta.equals(that.monedaVenta) : that.monedaVenta != null) return false;
         if (monedaCompra != null ? !monedaCompra.equals(that.monedaCompra) : that.monedaCompra != null) return false;
         if (cantidadCompra != null ? !cantidadCompra.equals(that.cantidadCompra) : that.cantidadCompra != null)
@@ -94,12 +97,20 @@ public class CambiodivisaEntity {
 
     @Override
     public int hashCode() {
-        int result = idOperacion;
+        int result = idOperacion != null ? idOperacion.hashCode() : 0;
         result = 31 * result + (monedaVenta != null ? monedaVenta.hashCode() : 0);
         result = 31 * result + (monedaCompra != null ? monedaCompra.hashCode() : 0);
         result = 31 * result + (cantidadCompra != null ? cantidadCompra.hashCode() : 0);
         result = 31 * result + (cantidadVenta != null ? cantidadVenta.hashCode() : 0);
         result = 31 * result + (comision != null ? comision.hashCode() : 0);
         return result;
+    }
+
+    public OperacionEntity getOperacionByIdOperacion() {
+        return operacionByIdOperacion;
+    }
+
+    public void setOperacionByIdOperacion(OperacionEntity operacionByIdOperacion) {
+        this.operacionByIdOperacion = operacionByIdOperacion;
     }
 }

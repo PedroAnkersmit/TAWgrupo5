@@ -1,28 +1,30 @@
 package com.taw.grupo5.entity;
 
 import javax.persistence.*;
-
 import java.sql.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "empresa", schema = "grupo5", catalog = "")
 public class EmpresaEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "ID_Empresa")
-    private int idEmpresa;
+    @Column(name = "ID_Empresa", nullable = false)
+    private Integer idEmpresa;
     @Basic
-    @Column(name = "nombre")
+    @Column(name = "nombre", nullable = true, length = 100)
     private String nombre;
     @Basic
-    @Column(name = "fechaCierre")
+    @Column(name = "fechaCierre", nullable = true)
     private Date fechaCierre;
+    @OneToMany(mappedBy = "empresaByIdEmpresa")
+    private List<ClienteEntity> clientesByIdEmpresa;
 
-    public int getIdEmpresa() {
+    public Integer getIdEmpresa() {
         return idEmpresa;
     }
 
-    public void setIdEmpresa(int idEmpresa) {
+    public void setIdEmpresa(Integer idEmpresa) {
         this.idEmpresa = idEmpresa;
     }
 
@@ -49,7 +51,7 @@ public class EmpresaEntity {
 
         EmpresaEntity that = (EmpresaEntity) o;
 
-        if (idEmpresa != that.idEmpresa) return false;
+        if (idEmpresa != null ? !idEmpresa.equals(that.idEmpresa) : that.idEmpresa != null) return false;
         if (nombre != null ? !nombre.equals(that.nombre) : that.nombre != null) return false;
         if (fechaCierre != null ? !fechaCierre.equals(that.fechaCierre) : that.fechaCierre != null) return false;
 
@@ -58,9 +60,17 @@ public class EmpresaEntity {
 
     @Override
     public int hashCode() {
-        int result = idEmpresa;
+        int result = idEmpresa != null ? idEmpresa.hashCode() : 0;
         result = 31 * result + (nombre != null ? nombre.hashCode() : 0);
         result = 31 * result + (fechaCierre != null ? fechaCierre.hashCode() : 0);
         return result;
+    }
+
+    public List<ClienteEntity> getClientesByIdEmpresa() {
+        return clientesByIdEmpresa;
+    }
+
+    public void setClientesByIdEmpresa(List<ClienteEntity> clientesByIdEmpresa) {
+        this.clientesByIdEmpresa = clientesByIdEmpresa;
     }
 }
