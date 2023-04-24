@@ -38,7 +38,7 @@
         %>
                 <tr>
                     <td><%=clienteEntity.getIdcliente()%></td>
-                    <td><%=clienteEntity.getNombre()%></td>
+                    <td><a href="/gestor/cliente?id=<%=clienteEntity.getIdcliente()%>"><%=clienteEntity.getNombre()%></a></td>
                     <td><%=clienteEntity.getEmail()%></td>
                     <td><%=clienteEntity.getTelefono()%></td>
                     <td><%=clienteEntity.getFechainicio()%></td>
