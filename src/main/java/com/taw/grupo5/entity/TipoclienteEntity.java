@@ -1,27 +1,27 @@
 package com.taw.grupo5.entity;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Collection;
 
 @Entity
 @Table(name = "tipocliente", schema = "grupo5", catalog = "")
 public class TipoclienteEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "ID_TipoCliente", nullable = false)
-    private Integer idTipoCliente;
+    @Column(name = "idtipocliente", nullable = false)
+    private Integer idtipocliente;
     @Basic
     @Column(name = "nombre", nullable = false, length = 50)
     private String nombre;
-    @OneToMany(mappedBy = "tipoclienteByIdTipoCliente")
-    private List<ClienteEntity> clientesByIdTipoCliente;
+    @OneToMany(mappedBy = "tipoclienteByIdtipocliente")
+    private Collection<ClienteEntity> clientesByIdtipocliente;
 
-    public Integer getIdTipoCliente() {
-        return idTipoCliente;
+    public Integer getIdtipocliente() {
+        return idtipocliente;
     }
 
-    public void setIdTipoCliente(Integer idTipoCliente) {
-        this.idTipoCliente = idTipoCliente;
+    public void setIdtipocliente(Integer idtipocliente) {
+        this.idtipocliente = idtipocliente;
     }
 
     public String getNombre() {
@@ -39,7 +39,7 @@ public class TipoclienteEntity {
 
         TipoclienteEntity that = (TipoclienteEntity) o;
 
-        if (idTipoCliente != null ? !idTipoCliente.equals(that.idTipoCliente) : that.idTipoCliente != null)
+        if (idtipocliente != null ? !idtipocliente.equals(that.idtipocliente) : that.idtipocliente != null)
             return false;
         if (nombre != null ? !nombre.equals(that.nombre) : that.nombre != null) return false;
 
@@ -48,16 +48,16 @@ public class TipoclienteEntity {
 
     @Override
     public int hashCode() {
-        int result = idTipoCliente != null ? idTipoCliente.hashCode() : 0;
+        int result = idtipocliente != null ? idtipocliente.hashCode() : 0;
         result = 31 * result + (nombre != null ? nombre.hashCode() : 0);
         return result;
     }
 
-    public List<ClienteEntity> getClientesByIdTipoCliente() {
-        return clientesByIdTipoCliente;
+    public Collection<ClienteEntity> getClientesByIdtipocliente() {
+        return clientesByIdtipocliente;
     }
 
-    public void setClientesByIdTipoCliente(List<ClienteEntity> clientesByIdTipoCliente) {
-        this.clientesByIdTipoCliente = clientesByIdTipoCliente;
+    public void setClientesByIdtipocliente(Collection<ClienteEntity> clientesByIdtipocliente) {
+        this.clientesByIdtipocliente = clientesByIdtipocliente;
     }
 }

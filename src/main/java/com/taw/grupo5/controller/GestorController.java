@@ -5,6 +5,7 @@ import com.taw.grupo5.entity.ClienteEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -15,6 +16,7 @@ public class GestorController {
     @Autowired
     ClienteRepository clienteRepository;
 
+    @GetMapping("/")
     public String mostrarClientesYEmpresas(Model model) {
         List<ClienteEntity> clienteEntityList = this.clienteRepository.findAll();
         model.addAttribute("listaClientes", clienteEntityList);

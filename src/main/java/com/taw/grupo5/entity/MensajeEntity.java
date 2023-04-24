@@ -7,24 +7,24 @@ import javax.persistence.*;
 public class MensajeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "ID_Mensaje", nullable = false)
-    private Integer idMensaje;
+    @Column(name = "idmensaje", nullable = false)
+    private Integer idmensaje;
     @Basic
     @Column(name = "contenido", nullable = true, length = -1)
     private String contenido;
     @Basic
-    @Column(name = "enviadoPorAsistente", nullable = true)
-    private Byte enviadoPorAsistente;
+    @Column(name = "enviadoporasistente", nullable = true)
+    private Byte enviadoporasistente;
     @ManyToOne
-    @JoinColumn(name = "ID_Conversacion", referencedColumnName = "ID_Conversacion", nullable = false)
-    private ConversacionEntity conversacionByIdConversacion;
+    @JoinColumn(name = "idconversacion", referencedColumnName = "idconversacion", nullable = false)
+    private ConversacionEntity conversacionByIdconversacion;
 
-    public Integer getIdMensaje() {
-        return idMensaje;
+    public Integer getIdmensaje() {
+        return idmensaje;
     }
 
-    public void setIdMensaje(Integer idMensaje) {
-        this.idMensaje = idMensaje;
+    public void setIdmensaje(Integer idmensaje) {
+        this.idmensaje = idmensaje;
     }
 
     public String getContenido() {
@@ -35,12 +35,12 @@ public class MensajeEntity {
         this.contenido = contenido;
     }
 
-    public Byte getEnviadoPorAsistente() {
-        return enviadoPorAsistente;
+    public Byte getEnviadoporasistente() {
+        return enviadoporasistente;
     }
 
-    public void setEnviadoPorAsistente(Byte enviadoPorAsistente) {
-        this.enviadoPorAsistente = enviadoPorAsistente;
+    public void setEnviadoporasistente(Byte enviadoporasistente) {
+        this.enviadoporasistente = enviadoporasistente;
     }
 
     @Override
@@ -50,9 +50,9 @@ public class MensajeEntity {
 
         MensajeEntity that = (MensajeEntity) o;
 
-        if (idMensaje != null ? !idMensaje.equals(that.idMensaje) : that.idMensaje != null) return false;
+        if (idmensaje != null ? !idmensaje.equals(that.idmensaje) : that.idmensaje != null) return false;
         if (contenido != null ? !contenido.equals(that.contenido) : that.contenido != null) return false;
-        if (enviadoPorAsistente != null ? !enviadoPorAsistente.equals(that.enviadoPorAsistente) : that.enviadoPorAsistente != null)
+        if (enviadoporasistente != null ? !enviadoporasistente.equals(that.enviadoporasistente) : that.enviadoporasistente != null)
             return false;
 
         return true;
@@ -60,17 +60,17 @@ public class MensajeEntity {
 
     @Override
     public int hashCode() {
-        int result = idMensaje != null ? idMensaje.hashCode() : 0;
+        int result = idmensaje != null ? idmensaje.hashCode() : 0;
         result = 31 * result + (contenido != null ? contenido.hashCode() : 0);
-        result = 31 * result + (enviadoPorAsistente != null ? enviadoPorAsistente.hashCode() : 0);
+        result = 31 * result + (enviadoporasistente != null ? enviadoporasistente.hashCode() : 0);
         return result;
     }
 
-    public ConversacionEntity getConversacionByIdConversacion() {
-        return conversacionByIdConversacion;
+    public ConversacionEntity getConversacionByIdconversacion() {
+        return conversacionByIdconversacion;
     }
 
-    public void setConversacionByIdConversacion(ConversacionEntity conversacionByIdConversacion) {
-        this.conversacionByIdConversacion = conversacionByIdConversacion;
+    public void setConversacionByIdconversacion(ConversacionEntity conversacionByIdconversacion) {
+        this.conversacionByIdconversacion = conversacionByIdconversacion;
     }
 }
