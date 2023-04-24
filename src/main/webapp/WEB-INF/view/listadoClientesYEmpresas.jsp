@@ -1,5 +1,6 @@
 <%@ page import="com.taw.grupo5.entity.ClienteEntity" %>
-<%@ page import="java.util.List" %><%--
+<%@ page import="java.util.List" %>
+<%@ page import="com.taw.grupo5.entity.EmpresaEntity" %><%--
   Created by IntelliJ IDEA.
   User: ignam
   Date: 24/04/2023
@@ -10,6 +11,7 @@
 
 <%
     List<ClienteEntity> clienteEntityList = (List<ClienteEntity>) request.getAttribute("listaClientes");
+    List<EmpresaEntity> empresaEntityList = (List<EmpresaEntity>) request.getAttribute("listaEmpresas");
 %>
 
 <html>
@@ -17,18 +19,18 @@
     <title>Listado de clientes y empresas</title>
 </head>
 <body>
-    <h1>Listado de clientes y empresas</h1>
-
-    <table>
+    <h1>Listado de clientes</h1>
+    <!-- Clientes -->
+    <table border="1">
         <tr>
             <th>ID</th>
-            <th>Conversacion</th>
             <th>Nombre</th>
             <th>Email</th>
-            <th>Telefono</th>
-            <th>Fecha inicio</th>
-            <th>ID Tipo Cliente</th>
-            <th>ID Tipo Empresa</th>
+            <th>Teléfono</th>
+            <th>Fecha de inicio</th>
+            <th>Tipo</th>
+            <th>Empresa</th>
+            <th>Conversación</th>
         </tr>
 
         <%
@@ -36,14 +38,36 @@
         %>
                 <tr>
                     <td><%=clienteEntity.getIdcliente()%></td>
-                    <td><%=clienteEntity.getConversacionsByIdcliente()%></td>
                     <td><%=clienteEntity.getNombre()%></td>
                     <td><%=clienteEntity.getEmail()%></td>
                     <td><%=clienteEntity.getTelefono()%></td>
                     <td><%=clienteEntity.getFechainicio()%></td>
-                    <td><%=clienteEntity.getTipoclienteByIdtipocliente()%></td>
-                    <td><%=clienteEntity.getEmpresaByIdempresa()%></td>
+                    <td><%=clienteEntity.getTipoclienteByIdtipocliente().getNombre()%></td>
+                    <td><%=clienteEntity.getEmpresaByIdempresa() == null ? "Sin empresa" : clienteEntity.getEmpresaByIdempresa().getNombre()%></td>
+                    <td><%=clienteEntity.getConversacionsByIdcliente()%></td>
                 </tr>
+        <%
+            }
+        %>
+    </table>
+
+    <h1>Listado de empresas</h1>
+    <!-- Empresas -->
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Fecha de cierre</th>
+        </tr>
+
+        <%
+            for(EmpresaEntity empresaEntity : empresaEntityList) {
+        %>
+        <tr>
+            <td><%=empresaEntity.getIdempresa()%></td>
+            <td><%=empresaEntity.getNombre()%></td>
+            <td><%=empresaEntity.getFechacierre()%></td>
+        </tr>
         <%
             }
         %>
