@@ -10,7 +10,7 @@ public class EmpleadoEntity {
     @Id
     @Column(name = "idempleado", nullable = false)
     private Integer idEmpleado;
-    @OneToMany(mappedBy = "empleadobyidempleado")
+    @OneToMany(mappedBy = "empleadoByIdEmpleado")
     private List<ConversacionEntity> conversacionesByIdEmpleado;
     @ManyToOne
     @JoinColumn(name = "idtipoempleado", referencedColumnName = "idtipoempleado", nullable = false)

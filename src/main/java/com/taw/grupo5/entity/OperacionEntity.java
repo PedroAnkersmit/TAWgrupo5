@@ -21,9 +21,9 @@ public class OperacionEntity {
     @ManyToOne
     @JoinColumn(name = "idcuenta", referencedColumnName = "idcuenta", nullable = false)
     private CuentaEntity cuentaByIdCuenta;
-    @OneToOne(mappedBy = "operacionbyidoperacion")
+    @OneToOne(mappedBy = "operacionByIdOperacion")
     private SacardineroEntity sacardineroByIdOperacion;
-    @OneToOne(mappedBy = "operacionbyidoperacion")
+    @OneToOne(mappedBy = "operacionByIdOperacion")
     private TransferenciaEntity transferenciaByIdOperacion;
 
     public Integer getIdOperacion() {

@@ -13,7 +13,7 @@ public class TipoestadoEntity {
     @Basic
     @Column(name = "nombre", nullable = false, length = 45)
     private String nombre;
-    @OneToMany(mappedBy = "tipoestadobyidestado")
+    @OneToMany(mappedBy = "tipoestadoByIdEstado")
     private List<CuentaEntity> cuentasByIdTipoestado;
 
     public Integer getIdTipoEstado() {

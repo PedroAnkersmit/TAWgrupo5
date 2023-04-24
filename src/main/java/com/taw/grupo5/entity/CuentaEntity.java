@@ -30,7 +30,7 @@ public class CuentaEntity {
     @ManyToOne
     @JoinColumn(name = "idestado", referencedColumnName = "idtipoestado", nullable = false)
     private TipoestadoEntity tipoestadoByIdEstado;
-    @OneToMany(mappedBy = "cuentabyidcuenta")
+    @OneToMany(mappedBy = "cuentaByIdCuenta")
     private List<OperacionEntity> operacionesByIdCuenta;
 
     public Integer getIdCuenta() {

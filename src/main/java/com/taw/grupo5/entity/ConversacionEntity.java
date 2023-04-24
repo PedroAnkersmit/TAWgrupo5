@@ -21,9 +21,9 @@ public class ConversacionEntity {
     private EmpleadoEntity empleadoByIdEmpleado;
     @ManyToOne
     @JoinColumn(name = "idcliente", referencedColumnName = "idcliente", nullable = false)
-    private ClienteEntity clientebyidcliente;
-    @OneToMany(mappedBy = "conversacionbyidconversacion")
-    private List<MensajeEntity> mensajesbyidconversacion;
+    private ClienteEntity clienteByIdCliente;
+    @OneToMany(mappedBy = "conversacionByIdConversacion")
+    private List<MensajeEntity> mensajesByIdConversacion;
 
     public Integer getIdConversacion() {
         return idConversacion;
@@ -80,19 +80,19 @@ public class ConversacionEntity {
         this.empleadoByIdEmpleado = empleadoByIdEmpleado;
     }
 
-    public ClienteEntity getClientebyidcliente() {
-        return clientebyidcliente;
+    public ClienteEntity getClienteByIdCliente() {
+        return clienteByIdCliente;
     }
 
-    public void setClientebyidcliente(ClienteEntity clienteByIdCliente) {
-        this.clientebyidcliente = clienteByIdCliente;
+    public void setClienteByIdCliente(ClienteEntity clienteByIdCliente) {
+        this.clienteByIdCliente = clienteByIdCliente;
     }
 
-    public List<MensajeEntity> getMensajesbyidconversacion() {
-        return mensajesbyidconversacion;
+    public List<MensajeEntity> getMensajesByIdConversacion() {
+        return mensajesByIdConversacion;
     }
 
-    public void setMensajesbyidconversacion(List<MensajeEntity> mensajesByIdConversacion) {
-        this.mensajesbyidconversacion = mensajesByIdConversacion;
+    public void setMensajesByIdConversacion(List<MensajeEntity> mensajesByIdConversacion) {
+        this.mensajesByIdConversacion = mensajesByIdConversacion;
     }
 }

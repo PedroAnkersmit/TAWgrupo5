@@ -13,7 +13,7 @@ public class TipoempleadoEntity {
     @Basic
     @Column(name = "puesto", nullable = false, length = 50)
     private String puesto;
-    @OneToMany(mappedBy = "tipoempleadobyidtipoempleado")
+    @OneToMany(mappedBy = "tipoempleadoByIdTipoempleado")
     private List<EmpleadoEntity> empleadosByIdTipoempleado;
 
     public Integer getIdTipoEmpleado() {

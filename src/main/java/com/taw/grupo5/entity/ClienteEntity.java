@@ -32,9 +32,9 @@ public class ClienteEntity {
     @ManyToOne
     @JoinColumn(name = "idempresa", referencedColumnName = "idempresa")
     private EmpresaEntity empresaByIdEmpresa;
-    @OneToMany(mappedBy = "clientebyidcliente")
+    @OneToMany(mappedBy = "clienteByIdCliente")
     private List<ConversacionEntity> conversacionesByIdCliente;
-    @OneToMany(mappedBy = "clientebyidcliente")
+    @OneToMany(mappedBy = "clienteByIdCliente")
     private List<CuentaEntity> cuentasByIdCliente;
 
     public Integer getIdCliente() {
