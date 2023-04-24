@@ -2,7 +2,7 @@ package com.taw.grupo5.entity;
 
 import javax.persistence.*;
 import java.sql.Date;
-import java.util.List;
+import java.util.Collection;
 
 @Entity
 @Table(name = "empresa", schema = "grupo5", catalog = "")
@@ -10,22 +10,22 @@ public class EmpresaEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "idempresa", nullable = false)
-    private Integer idEmpresa;
+    private Integer idempresa;
     @Basic
     @Column(name = "nombre", nullable = true, length = 100)
     private String nombre;
     @Basic
     @Column(name = "fechacierre", nullable = true)
-    private Date fechaCierre;
-    @OneToMany(mappedBy = "empresaByIdEmpresa")
-    private List<ClienteEntity> clientesByIdEmpresa;
+    private Date fechacierre;
+    @OneToMany(mappedBy = "empresaByIdempresa")
+    private Collection<ClienteEntity> clientesByIdempresa;
 
-    public Integer getIdEmpresa() {
-        return idEmpresa;
+    public Integer getIdempresa() {
+        return idempresa;
     }
 
-    public void setIdEmpresa(Integer idEmpresa) {
-        this.idEmpresa = idEmpresa;
+    public void setIdempresa(Integer idempresa) {
+        this.idempresa = idempresa;
     }
 
     public String getNombre() {
@@ -36,12 +36,12 @@ public class EmpresaEntity {
         this.nombre = nombre;
     }
 
-    public Date getFechaCierre() {
-        return fechaCierre;
+    public Date getFechacierre() {
+        return fechacierre;
     }
 
-    public void setFechaCierre(Date fechaCierre) {
-        this.fechaCierre = fechaCierre;
+    public void setFechacierre(Date fechacierre) {
+        this.fechacierre = fechacierre;
     }
 
     @Override
@@ -51,26 +51,26 @@ public class EmpresaEntity {
 
         EmpresaEntity that = (EmpresaEntity) o;
 
-        if (idEmpresa != null ? !idEmpresa.equals(that.idEmpresa) : that.idEmpresa != null) return false;
+        if (idempresa != null ? !idempresa.equals(that.idempresa) : that.idempresa != null) return false;
         if (nombre != null ? !nombre.equals(that.nombre) : that.nombre != null) return false;
-        if (fechaCierre != null ? !fechaCierre.equals(that.fechaCierre) : that.fechaCierre != null) return false;
+        if (fechacierre != null ? !fechacierre.equals(that.fechacierre) : that.fechacierre != null) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = idEmpresa != null ? idEmpresa.hashCode() : 0;
+        int result = idempresa != null ? idempresa.hashCode() : 0;
         result = 31 * result + (nombre != null ? nombre.hashCode() : 0);
-        result = 31 * result + (fechaCierre != null ? fechaCierre.hashCode() : 0);
+        result = 31 * result + (fechacierre != null ? fechacierre.hashCode() : 0);
         return result;
     }
 
-    public List<ClienteEntity> getClientesByIdEmpresa() {
-        return clientesByIdEmpresa;
+    public Collection<ClienteEntity> getClientesByIdempresa() {
+        return clientesByIdempresa;
     }
 
-    public void setClientesByIdEmpresa(List<ClienteEntity> clientesByIdEmpresa) {
-        this.clientesByIdEmpresa = clientesByIdEmpresa;
+    public void setClientesByIdempresa(Collection<ClienteEntity> clientesByIdempresa) {
+        this.clientesByIdempresa = clientesByIdempresa;
     }
 }

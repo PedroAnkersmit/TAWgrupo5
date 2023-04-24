@@ -2,8 +2,6 @@ package com.taw.grupo5.controller;
 
 import com.taw.grupo5.dao.ClienteRepository;
 import com.taw.grupo5.dao.CuentaRepository;
-import com.taw.grupo5.entity.ClienteEntity;
-import com.taw.grupo5.entity.CuentaEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
