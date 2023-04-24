@@ -40,4 +40,12 @@ public class GestorController {
 
         return "gestorCliente";
     }
+
+    @GetMapping("empresa")
+    public String mostrarDatosEmpresa(@RequestParam("id") Integer idEmpresa, Model model) {
+        EmpresaEntity empresaEntity = this.empresaRepository.findById(idEmpresa).orElse(null);
+        model.addAttribute("empresa", empresaEntity);
+
+        return "gestorEmpresa";
+    }
 }
