@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -29,6 +30,14 @@ public class GestorController {
         List<EmpresaEntity> empresaEntityList = this.empresaRepository.findAll();
         model.addAttribute("listaEmpresas", empresaEntityList);
 
-        return "listadoClientesYEmpresas";
+        return "gestorListar";
+    }
+
+    @GetMapping("cliente")
+    public String mostrarDatosCliente(@RequestParam("id") Integer idCliente, Model model) {
+        ClienteEntity clienteEntity = this.clienteRepository.findById(idCliente).orElse(null);
+        model.addAttribute("cliente", clienteEntity);
+
+        return "gestorCliente";
     }
 }
