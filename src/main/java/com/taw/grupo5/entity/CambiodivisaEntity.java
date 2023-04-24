@@ -8,64 +8,64 @@ public class CambiodivisaEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "ID_Operacion", nullable = false)
-    private Integer idOperacion;
+    private Integer idoperacion;
     @Basic
     @Column(name = "monedaVenta", nullable = true, length = 50)
-    private String monedaVenta;
+    private String monedaventa;
     @Basic
     @Column(name = "monedaCompra", nullable = true, length = 50)
-    private String monedaCompra;
+    private String monedacompra;
     @Basic
     @Column(name = "cantidadCompra", nullable = true, length = 50)
-    private String cantidadCompra;
+    private String cantidadcompra;
     @Basic
     @Column(name = "cantidadVenta", nullable = true, length = 50)
-    private String cantidadVenta;
+    private String cantidadventa;
     @Basic
     @Column(name = "comision", nullable = true, length = 50)
     private String comision;
     @OneToOne
     @JoinColumn(name = "ID_Operacion", referencedColumnName = "ID_Operacion", nullable = false)
-    private OperacionEntity operacionByIdOperacion;
+    private OperacionEntity operacionbyidoperacion;
 
-    public Integer getIdOperacion() {
-        return idOperacion;
+    public Integer getIdoperacion() {
+        return idoperacion;
     }
 
-    public void setIdOperacion(Integer idOperacion) {
-        this.idOperacion = idOperacion;
+    public void setIdoperacion(Integer idOperacion) {
+        this.idoperacion = idOperacion;
     }
 
-    public String getMonedaVenta() {
-        return monedaVenta;
+    public String getMonedaventa() {
+        return monedaventa;
     }
 
-    public void setMonedaVenta(String monedaVenta) {
-        this.monedaVenta = monedaVenta;
+    public void setMonedaventa(String monedaVenta) {
+        this.monedaventa = monedaVenta;
     }
 
-    public String getMonedaCompra() {
-        return monedaCompra;
+    public String getMonedacompra() {
+        return monedacompra;
     }
 
-    public void setMonedaCompra(String monedaCompra) {
-        this.monedaCompra = monedaCompra;
+    public void setMonedacompra(String monedaCompra) {
+        this.monedacompra = monedaCompra;
     }
 
-    public String getCantidadCompra() {
-        return cantidadCompra;
+    public String getCantidadcompra() {
+        return cantidadcompra;
     }
 
-    public void setCantidadCompra(String cantidadCompra) {
-        this.cantidadCompra = cantidadCompra;
+    public void setCantidadcompra(String cantidadCompra) {
+        this.cantidadcompra = cantidadCompra;
     }
 
-    public String getCantidadVenta() {
-        return cantidadVenta;
+    public String getCantidadventa() {
+        return cantidadventa;
     }
 
-    public void setCantidadVenta(String cantidadVenta) {
-        this.cantidadVenta = cantidadVenta;
+    public void setCantidadventa(String cantidadVenta) {
+        this.cantidadventa = cantidadVenta;
     }
 
     public String getComision() {
@@ -83,12 +83,12 @@ public class CambiodivisaEntity {
 
         CambiodivisaEntity that = (CambiodivisaEntity) o;
 
-        if (idOperacion != null ? !idOperacion.equals(that.idOperacion) : that.idOperacion != null) return false;
-        if (monedaVenta != null ? !monedaVenta.equals(that.monedaVenta) : that.monedaVenta != null) return false;
-        if (monedaCompra != null ? !monedaCompra.equals(that.monedaCompra) : that.monedaCompra != null) return false;
-        if (cantidadCompra != null ? !cantidadCompra.equals(that.cantidadCompra) : that.cantidadCompra != null)
+        if (idoperacion != null ? !idoperacion.equals(that.idoperacion) : that.idoperacion != null) return false;
+        if (monedaventa != null ? !monedaventa.equals(that.monedaventa) : that.monedaventa != null) return false;
+        if (monedacompra != null ? !monedacompra.equals(that.monedacompra) : that.monedacompra != null) return false;
+        if (cantidadcompra != null ? !cantidadcompra.equals(that.cantidadcompra) : that.cantidadcompra != null)
             return false;
-        if (cantidadVenta != null ? !cantidadVenta.equals(that.cantidadVenta) : that.cantidadVenta != null)
+        if (cantidadventa != null ? !cantidadventa.equals(that.cantidadventa) : that.cantidadventa != null)
             return false;
         if (comision != null ? !comision.equals(that.comision) : that.comision != null) return false;
 
@@ -97,20 +97,20 @@ public class CambiodivisaEntity {
 
     @Override
     public int hashCode() {
-        int result = idOperacion != null ? idOperacion.hashCode() : 0;
-        result = 31 * result + (monedaVenta != null ? monedaVenta.hashCode() : 0);
-        result = 31 * result + (monedaCompra != null ? monedaCompra.hashCode() : 0);
-        result = 31 * result + (cantidadCompra != null ? cantidadCompra.hashCode() : 0);
-        result = 31 * result + (cantidadVenta != null ? cantidadVenta.hashCode() : 0);
+        int result = idoperacion != null ? idoperacion.hashCode() : 0;
+        result = 31 * result + (monedaventa != null ? monedaventa.hashCode() : 0);
+        result = 31 * result + (monedacompra != null ? monedacompra.hashCode() : 0);
+        result = 31 * result + (cantidadcompra != null ? cantidadcompra.hashCode() : 0);
+        result = 31 * result + (cantidadventa != null ? cantidadventa.hashCode() : 0);
         result = 31 * result + (comision != null ? comision.hashCode() : 0);
         return result;
     }
 
-    public OperacionEntity getOperacionByIdOperacion() {
-        return operacionByIdOperacion;
+    public OperacionEntity getOperacionbyidoperacion() {
+        return operacionbyidoperacion;
     }
 
-    public void setOperacionByIdOperacion(OperacionEntity operacionByIdOperacion) {
-        this.operacionByIdOperacion = operacionByIdOperacion;
+    public void setOperacionbyidoperacion(OperacionEntity operacionByIdOperacion) {
+        this.operacionbyidoperacion = operacionByIdOperacion;
     }
 }

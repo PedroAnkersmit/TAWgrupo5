@@ -9,19 +9,19 @@ public class EmpleadoEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "ID_Empleado", nullable = false)
-    private Integer idEmpleado;
-    @OneToMany(mappedBy = "empleadoByIdEmpleado")
+    private Integer idempleado;
+    @OneToMany(mappedBy = "empleadobyidempleado")
     private List<ConversacionEntity> conversacionsByIdEmpleado;
     @ManyToOne
     @JoinColumn(name = "ID_TipoEmpleado", referencedColumnName = "ID_TipoEmpleado", nullable = false)
-    private TipoempleadoEntity tipoempleadoByIdTipoEmpleado;
+    private TipoempleadoEntity tipoempleadobyidtipoempleado;
 
-    public Integer getIdEmpleado() {
-        return idEmpleado;
+    public Integer getIdempleado() {
+        return idempleado;
     }
 
-    public void setIdEmpleado(Integer idEmpleado) {
-        this.idEmpleado = idEmpleado;
+    public void setIdempleado(Integer idEmpleado) {
+        this.idempleado = idEmpleado;
     }
 
     @Override
@@ -31,14 +31,14 @@ public class EmpleadoEntity {
 
         EmpleadoEntity that = (EmpleadoEntity) o;
 
-        if (idEmpleado != null ? !idEmpleado.equals(that.idEmpleado) : that.idEmpleado != null) return false;
+        if (idempleado != null ? !idempleado.equals(that.idempleado) : that.idempleado != null) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        return idEmpleado != null ? idEmpleado.hashCode() : 0;
+        return idempleado != null ? idempleado.hashCode() : 0;
     }
 
     public List<ConversacionEntity> getConversacionsByIdEmpleado() {
@@ -49,11 +49,11 @@ public class EmpleadoEntity {
         this.conversacionsByIdEmpleado = conversacionsByIdEmpleado;
     }
 
-    public TipoempleadoEntity getTipoempleadoByIdTipoEmpleado() {
-        return tipoempleadoByIdTipoEmpleado;
+    public TipoempleadoEntity getTipoempleadobyidtipoempleado() {
+        return tipoempleadobyidtipoempleado;
     }
 
-    public void setTipoempleadoByIdTipoEmpleado(TipoempleadoEntity tipoempleadoByIdTipoEmpleado) {
-        this.tipoempleadoByIdTipoEmpleado = tipoempleadoByIdTipoEmpleado;
+    public void setTipoempleadobyidtipoempleado(TipoempleadoEntity tipoempleadoByIdTipoEmpleado) {
+        this.tipoempleadobyidtipoempleado = tipoempleadoByIdTipoEmpleado;
     }
 }

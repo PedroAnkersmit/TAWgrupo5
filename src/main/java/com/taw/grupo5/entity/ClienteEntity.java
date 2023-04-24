@@ -10,10 +10,10 @@ public class ClienteEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "ID_Cliente", nullable = false)
-    private Integer idCliente;
+    private Integer idcliente;
     @Basic
     @Column(name = "ID_Conversacion", nullable = true)
-    private Integer idConversacion;
+    private Integer idconversacion;
     @Basic
     @Column(name = "nombre", nullable = true, length = 50)
     private String nombre;
@@ -25,32 +25,32 @@ public class ClienteEntity {
     private String telefono;
     @Basic
     @Column(name = "fechaInicio", nullable = true)
-    private Date fechaInicio;
+    private Date fechainicio;
     @ManyToOne
     @JoinColumn(name = "ID_TipoCliente", referencedColumnName = "ID_TipoCliente", nullable = false)
-    private TipoclienteEntity tipoclienteByIdTipoCliente;
+    private TipoclienteEntity tipoclientebyidtipocliente;
     @ManyToOne
     @JoinColumn(name = "ID_Empresa", referencedColumnName = "ID_Empresa")
-    private EmpresaEntity empresaByIdEmpresa;
-    @OneToMany(mappedBy = "clienteByIdCliente")
-    private List<ConversacionEntity> conversacionsByIdCliente;
-    @OneToMany(mappedBy = "clienteByIdCliente")
-    private List<CuentaEntity> cuentasByIdCliente;
+    private EmpresaEntity empresabyidempresa;
+    @OneToMany(mappedBy = "clientebyidcliente")
+    private List<ConversacionEntity> conversacionsbyidcliente;
+    @OneToMany(mappedBy = "clientebyidcliente")
+    private List<CuentaEntity> cuentasbyidcliente;
 
-    public Integer getIdCliente() {
-        return idCliente;
+    public Integer getIdcliente() {
+        return idcliente;
     }
 
-    public void setIdCliente(Integer idCliente) {
-        this.idCliente = idCliente;
+    public void setIdcliente(Integer idCliente) {
+        this.idcliente = idCliente;
     }
 
-    public Integer getIdConversacion() {
-        return idConversacion;
+    public Integer getIdconversacion() {
+        return idconversacion;
     }
 
-    public void setIdConversacion(Integer idConversacion) {
-        this.idConversacion = idConversacion;
+    public void setIdconversacion(Integer idConversacion) {
+        this.idconversacion = idConversacion;
     }
 
     public String getNombre() {
@@ -77,12 +77,12 @@ public class ClienteEntity {
         this.telefono = telefono;
     }
 
-    public Date getFechaInicio() {
-        return fechaInicio;
+    public Date getFechainicio() {
+        return fechainicio;
     }
 
-    public void setFechaInicio(Date fechaInicio) {
-        this.fechaInicio = fechaInicio;
+    public void setFechainicio(Date fechaInicio) {
+        this.fechainicio = fechaInicio;
     }
 
     @Override
@@ -92,57 +92,57 @@ public class ClienteEntity {
 
         ClienteEntity cliente = (ClienteEntity) o;
 
-        if (idCliente != null ? !idCliente.equals(cliente.idCliente) : cliente.idCliente != null) return false;
-        if (idConversacion != null ? !idConversacion.equals(cliente.idConversacion) : cliente.idConversacion != null)
+        if (idcliente != null ? !idcliente.equals(cliente.idcliente) : cliente.idcliente != null) return false;
+        if (idconversacion != null ? !idconversacion.equals(cliente.idconversacion) : cliente.idconversacion != null)
             return false;
         if (nombre != null ? !nombre.equals(cliente.nombre) : cliente.nombre != null) return false;
         if (email != null ? !email.equals(cliente.email) : cliente.email != null) return false;
         if (telefono != null ? !telefono.equals(cliente.telefono) : cliente.telefono != null) return false;
-        if (fechaInicio != null ? !fechaInicio.equals(cliente.fechaInicio) : cliente.fechaInicio != null) return false;
+        if (fechainicio != null ? !fechainicio.equals(cliente.fechainicio) : cliente.fechainicio != null) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = idCliente != null ? idCliente.hashCode() : 0;
-        result = 31 * result + (idConversacion != null ? idConversacion.hashCode() : 0);
+        int result = idcliente != null ? idcliente.hashCode() : 0;
+        result = 31 * result + (idconversacion != null ? idconversacion.hashCode() : 0);
         result = 31 * result + (nombre != null ? nombre.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
         result = 31 * result + (telefono != null ? telefono.hashCode() : 0);
-        result = 31 * result + (fechaInicio != null ? fechaInicio.hashCode() : 0);
+        result = 31 * result + (fechainicio != null ? fechainicio.hashCode() : 0);
         return result;
     }
 
-    public TipoclienteEntity getTipoclienteByIdTipoCliente() {
-        return tipoclienteByIdTipoCliente;
+    public TipoclienteEntity getTipoclientebyidtipocliente() {
+        return tipoclientebyidtipocliente;
     }
 
-    public void setTipoclienteByIdTipoCliente(TipoclienteEntity tipoclienteByIdTipoCliente) {
-        this.tipoclienteByIdTipoCliente = tipoclienteByIdTipoCliente;
+    public void setTipoclientebyidtipocliente(TipoclienteEntity tipoclienteByIdTipoCliente) {
+        this.tipoclientebyidtipocliente = tipoclienteByIdTipoCliente;
     }
 
-    public EmpresaEntity getEmpresaByIdEmpresa() {
-        return empresaByIdEmpresa;
+    public EmpresaEntity getEmpresabyidempresa() {
+        return empresabyidempresa;
     }
 
-    public void setEmpresaByIdEmpresa(EmpresaEntity empresaByIdEmpresa) {
-        this.empresaByIdEmpresa = empresaByIdEmpresa;
+    public void setEmpresabyidempresa(EmpresaEntity empresaByIdEmpresa) {
+        this.empresabyidempresa = empresaByIdEmpresa;
     }
 
-    public List<ConversacionEntity> getConversacionsByIdCliente() {
-        return conversacionsByIdCliente;
+    public List<ConversacionEntity> getConversacionsbyidcliente() {
+        return conversacionsbyidcliente;
     }
 
-    public void setConversacionsByIdCliente(List<ConversacionEntity> conversacionsByIdCliente) {
-        this.conversacionsByIdCliente = conversacionsByIdCliente;
+    public void setConversacionsbyidcliente(List<ConversacionEntity> conversacionsByIdCliente) {
+        this.conversacionsbyidcliente = conversacionsByIdCliente;
     }
 
-    public List<CuentaEntity> getCuentasByIdCliente() {
-        return cuentasByIdCliente;
+    public List<CuentaEntity> getCuentasbyidcliente() {
+        return cuentasbyidcliente;
     }
 
-    public void setCuentasByIdCliente(List<CuentaEntity> cuentasByIdCliente) {
-        this.cuentasByIdCliente = cuentasByIdCliente;
+    public void setCuentasbyidcliente(List<CuentaEntity> cuentasByIdCliente) {
+        this.cuentasbyidcliente = cuentasByIdCliente;
     }
 }

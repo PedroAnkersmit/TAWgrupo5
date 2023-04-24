@@ -10,26 +10,26 @@ public class TransferenciaEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "ID_Operacion", nullable = false)
-    private Integer idOperacion;
+    private Integer idoperacion;
     @Basic
     @Column(name = "cantidad", nullable = true, precision = 2)
     private BigDecimal cantidad;
     @Basic
     @Column(name = "fechaInstruccion", nullable = true)
-    private Date fechaInstruccion;
+    private Date fechainstruccion;
     @Basic
     @Column(name = "fechaEjecucion", nullable = true)
-    private Date fechaEjecucion;
+    private Date fechaejecucion;
     @OneToOne
     @JoinColumn(name = "ID_Operacion", referencedColumnName = "ID_Operacion", nullable = false)
-    private OperacionEntity operacionByIdOperacion;
+    private OperacionEntity operacionbyidoperacion;
 
-    public Integer getIdOperacion() {
-        return idOperacion;
+    public Integer getIdoperacion() {
+        return idoperacion;
     }
 
-    public void setIdOperacion(Integer idOperacion) {
-        this.idOperacion = idOperacion;
+    public void setIdoperacion(Integer idOperacion) {
+        this.idoperacion = idOperacion;
     }
 
     public BigDecimal getCantidad() {
@@ -40,20 +40,20 @@ public class TransferenciaEntity {
         this.cantidad = cantidad;
     }
 
-    public Date getFechaInstruccion() {
-        return fechaInstruccion;
+    public Date getFechainstruccion() {
+        return fechainstruccion;
     }
 
-    public void setFechaInstruccion(Date fechaInstruccion) {
-        this.fechaInstruccion = fechaInstruccion;
+    public void setFechainstruccion(Date fechaInstruccion) {
+        this.fechainstruccion = fechaInstruccion;
     }
 
-    public Date getFechaEjecucion() {
-        return fechaEjecucion;
+    public Date getFechaejecucion() {
+        return fechaejecucion;
     }
 
-    public void setFechaEjecucion(Date fechaEjecucion) {
-        this.fechaEjecucion = fechaEjecucion;
+    public void setFechaejecucion(Date fechaEjecucion) {
+        this.fechaejecucion = fechaEjecucion;
     }
 
     @Override
@@ -63,11 +63,11 @@ public class TransferenciaEntity {
 
         TransferenciaEntity that = (TransferenciaEntity) o;
 
-        if (idOperacion != null ? !idOperacion.equals(that.idOperacion) : that.idOperacion != null) return false;
+        if (idoperacion != null ? !idoperacion.equals(that.idoperacion) : that.idoperacion != null) return false;
         if (cantidad != null ? !cantidad.equals(that.cantidad) : that.cantidad != null) return false;
-        if (fechaInstruccion != null ? !fechaInstruccion.equals(that.fechaInstruccion) : that.fechaInstruccion != null)
+        if (fechainstruccion != null ? !fechainstruccion.equals(that.fechainstruccion) : that.fechainstruccion != null)
             return false;
-        if (fechaEjecucion != null ? !fechaEjecucion.equals(that.fechaEjecucion) : that.fechaEjecucion != null)
+        if (fechaejecucion != null ? !fechaejecucion.equals(that.fechaejecucion) : that.fechaejecucion != null)
             return false;
 
         return true;
@@ -75,18 +75,18 @@ public class TransferenciaEntity {
 
     @Override
     public int hashCode() {
-        int result = idOperacion != null ? idOperacion.hashCode() : 0;
+        int result = idoperacion != null ? idoperacion.hashCode() : 0;
         result = 31 * result + (cantidad != null ? cantidad.hashCode() : 0);
-        result = 31 * result + (fechaInstruccion != null ? fechaInstruccion.hashCode() : 0);
-        result = 31 * result + (fechaEjecucion != null ? fechaEjecucion.hashCode() : 0);
+        result = 31 * result + (fechainstruccion != null ? fechainstruccion.hashCode() : 0);
+        result = 31 * result + (fechaejecucion != null ? fechaejecucion.hashCode() : 0);
         return result;
     }
 
-    public OperacionEntity getOperacionByIdOperacion() {
-        return operacionByIdOperacion;
+    public OperacionEntity getOperacionbyidoperacion() {
+        return operacionbyidoperacion;
     }
 
-    public void setOperacionByIdOperacion(OperacionEntity operacionByIdOperacion) {
-        this.operacionByIdOperacion = operacionByIdOperacion;
+    public void setOperacionbyidoperacion(OperacionEntity operacionByIdOperacion) {
+        this.operacionbyidoperacion = operacionByIdOperacion;
     }
 }

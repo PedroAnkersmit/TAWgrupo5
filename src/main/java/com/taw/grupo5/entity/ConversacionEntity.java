@@ -9,7 +9,7 @@ public class ConversacionEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "ID_Conversacion", nullable = false)
-    private Integer idConversacion;
+    private Integer idconversacion;
     @Basic
     @Column(name = "asunto", nullable = true, length = 100)
     private String asunto;
@@ -18,19 +18,19 @@ public class ConversacionEntity {
     private Byte abierto;
     @ManyToOne
     @JoinColumn(name = "ID_Empleado", referencedColumnName = "ID_Empleado", nullable = false)
-    private EmpleadoEntity empleadoByIdEmpleado;
+    private EmpleadoEntity empleadobyidempleado;
     @ManyToOne
     @JoinColumn(name = "ID_Cliente", referencedColumnName = "ID_Cliente", nullable = false)
-    private ClienteEntity clienteByIdCliente;
-    @OneToMany(mappedBy = "conversacionByIdConversacion")
-    private List<MensajeEntity> mensajesByIdConversacion;
+    private ClienteEntity clientebyidcliente;
+    @OneToMany(mappedBy = "conversacionbyidconversacion")
+    private List<MensajeEntity> mensajesbyidconversacion;
 
-    public Integer getIdConversacion() {
-        return idConversacion;
+    public Integer getIdconversacion() {
+        return idconversacion;
     }
 
-    public void setIdConversacion(Integer idConversacion) {
-        this.idConversacion = idConversacion;
+    public void setIdconversacion(Integer idConversacion) {
+        this.idconversacion = idConversacion;
     }
 
     public String getAsunto() {
@@ -56,7 +56,7 @@ public class ConversacionEntity {
 
         ConversacionEntity that = (ConversacionEntity) o;
 
-        if (idConversacion != null ? !idConversacion.equals(that.idConversacion) : that.idConversacion != null)
+        if (idconversacion != null ? !idconversacion.equals(that.idconversacion) : that.idconversacion != null)
             return false;
         if (asunto != null ? !asunto.equals(that.asunto) : that.asunto != null) return false;
         if (abierto != null ? !abierto.equals(that.abierto) : that.abierto != null) return false;
@@ -66,33 +66,33 @@ public class ConversacionEntity {
 
     @Override
     public int hashCode() {
-        int result = idConversacion != null ? idConversacion.hashCode() : 0;
+        int result = idconversacion != null ? idconversacion.hashCode() : 0;
         result = 31 * result + (asunto != null ? asunto.hashCode() : 0);
         result = 31 * result + (abierto != null ? abierto.hashCode() : 0);
         return result;
     }
 
-    public EmpleadoEntity getEmpleadoByIdEmpleado() {
-        return empleadoByIdEmpleado;
+    public EmpleadoEntity getEmpleadobyidempleado() {
+        return empleadobyidempleado;
     }
 
-    public void setEmpleadoByIdEmpleado(EmpleadoEntity empleadoByIdEmpleado) {
-        this.empleadoByIdEmpleado = empleadoByIdEmpleado;
+    public void setEmpleadobyidempleado(EmpleadoEntity empleadoByIdEmpleado) {
+        this.empleadobyidempleado = empleadoByIdEmpleado;
     }
 
-    public ClienteEntity getClienteByIdCliente() {
-        return clienteByIdCliente;
+    public ClienteEntity getClientebyidcliente() {
+        return clientebyidcliente;
     }
 
-    public void setClienteByIdCliente(ClienteEntity clienteByIdCliente) {
-        this.clienteByIdCliente = clienteByIdCliente;
+    public void setClientebyidcliente(ClienteEntity clienteByIdCliente) {
+        this.clientebyidcliente = clienteByIdCliente;
     }
 
-    public List<MensajeEntity> getMensajesByIdConversacion() {
-        return mensajesByIdConversacion;
+    public List<MensajeEntity> getMensajesbyidconversacion() {
+        return mensajesbyidconversacion;
     }
 
-    public void setMensajesByIdConversacion(List<MensajeEntity> mensajesByIdConversacion) {
-        this.mensajesByIdConversacion = mensajesByIdConversacion;
+    public void setMensajesbyidconversacion(List<MensajeEntity> mensajesByIdConversacion) {
+        this.mensajesbyidconversacion = mensajesByIdConversacion;
     }
 }
