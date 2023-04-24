@@ -13,7 +13,7 @@ public class TipoclienteEntity {
     @Basic
     @Column(name = "nombre", nullable = false, length = 50)
     private String nombre;
-    @OneToMany(mappedBy = "tipoclientebyidtipocliente")
+    @OneToMany(mappedBy = "tipoclienteByIdTipocliente")
     private List<ClienteEntity> clientesByIdTipocliente;
 
     public Integer getIdTipocliente() {
