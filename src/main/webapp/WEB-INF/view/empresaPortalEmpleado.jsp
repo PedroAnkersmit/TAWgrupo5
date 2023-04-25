@@ -1,5 +1,8 @@
 <%@ page import="com.taw.grupo5.entity.ClienteEntity" %>
-<%@ page import="java.util.List" %><%--
+<%@ page import="java.util.List" %>
+<%@ page import="com.taw.grupo5.entity.OperacionEntity" %>
+<%@ page import="com.taw.grupo5.dao.OperacionRepository" %>
+<%@ page import="java.util.ArrayList" %><%--
   Created by IntelliJ IDEA.
   User: jesus
   Date: 25/04/2023
@@ -11,6 +14,7 @@
 <%
     ClienteEntity cliente = (ClienteEntity) request.getAttribute("clientePortal");
     List<ClienteEntity> listaClientesDeLaEmpresa = (List<ClienteEntity>) request.getAttribute("listaClientes");
+    List<OperacionEntity> listaOperaciones = (List<OperacionEntity>) request.getAttribute("listaOperaciones");
 %>
 
 <html>
@@ -64,6 +68,37 @@
 <button>Hacer transferencia</button>
 <button>Hacer cambio de divisas</button><br/>
 <h2>Listado de operaciones de compañeros de empresa</h2>
+
+<table border="1">
+    <tr>
+        <th>OPERACIÓN</th>
+        <th>CUENTA</th>
+        <th>FECHA</th>
+        <th>CLIENTE</th>
+    </tr>
+    <%
+        List<Integer> lista = new ArrayList<>();
+
+        for(ClienteEntity c : listaClientesDeLaEmpresa)
+        {
+            lista.add(c.getIdcliente());
+        }
+        for(OperacionEntity o : listaOperaciones)
+        {
+            if(lista.contains(o.getIdcliente()))
+            {
+    %>
+    <tr>
+        <td><%= o.getIdcliente() %></td>
+        <td><%= o.getCuentaByIdcuenta().getIdcuenta() %></td>
+        <td><%= o.getFecha() %></td>
+        <td><%= o.getIdcliente() %></td>
+    </tr>
+    <%
+        }
+        }
+    %>
+</table border="1">
 
 <%
     if(cliente.getCuentasByIdcliente().get(0).getTipoestadoByIdestado().getIdtipoestado() == 4)

@@ -3,6 +3,7 @@ package com.taw.grupo5.controller;
 import com.taw.grupo5.dao.ClienteRepository;
 import com.taw.grupo5.dao.CuentaRepository;
 import com.taw.grupo5.dao.EmpresaRepository;
+import com.taw.grupo5.dao.OperacionRepository;
 import com.taw.grupo5.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,6 +27,9 @@ public class EmpresaController {
 
     @Autowired
     protected CuentaRepository cuentaRepository;
+
+    @Autowired
+    protected OperacionRepository operacionRepository;
 
     @GetMapping("")
     public String empresaInicio(Model model)
@@ -128,8 +132,11 @@ public class EmpresaController {
     {
         ClienteEntity cliente = this.clienteRepository.findById(idCliente).orElse(null);
         List<ClienteEntity> listaClientes = this.clienteRepository.buscarPorEmpresa(cliente.getEmpresaByIdempresa().getIdempresa());
+        List<OperacionEntity> listaOperaciones = this.operacionRepository.findAll();
+
         model.addAttribute("clientePortal", cliente);
         model.addAttribute("listaClientes", listaClientes);
+        model.addAttribute("listaOperaciones", listaOperaciones);
 
         return "empresaPortalEmpleado";
     }
