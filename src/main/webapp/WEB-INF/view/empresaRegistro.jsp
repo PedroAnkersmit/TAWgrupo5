@@ -15,9 +15,9 @@
 <body>
 <h1>Registro empresa</h1>
 <form:form action="/empresa/registro/guardar" method="post" modelAttribute="empresa">
-    <form:hidden path="idEmpresa"/>
+    <form:hidden path="idempresa"/>
     Nombre <form:input path="nombre"/><br/>
-    Fecha cierre <form:input type="date" path="fechaCierre"/><br/>
+    Fecha cierre <form:input type="date" path="fechacierre"/><br/>
     <form:button>Registrar</form:button>
 </form:form>
 </body>
