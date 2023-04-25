@@ -121,4 +121,47 @@ public class EmpresaController {
 
         return "redirect:/";
     }
+
+    @GetMapping("/portal")
+    public String portalEmpleado(@RequestParam("id") Integer idCliente, Model model)
+    {
+        ClienteEntity cliente = this.clienteRepository.findById(idCliente).orElse(null);
+        model.addAttribute("clientePortal", cliente);
+
+        return "empresaPortalEmpleado";
+    }
+
+    @GetMapping("/editarcliente")
+    public String editarCliente(@RequestParam("id") Integer idCliente, Model model)
+    {
+        ClienteEntity cliente = this.clienteRepository.findById(idCliente).orElse(null);
+        model.addAttribute("clienteAEditar", cliente);
+
+        return "empresaEditarCliente";
+    }
+
+    @PostMapping("/editarcliente/guardar")
+    public String guardarEditarCliente(@ModelAttribute("clienteAEditar") ClienteEntity cliente, Model model)
+    {
+        this.clienteRepository.save(cliente);
+
+        return "redirect:/";
+    }
+
+    @GetMapping("/editarempresa")
+    public String editarEmpresa(@RequestParam("id") Integer idEmpresa, Model model)
+    {
+        EmpresaEntity empresa = this.empresaRepository.findById(idEmpresa).orElse(null);
+        model.addAttribute("empresaAEditar", empresa);
+
+        return "empresaEditarEmpresa";
+    }
+
+    @PostMapping("/editarempresa/guardar")
+    public String guardarEditarEmpresa(@ModelAttribute("empresaAEditar") EmpresaEntity empresa, Model model)
+    {
+        this.empresaRepository.save(empresa);
+
+        return "redirect:/";
+    }
 }
