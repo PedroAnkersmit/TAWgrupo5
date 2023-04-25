@@ -20,7 +20,7 @@
     <tr>
       <td>
         <%=cuenta.getSaldo()%>
-        <%=cuenta.getNumeroCuenta()%>
+        <%=cuenta.getNumerocuenta()%>
         <a href="/cajeroEditar">Modificar datos</a>
       </td>
     </tr>

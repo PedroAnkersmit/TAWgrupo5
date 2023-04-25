@@ -10,43 +10,43 @@ import java.util.List;
 public class CuentaEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "ID_Cuenta", nullable = false)
-    private Integer idCuenta;
+    @Column(name = "idcuenta", nullable = false)
+    private Integer idcuenta;
     @Basic
-    @Column(name = "numeroCuenta", nullable = false, length = 50)
-    private String numeroCuenta;
+    @Column(name = "numerocuenta", nullable = false, length = 50)
+    private String numerocuenta;
     @Basic
     @Column(name = "saldo", nullable = true, precision = 2)
     private BigDecimal saldo;
     @Basic
-    @Column(name = "fechaApertura", nullable = false)
-    private Date fechaApertura;
+    @Column(name = "fechaapertura", nullable = false)
+    private Date fechaapertura;
     @Basic
-    @Column(name = "fechaCierre", nullable = true)
-    private Date fechaCierre;
+    @Column(name = "fechacierre", nullable = true)
+    private Date fechacierre;
     @ManyToOne
-    @JoinColumn(name = "ID_Cliente", referencedColumnName = "ID_Cliente", nullable = false)
-    private ClienteEntity clienteByIdCliente;
+    @JoinColumn(name = "idcliente", referencedColumnName = "idcliente", nullable = false)
+    private ClienteEntity clienteByIdcliente;
     @ManyToOne
-    @JoinColumn(name = "ID_Estado", referencedColumnName = "ID_TipoEstado", nullable = false)
-    private TipoestadoEntity tipoestadoByIdEstado;
-    @OneToMany(mappedBy = "cuentaByIdCuenta")
-    private List<OperacionEntity> operacionsByIdCuenta;
+    @JoinColumn(name = "idestado", referencedColumnName = "idtipoestado", nullable = false)
+    private TipoestadoEntity tipoestadoByIdestado;
+    @OneToMany(mappedBy = "cuentaByIdcuenta")
+    private List<OperacionEntity> operacionsByIdcuenta;
 
-    public Integer getIdCuenta() {
-        return idCuenta;
+    public Integer getIdcuenta() {
+        return idcuenta;
     }
 
-    public void setIdCuenta(Integer idCuenta) {
-        this.idCuenta = idCuenta;
+    public void setIdcuenta(Integer idcuenta) {
+        this.idcuenta = idcuenta;
     }
 
-    public String getNumeroCuenta() {
-        return numeroCuenta;
+    public String getNumerocuenta() {
+        return numerocuenta;
     }
 
-    public void setNumeroCuenta(String numeroCuenta) {
-        this.numeroCuenta = numeroCuenta;
+    public void setNumerocuenta(String numerocuenta) {
+        this.numerocuenta = numerocuenta;
     }
 
     public BigDecimal getSaldo() {
@@ -57,20 +57,20 @@ public class CuentaEntity {
         this.saldo = saldo;
     }
 
-    public Date getFechaApertura() {
-        return fechaApertura;
+    public Date getFechaapertura() {
+        return fechaapertura;
     }
 
-    public void setFechaApertura(Date fechaApertura) {
-        this.fechaApertura = fechaApertura;
+    public void setFechaapertura(Date fechaapertura) {
+        this.fechaapertura = fechaapertura;
     }
 
-    public Date getFechaCierre() {
-        return fechaCierre;
+    public Date getFechacierre() {
+        return fechacierre;
     }
 
-    public void setFechaCierre(Date fechaCierre) {
-        this.fechaCierre = fechaCierre;
+    public void setFechacierre(Date fechacierre) {
+        this.fechacierre = fechacierre;
     }
 
     @Override
@@ -78,50 +78,49 @@ public class CuentaEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        CuentaEntity cuenta = (CuentaEntity) o;
+        CuentaEntity that = (CuentaEntity) o;
 
-        if (idCuenta != null ? !idCuenta.equals(cuenta.idCuenta) : cuenta.idCuenta != null) return false;
-        if (numeroCuenta != null ? !numeroCuenta.equals(cuenta.numeroCuenta) : cuenta.numeroCuenta != null)
+        if (idcuenta != null ? !idcuenta.equals(that.idcuenta) : that.idcuenta != null) return false;
+        if (numerocuenta != null ? !numerocuenta.equals(that.numerocuenta) : that.numerocuenta != null) return false;
+        if (saldo != null ? !saldo.equals(that.saldo) : that.saldo != null) return false;
+        if (fechaapertura != null ? !fechaapertura.equals(that.fechaapertura) : that.fechaapertura != null)
             return false;
-        if (saldo != null ? !saldo.equals(cuenta.saldo) : cuenta.saldo != null) return false;
-        if (fechaApertura != null ? !fechaApertura.equals(cuenta.fechaApertura) : cuenta.fechaApertura != null)
-            return false;
-        if (fechaCierre != null ? !fechaCierre.equals(cuenta.fechaCierre) : cuenta.fechaCierre != null) return false;
+        if (fechacierre != null ? !fechacierre.equals(that.fechacierre) : that.fechacierre != null) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = idCuenta != null ? idCuenta.hashCode() : 0;
-        result = 31 * result + (numeroCuenta != null ? numeroCuenta.hashCode() : 0);
+        int result = idcuenta != null ? idcuenta.hashCode() : 0;
+        result = 31 * result + (numerocuenta != null ? numerocuenta.hashCode() : 0);
         result = 31 * result + (saldo != null ? saldo.hashCode() : 0);
-        result = 31 * result + (fechaApertura != null ? fechaApertura.hashCode() : 0);
-        result = 31 * result + (fechaCierre != null ? fechaCierre.hashCode() : 0);
+        result = 31 * result + (fechaapertura != null ? fechaapertura.hashCode() : 0);
+        result = 31 * result + (fechacierre != null ? fechacierre.hashCode() : 0);
         return result;
     }
 
-    public ClienteEntity getClienteByIdCliente() {
-        return clienteByIdCliente;
+    public ClienteEntity getClienteByIdcliente() {
+        return clienteByIdcliente;
     }
 
-    public void setClienteByIdCliente(ClienteEntity clienteByIdCliente) {
-        this.clienteByIdCliente = clienteByIdCliente;
+    public void setClienteByIdcliente(ClienteEntity clienteByIdcliente) {
+        this.clienteByIdcliente = clienteByIdcliente;
     }
 
-    public TipoestadoEntity getTipoestadoByIdEstado() {
-        return tipoestadoByIdEstado;
+    public TipoestadoEntity getTipoestadoByIdestado() {
+        return tipoestadoByIdestado;
     }
 
-    public void setTipoestadoByIdEstado(TipoestadoEntity tipoestadoByIdEstado) {
-        this.tipoestadoByIdEstado = tipoestadoByIdEstado;
+    public void setTipoestadoByIdestado(TipoestadoEntity tipoestadoByIdestado) {
+        this.tipoestadoByIdestado = tipoestadoByIdestado;
     }
 
-    public List<OperacionEntity> getOperacionsByIdCuenta() {
-        return operacionsByIdCuenta;
+    public List<OperacionEntity> getOperacionsByIdcuenta() {
+        return operacionsByIdcuenta;
     }
 
-    public void setOperacionsByIdCuenta(List<OperacionEntity> operacionsByIdCuenta) {
-        this.operacionsByIdCuenta = operacionsByIdCuenta;
+    public void setOperacionsByIdcuenta(List<OperacionEntity> operacionsByIdcuenta) {
+        this.operacionsByIdcuenta = operacionsByIdcuenta;
     }
 }
