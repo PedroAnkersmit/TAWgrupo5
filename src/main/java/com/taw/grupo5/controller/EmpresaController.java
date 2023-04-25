@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Random;
 
 @Controller
@@ -126,7 +127,9 @@ public class EmpresaController {
     public String portalEmpleado(@RequestParam("id") Integer idCliente, Model model)
     {
         ClienteEntity cliente = this.clienteRepository.findById(idCliente).orElse(null);
+        List<ClienteEntity> listaClientes = this.clienteRepository.buscarPorEmpresa(cliente.getEmpresaByIdempresa().getIdempresa());
         model.addAttribute("clientePortal", cliente);
+        model.addAttribute("listaClientes", listaClientes);
 
         return "empresaPortalEmpleado";
     }
@@ -161,6 +164,38 @@ public class EmpresaController {
     public String guardarEditarEmpresa(@ModelAttribute("empresaAEditar") EmpresaEntity empresa, Model model)
     {
         this.empresaRepository.save(empresa);
+
+        return "redirect:/";
+    }
+
+    @GetMapping("/bloquear")
+    public String bloquearCliente(@RequestParam("id") Integer idCliente, Model model)
+    {
+        ClienteEntity cliente = this.clienteRepository.findById(idCliente).orElse(null);
+        CuentaEntity cuenta = this.cuentaRepository.findById(cliente.getCuentasByIdcliente().get(0).getIdcuenta()).orElse(null);
+        TipoestadoEntity estadoCuenta = new TipoestadoEntity();
+
+        estadoCuenta.setIdtipoestado(4);
+
+        cuenta.setTipoestadoByIdestado(estadoCuenta);
+
+        this.cuentaRepository.save(cuenta);
+
+        return "redirect:/";
+    }
+
+    @GetMapping("/solicitarActivacion")
+    public String solicitarActivacion(@RequestParam("id") Integer idCliente, Model model)
+    {
+        ClienteEntity cliente = this.clienteRepository.findById(idCliente).orElse(null);
+        CuentaEntity cuenta = this.cuentaRepository.findById(cliente.getCuentasByIdcliente().get(0).getIdcuenta()).orElse(null);
+        TipoestadoEntity estadoCuenta = new TipoestadoEntity();
+
+        estadoCuenta.setIdtipoestado(1);
+
+        cuenta.setTipoestadoByIdestado(estadoCuenta);
+
+        this.cuentaRepository.save(cuenta);
 
         return "redirect:/";
     }
