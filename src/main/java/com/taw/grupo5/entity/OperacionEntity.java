@@ -8,30 +8,30 @@ import java.sql.Date;
 public class OperacionEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "ID_Operacion", nullable = false)
-    private Integer idOperacion;
+    @Column(name = "idoperacion", nullable = false)
+    private Integer idoperacion;
     @Basic
     @Column(name = "fecha", nullable = true)
     private Date fecha;
     @Basic
-    @Column(name = "ID_Cliente", nullable = false)
-    private Integer idCliente;
-    @OneToOne(mappedBy = "operacionByIdOperacion")
-    private CambiodivisaEntity cambiodivisaByIdOperacion;
+    @Column(name = "idcliente", nullable = false)
+    private Integer idcliente;
+    @OneToOne(mappedBy = "operacionByIdoperacion")
+    private CambiodivisaEntity cambiodivisaByIdoperacion;
     @ManyToOne
-    @JoinColumn(name = "ID_Cuenta", referencedColumnName = "ID_Cuenta", nullable = false)
-    private CuentaEntity cuentaByIdCuenta;
-    @OneToOne(mappedBy = "operacionByIdOperacion")
-    private SacardineroEntity sacardineroByIdOperacion;
-    @OneToOne(mappedBy = "operacionByIdOperacion")
-    private TransferenciaEntity transferenciaByIdOperacion;
+    @JoinColumn(name = "idcuenta", referencedColumnName = "idcuenta", nullable = false)
+    private CuentaEntity cuentaByIdcuenta;
+    @OneToOne(mappedBy = "operacionByIdoperacion")
+    private SacardineroEntity sacardineroByIdoperacion;
+    @OneToOne(mappedBy = "operacionByIdoperacion")
+    private TransferenciaEntity transferenciaByIdoperacion;
 
-    public Integer getIdOperacion() {
-        return idOperacion;
+    public Integer getIdoperacion() {
+        return idoperacion;
     }
 
-    public void setIdOperacion(Integer idOperacion) {
-        this.idOperacion = idOperacion;
+    public void setIdoperacion(Integer idoperacion) {
+        this.idoperacion = idoperacion;
     }
 
     public Date getFecha() {
@@ -42,12 +42,12 @@ public class OperacionEntity {
         this.fecha = fecha;
     }
 
-    public Integer getIdCliente() {
-        return idCliente;
+    public Integer getIdcliente() {
+        return idcliente;
     }
 
-    public void setIdCliente(Integer idCliente) {
-        this.idCliente = idCliente;
+    public void setIdcliente(Integer idcliente) {
+        this.idcliente = idcliente;
     }
 
     @Override
@@ -57,50 +57,50 @@ public class OperacionEntity {
 
         OperacionEntity that = (OperacionEntity) o;
 
-        if (idOperacion != null ? !idOperacion.equals(that.idOperacion) : that.idOperacion != null) return false;
+        if (idoperacion != null ? !idoperacion.equals(that.idoperacion) : that.idoperacion != null) return false;
         if (fecha != null ? !fecha.equals(that.fecha) : that.fecha != null) return false;
-        if (idCliente != null ? !idCliente.equals(that.idCliente) : that.idCliente != null) return false;
+        if (idcliente != null ? !idcliente.equals(that.idcliente) : that.idcliente != null) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = idOperacion != null ? idOperacion.hashCode() : 0;
+        int result = idoperacion != null ? idoperacion.hashCode() : 0;
         result = 31 * result + (fecha != null ? fecha.hashCode() : 0);
-        result = 31 * result + (idCliente != null ? idCliente.hashCode() : 0);
+        result = 31 * result + (idcliente != null ? idcliente.hashCode() : 0);
         return result;
     }
 
-    public CambiodivisaEntity getCambiodivisaByIdOperacion() {
-        return cambiodivisaByIdOperacion;
+    public CambiodivisaEntity getCambiodivisaByIdoperacion() {
+        return cambiodivisaByIdoperacion;
     }
 
-    public void setCambiodivisaByIdOperacion(CambiodivisaEntity cambiodivisaByIdOperacion) {
-        this.cambiodivisaByIdOperacion = cambiodivisaByIdOperacion;
+    public void setCambiodivisaByIdoperacion(CambiodivisaEntity cambiodivisaByIdoperacion) {
+        this.cambiodivisaByIdoperacion = cambiodivisaByIdoperacion;
     }
 
-    public CuentaEntity getCuentaByIdCuenta() {
-        return cuentaByIdCuenta;
+    public CuentaEntity getCuentaByIdcuenta() {
+        return cuentaByIdcuenta;
     }
 
-    public void setCuentaByIdCuenta(CuentaEntity cuentaByIdCuenta) {
-        this.cuentaByIdCuenta = cuentaByIdCuenta;
+    public void setCuentaByIdcuenta(CuentaEntity cuentaByIdcuenta) {
+        this.cuentaByIdcuenta = cuentaByIdcuenta;
     }
 
-    public SacardineroEntity getSacardineroByIdOperacion() {
-        return sacardineroByIdOperacion;
+    public SacardineroEntity getSacardineroByIdoperacion() {
+        return sacardineroByIdoperacion;
     }
 
-    public void setSacardineroByIdOperacion(SacardineroEntity sacardineroByIdOperacion) {
-        this.sacardineroByIdOperacion = sacardineroByIdOperacion;
+    public void setSacardineroByIdoperacion(SacardineroEntity sacardineroByIdoperacion) {
+        this.sacardineroByIdoperacion = sacardineroByIdoperacion;
     }
 
-    public TransferenciaEntity getTransferenciaByIdOperacion() {
-        return transferenciaByIdOperacion;
+    public TransferenciaEntity getTransferenciaByIdoperacion() {
+        return transferenciaByIdoperacion;
     }
 
-    public void setTransferenciaByIdOperacion(TransferenciaEntity transferenciaByIdOperacion) {
-        this.transferenciaByIdOperacion = transferenciaByIdOperacion;
+    public void setTransferenciaByIdoperacion(TransferenciaEntity transferenciaByIdoperacion) {
+        this.transferenciaByIdoperacion = transferenciaByIdoperacion;
     }
 }

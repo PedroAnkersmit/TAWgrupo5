@@ -8,20 +8,20 @@ import java.util.List;
 public class TipoempleadoEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "ID_TipoEmpleado", nullable = false)
-    private Integer idTipoEmpleado;
+    @Column(name = "idtipoempleado", nullable = false)
+    private Integer idtipoempleado;
     @Basic
     @Column(name = "puesto", nullable = false, length = 50)
     private String puesto;
-    @OneToMany(mappedBy = "tipoempleadoByIdTipoEmpleado")
-    private List<EmpleadoEntity> empleadosByIdTipoEmpleado;
+    @OneToMany(mappedBy = "tipoempleadoByIdtipoempleado")
+    private List<EmpleadoEntity> empleadosByIdtipoempleado;
 
-    public Integer getIdTipoEmpleado() {
-        return idTipoEmpleado;
+    public Integer getIdtipoempleado() {
+        return idtipoempleado;
     }
 
-    public void setIdTipoEmpleado(Integer idTipoEmpleado) {
-        this.idTipoEmpleado = idTipoEmpleado;
+    public void setIdtipoempleado(Integer idtipoempleado) {
+        this.idtipoempleado = idtipoempleado;
     }
 
     public String getPuesto() {
@@ -39,7 +39,7 @@ public class TipoempleadoEntity {
 
         TipoempleadoEntity that = (TipoempleadoEntity) o;
 
-        if (idTipoEmpleado != null ? !idTipoEmpleado.equals(that.idTipoEmpleado) : that.idTipoEmpleado != null)
+        if (idtipoempleado != null ? !idtipoempleado.equals(that.idtipoempleado) : that.idtipoempleado != null)
             return false;
         if (puesto != null ? !puesto.equals(that.puesto) : that.puesto != null) return false;
 
@@ -48,16 +48,16 @@ public class TipoempleadoEntity {
 
     @Override
     public int hashCode() {
-        int result = idTipoEmpleado != null ? idTipoEmpleado.hashCode() : 0;
+        int result = idtipoempleado != null ? idtipoempleado.hashCode() : 0;
         result = 31 * result + (puesto != null ? puesto.hashCode() : 0);
         return result;
     }
 
-    public List<EmpleadoEntity> getEmpleadosByIdTipoEmpleado() {
-        return empleadosByIdTipoEmpleado;
+    public List<EmpleadoEntity> getEmpleadosByIdtipoempleado() {
+        return empleadosByIdtipoempleado;
     }
 
-    public void setEmpleadosByIdTipoEmpleado(List<EmpleadoEntity> empleadosByIdTipoEmpleado) {
-        this.empleadosByIdTipoEmpleado = empleadosByIdTipoEmpleado;
+    public void setEmpleadosByIdtipoempleado(List<EmpleadoEntity> empleadosByIdtipoempleado) {
+        this.empleadosByIdtipoempleado = empleadosByIdtipoempleado;
     }
 }
