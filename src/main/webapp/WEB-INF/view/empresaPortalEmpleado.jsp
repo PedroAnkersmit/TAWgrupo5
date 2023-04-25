@@ -65,8 +65,9 @@
 </table border="1">
 
 <h2>Movimientos bancarios</h2>
-<button>Hacer transferencia</button>
-<button>Hacer cambio de divisas</button><br/>
+<a href="/empresa/transferencia?id=<%=cliente.getIdcliente()%>"><button>Hacer transferencia</button></a>
+<a href="/empresa/cambiodivisa?id=<%=cliente.getIdcliente()%>"><button>Hacer cambio de divisas</button></a>
+
 <h2>Listado de operaciones de compañeros de empresa</h2>
 
 <table border="1">

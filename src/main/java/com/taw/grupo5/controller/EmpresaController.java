@@ -206,4 +206,28 @@ public class EmpresaController {
 
         return "redirect:/";
     }
+
+    @GetMapping("/transferencia")
+    public String transferenciaEmpresa(@RequestParam("id") Integer idCliente, Model model)
+    {
+        ClienteEntity cliente = this.clienteRepository.findById(idCliente).orElse(null);
+        CuentaEntity cuenta = this.cuentaRepository.findById(cliente.getCuentasByIdcliente().get(0).getIdcuenta()).orElse(null);
+
+        model.addAttribute("clienteTransferencia", cliente);
+        model.addAttribute("cuentaTransferencia", cuenta);
+
+        return "redirect:/";
+    }
+
+    @PostMapping("/transferencia/enviar")
+    public String tramitarTransferenciaEmpresa(@ModelAttribute("") Integer idCliente, Model model)
+    {
+        ClienteEntity cliente = this.clienteRepository.findById(idCliente).orElse(null);
+        CuentaEntity cuenta = this.cuentaRepository.findById(cliente.getCuentasByIdcliente().get(0).getIdcuenta()).orElse(null);
+
+        model.addAttribute("clienteTransferencia", cliente);
+        model.addAttribute("cuentaTransferencia", cuenta);
+
+        return "redirect:/";
+    }
 }
