@@ -1,7 +1,7 @@
 package com.taw.grupo5.entity;
 
 import javax.persistence.*;
-import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name = "tipocliente", schema = "grupo5", catalog = "")
@@ -14,7 +14,7 @@ public class TipoclienteEntity {
     @Column(name = "nombre", nullable = false, length = 50)
     private String nombre;
     @OneToMany(mappedBy = "tipoclienteByIdtipocliente")
-    private Collection<ClienteEntity> clientesByIdtipocliente;
+    private List<ClienteEntity> clientesByIdtipocliente;
 
     public Integer getIdtipocliente() {
         return idtipocliente;
@@ -53,11 +53,11 @@ public class TipoclienteEntity {
         return result;
     }
 
-    public Collection<ClienteEntity> getClientesByIdtipocliente() {
+    public List<ClienteEntity> getClientesByIdtipocliente() {
         return clientesByIdtipocliente;
     }
 
-    public void setClientesByIdtipocliente(Collection<ClienteEntity> clientesByIdtipocliente) {
+    public void setClientesByIdtipocliente(List<ClienteEntity> clientesByIdtipocliente) {
         this.clientesByIdtipocliente = clientesByIdtipocliente;
     }
 }
