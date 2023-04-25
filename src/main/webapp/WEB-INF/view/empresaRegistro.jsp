@@ -14,10 +14,27 @@
 </head>
 <body>
 <h1>Registro empresa</h1>
-<form:form action="/empresa/registro/guardar" method="post" modelAttribute="empresa">
-    <form:hidden path="idempresa"/>
-    Nombre <form:input path="nombre"/><br/>
-    Fecha cierre <form:input type="date" path="fechacierre"/><br/>
+<form:form action="/empresa/registro/guardar" method="post" modelAttribute="empresaregistro">
+    <h2>Empresa:</h2>
+    <form:hidden path="empresa.idempresa"/>
+    Nombre <form:input path="empresa.nombre"/><br/>
+    Fecha cierre <form:input type="date" path="empresa.fechacierre"/><br/>
+
+    <h2>Socio empresa:</h2>
+    <form:hidden path="cliente.idcliente"/>
+    Nombre <form:input path="cliente.nombre"/><br/>
+    Email <form:input path="cliente.email"/><br/>
+    Telefono <form:input path="cliente.telefono"/><br/>
+    <form:hidden path="cliente.tipoclienteByIdtipocliente.idtipocliente"/>
+    <form:hidden path="cliente.empresaByIdempresa.idempresa"/>
+
+    <h2>Cuenta del socio:</h2>
+    <form:hidden path="cuenta.idcuenta"/>
+    <form:hidden path="cuenta.clienteByIdcliente.idcliente"/>
+    <form:hidden path="cuenta.numerocuenta"/>
+    <form:hidden path="cuenta.tipoestadoByIdestado.idtipoestado"/>
+    <form:hidden path="cuenta.saldo"/>
+    Fecha cierre: <form:input type="date" path="cuenta.fechacierre"/><br/>
     <form:button>Registrar</form:button>
 </form:form>
 </body>
