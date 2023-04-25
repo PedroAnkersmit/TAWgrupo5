@@ -17,7 +17,7 @@ public class EmpresaEntity {
     @Basic
     @Column(name = "fechacierre", nullable = true)
     private Date fechacierre;
-    @OneToMany(mappedBy = "empresaByIdEmpresa")
+    @OneToMany(mappedBy = "empresabyidempresa")
     private List<ClienteEntity> clientesbyidempresa;
 
     public Integer getIdempresa() {
