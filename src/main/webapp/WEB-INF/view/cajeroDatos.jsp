@@ -8,7 +8,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-  CuentaEntity cuenta = (CuentaEntity) request.getAttribute("cuenta");
+  ClienteEntity cliente = (ClienteEntity) request.getAttribute("cliente");
 %>
 <html>
 <head>
@@ -18,11 +18,14 @@
 
   <table border="1">
     <tr>
-      <td>
-        <%=cuenta.getSaldo()%>
-        <%=cuenta.getNumeroCuenta()%>
+        <% for(CuentaEntity c : cliente.getCuentasByIdCliente()){ %>
+          <td>
+            <%= c.getNumeroCuenta() %>
+            -
+            <%= c.getSaldo() %>
+          </td>
+        <%}%>
         <a href="/cajeroEditar">Modificar datos</a>
-      </td>
     </tr>
   </table>
 
