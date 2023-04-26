@@ -1,3 +1,5 @@
+<%@ page import="com.taw.grupo5.entity.CuentaEntity" %>
+<%@ page import="java.util.List" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
@@ -15,9 +17,15 @@
 </head>
 <body>
 <h1>Transferencia</h1>
-<form:form action="clienteHome/ejecutarTransferencia" method="post" modelAttribute="transference">
+<%
+    List<CuentaEntity> listaCuentas = (List<CuentaEntity>) request.getAttribute("allAccounts");
+
+%>
+
+<form:form action="clienteHome/seleccionarRecibidorTransferencia" method="post" modelAttribute="transference">
     <form:hidden path="idoperacion"/>
     Cantidad a Transferir: <form:input path="cantidad" maxlength="5" size="20px"/>
+    <form:button>Confirmar</form:button>
 </form:form>
 
 </body>

@@ -2,16 +2,20 @@ package com.taw.grupo5.controller;
 
 import com.taw.grupo5.dao.ClienteRepository;
 import com.taw.grupo5.dao.CuentaRepository;
+import com.taw.grupo5.dao.OperacionesRepository;
+import com.taw.grupo5.dao.TransferenciasRepository;
 import com.taw.grupo5.entity.ClienteEntity;
 import com.taw.grupo5.entity.CuentaEntity;
 import com.taw.grupo5.entity.OperacionEntity;
 import com.taw.grupo5.entity.TransferenciaEntity;
+import com.taw.grupo5.ui.FiltroOperaciones;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.math.BigDecimal;
 import java.util.List;
 /*
 Created by Pedro Ankersmit Carrión
@@ -23,13 +27,53 @@ public class ClienteUsuarioController {
     protected ClienteRepository clienteRepository;
     @Autowired
     protected CuentaRepository cuentaRepository;
+    @Autowired
+    protected OperacionesRepository operacionesRepository;
+    @Autowired
+    protected TransferenciasRepository transferenciasRepository;
 
     @GetMapping("/")
     String doMostrar(Model model, HttpSession httpSession){
         ClienteEntity usuario = (ClienteEntity) httpSession.getAttribute("user");
-        List<CuentaEntity> cuentasUsuario = cuentaRepository.buscarPorCLiente(usuario.getIdcliente());
+        return doMostrarFiltrado(model,usuario,null);
+    }
+    @PostMapping("/filtrar")
+    String doFiltrar(Model model,HttpSession httpSession, @ModelAttribute("filtro") FiltroOperaciones filtro){
+        ClienteEntity usuario = (ClienteEntity) httpSession.getAttribute("user");
+        return doMostrarFiltrado(model,usuario,filtro);
+    }
+    String doMostrarFiltrado(Model model, ClienteEntity usuario, FiltroOperaciones filtro){
+        List<CuentaEntity> cuentasUsuario = cuentaRepository.buscarPorCLiente(usuario.getIdcliente());;
+        List<OperacionEntity> operaciones = operacionesRepository.buscarPorCliente(usuario.getIdcliente());
+        if(filtro == null || (!filtro.isTransferencia()&&!filtro.isCambioDivisa()&&!filtro.isCambioDivisa()&&filtro.getFecha() == null && filtro.getCantidad().equals(BigDecimal.ZERO))){
+            filtro = new FiltroOperaciones();
+        }else if(filtro.isCambioDivisa()){
+            if(filtro.getFecha() == null){
+            operaciones = operacionesRepository.buscarCambioDivisa(filtro.getCantidad());
+            } else {
+            operaciones = operacionesRepository.buscarCambioDivisaPorFecha(filtro.getCantidad(), filtro.getFecha());
+            }
+        } else if(filtro.isSacarDinero()){
+            if(filtro.getFecha() == null){
+                operaciones = operacionesRepository.buscarSacarDinero(filtro.getCantidad());
+            } else {
+                operaciones = operacionesRepository.buscarSacarDineroPorFecha(filtro.getCantidad(), filtro.getFecha());
+            }
+        } else if(filtro.isTransferencia()){
+            if(filtro.getFecha() == null){
+                operaciones = operacionesRepository.buscarTransferencia(filtro.getCantidad());
+            } else {
+                operaciones = operacionesRepository.buscarTransferenciaPorFecha(filtro.getCantidad(), filtro.getFecha());
+            }
+        }
+        else if (filtro.getFecha() != null) {
+            operaciones = operacionesRepository.buscarPorFecha(filtro.getFecha(), filtro.getCantidad());
+            }
+
         model.addAttribute("user", usuario);
         model.addAttribute("accounts", cuentasUsuario);
+        model.addAttribute("operations", operaciones);
+        model.addAttribute("filtro", filtro);
         return "clienteHome";
     }
     @GetMapping("/editar")
@@ -51,9 +95,30 @@ public class ClienteUsuarioController {
         operacion.setCuentaByIdcuenta(cuentaCliente);
         TransferenciaEntity transferencia = new TransferenciaEntity();
         transferencia.setOperacionByIdoperacion(operacion);
+        transferencia.setFechainstruccion(new java.sql.Date(System.currentTimeMillis()));
 
         model.addAttribute("allAccounts", listaCuentas);
         model.addAttribute("transference", transferencia);
         return "/clienteTransferencia";
+    }
+
+    @PostMapping("/ejecutarTransferencia")
+    String doConfirmTransfer(Model model, @ModelAttribute("transference") TransferenciaEntity transferencia){
+        CuentaEntity cuentaEmisora = cuentaRepository.getById(transferencia.getOperacionByIdoperacion().getCuentaByIdcuenta().getIdcuenta());
+        CuentaEntity cuentaObjetivo = cuentaRepository.getById(transferencia.getOperacionByIdoperacion().getCuentaByIdcuenta().getIdcuenta());
+        cuentaObjetivo.setSaldo(cuentaObjetivo.getSaldo().add(transferencia.getCantidad()));
+        OperacionEntity op =  operacionesRepository.findById(transferencia.getOperacionByIdoperacion().getIdoperacion()).orElse(null);
+        transferencia.setFechaejecucion(new java.sql.Date(System.currentTimeMillis()));
+
+        op.setTransferenciaByIdoperacion(transferencia);
+        cuentaObjetivo.getOperacionsByIdcuenta().add(op);
+
+
+
+        transferenciasRepository.save(transferencia);
+        operacionesRepository.save(op);
+        cuentaRepository.save(cuentaObjetivo);
+
+        return "";
     }
 }

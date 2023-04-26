@@ -1,6 +1,8 @@
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page import="com.taw.grupo5.entity.ClienteEntity" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.taw.grupo5.entity.CuentaEntity" %>
+<%@ page import="com.taw.grupo5.entity.OperacionEntity" %>
 
 
 <%--
@@ -16,6 +18,7 @@
 <%
     ClienteEntity usuario = (ClienteEntity) request.getAttribute("user");
     List<CuentaEntity> cuentas = (List<CuentaEntity>) request.getAttribute("accounts");
+    List<OperacionEntity> operaciones = (List<OperacionEntity>) request.getAttribute("operations");
 %>
 <html>
 <head>
@@ -80,5 +83,63 @@
         }
     %>
 </table>
+<h1>Mis operaciones:</h1>
+<form:form action="/clienteHome/filtrar" method="post" modelAttribute="filtro">
+    Tipo de Operacion:</br>
+    Transferencia <form:checkbox path="transferencia" /> Cambio de Divisa <form:checkbox path="cambioDivisa"/> Extraccion <form:checkbox path="sacarDinero"/> </br>
+    Cantidad minima:
+    <form:input path="cantidad" size="20px" maxlength="5"/></br>
+    Fecha: <form:input type="date" path="fecha"/>
+    <form:button>Filtrar</form:button>
+</form:form>
+
+<table border="1">
+    <tr>
+        <th>IDENTIFICADOR</th>
+        <th>FECHA DE INSTRUCCION</th>
+        <th>TIPO</th>
+    </tr>
+    <%
+        for (OperacionEntity o : operaciones) {
+    %>
+    <tr>
+        <td><%=o.getIdoperacion()%>
+        </td>
+        <td><%=o.getFecha()%>
+        </td>
+        <td><%
+            if (o.getCambiodivisaByIdoperacion() == null && o.getSacardineroByIdoperacion() == null) {
+        %>
+            <p>Transferencia:</p>
+            Fecha de Ejecucion: <%=o.getTransferenciaByIdoperacion().getFechainstruccion()%></br>
+            Movimiento: <%=o.getTransferenciaByIdoperacion().getCantidad()%></br>
+            <%
+            } else if (o.getCambiodivisaByIdoperacion() == null && o.getTransferenciaByIdoperacion() == null) {
+            %>
+            <p>Extracción:</p>
+            Cantidad: <%=o.getSacardineroByIdoperacion().getCantidad()%>
+            <%
+            } else {
+            %>
+            <p>Cambio de Divisa</p>
+            Moneda
+            Comprada: <%=o.getCambiodivisaByIdoperacion().getCantidadcompra()%> <%=o.getCambiodivisaByIdoperacion().getMonedacompra()%> </br>
+            Moneda
+            Vendida: <%=o.getCambiodivisaByIdoperacion().getCantidadventa()%> <%=o.getCambiodivisaByIdoperacion().getMonedaventa()%> </br>
+            <%
+                }
+            %>
+        </td>
+    </tr>
+
+    <%
+        }
+    %>
+</table>
+
+
+
+<h6> Accediendo con el siguiente sessionid: <%= session.getId() %> </h6>
+
 </body>
 </html>

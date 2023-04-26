@@ -3,6 +3,7 @@ package com.taw.grupo5.controller;
 import com.taw.grupo5.dao.ClienteRepository;
 import com.taw.grupo5.dao.TipoClienteRepository;
 import com.taw.grupo5.entity.ClienteEntity;
+import com.taw.grupo5.entity.CuentaEntity;
 import com.taw.grupo5.entity.TipoclienteEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -51,12 +52,17 @@ public class LoginController {
     String crearCliente(@RequestParam("mail") String mail, @RequestParam("name") String name,
                         @RequestParam("phone") String phone, Model model, HttpSession httpSession) {
         ClienteEntity cliente = new ClienteEntity();
+        CuentaEntity cuenta = new CuentaEntity();
+        cuenta.setFechaapertura(new java.sql.Date(System.currentTimeMillis()));
+        //cuenta.setFechacierre();
+
         TipoclienteEntity tipocliente = tipoClienteRepository.findById(1).orElse(null);
         cliente.setNombre(name);
         cliente.setEmail(mail);
         cliente.setTelefono(phone);
         cliente.setFechainicio(new java.sql.Date(System.currentTimeMillis()));
         cliente.setTipoclienteByIdtipocliente(tipocliente);
+
         clienteRepository.save(cliente);
         return doAutenticar(mail, model, httpSession);
     }
