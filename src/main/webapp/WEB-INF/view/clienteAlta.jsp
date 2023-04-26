@@ -1,4 +1,13 @@
-<!DOCTYPE html>
+<%--
+  Created by IntelliJ IDEA.
+  User: Pedro
+  Date: 24/03/2023
+  Time: 15:40
+  To change this template use File | Settings | File Templates.
+
+  Created by Pedro Ankersmit Carrión
+--%>
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
