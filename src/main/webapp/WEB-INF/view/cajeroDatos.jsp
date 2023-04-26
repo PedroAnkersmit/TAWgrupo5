@@ -18,9 +18,9 @@
 
   <table border="1">
     <tr>
-        <% for(CuentaEntity c : cliente.getCuentasByIdCliente()){ %>
+        <% for(CuentaEntity c : cliente.getCuentasByIdcliente()){ %>
           <td>
-            <%= c.getNumeroCuenta() %>
+            <%= c.getNumerocuenta() %>
             -
             <%= c.getSaldo() %>
           </td>
