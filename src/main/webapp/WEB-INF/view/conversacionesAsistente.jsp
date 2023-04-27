@@ -1,6 +1,7 @@
 <%@ page import="com.taw.grupo5.entity.EmpleadoEntity" %>
 <%@ page import="com.taw.grupo5.entity.ConversacionEntity" %>
-<%@ page import="java.util.List" %><%--
+<%@ page import="java.util.List" %>
+<%--
   Created by IntelliJ IDEA.
   User: Hilaria
   Date: 26/04/2023
@@ -16,24 +17,30 @@
 </head>
 <body>
     <h1>Conversaciones</h1>
+
+    <%if(!empleado.getTipoempleadoByIdtipoempleado().getPuesto().equalsIgnoreCase("asistente")){ // NO es gestor%>
+    <p>No tienes conversaciones porque no eres asistente.</p>
+    <%}else{%>
     <p>Filtros:</p>
 
     <table border="1">
         <tr>
             <th>Asunto</th>
             <th>Nombre del cliente</th>
+            <th>Conversación</th>
         </tr>
         <% for (ConversacionEntity conversacion : lista){
-            if(conversacion.getEmpleadoByIdempleado().equals(empleado)){ //o get id%>
+            if(conversacion.getEmpleadoByIdempleado().equals(empleado)){%>
             <tr>
-                <td><a href="/asistente/conversacion?id=<%=conversacion.getIdconversacion()%>">
-                    <%=conversacion.getAsunto()%></a></td>
+                <td><%=conversacion.getAsunto()%></td>
                 <td><%=conversacion.getClienteByIdcliente().getNombre()%></td>
-                <% if(conversacion.getAbierto()>0){%>   <td>Abrir chat</td>
-                <% }else{%>                             <td>Conversación cerrada</td>  <%}%>
+                <% if(conversacion.getAbierto()>0){%>   <td>Abierta</td>
+                <% }else{%>                             <td style="color:red">Cerrada</td>  <%}%>
+                <td><a href="/asistente/conversacion?id=<%=conversacion.getIdconversacion()%>">Abrir</a></td>
             </tr>
             <%}
         }%>
     </table>
+    <%}%>
 </body>
 </html>

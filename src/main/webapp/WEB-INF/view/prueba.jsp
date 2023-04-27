@@ -1,3 +1,4 @@
+<%@ taglib prefix="input" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
   User: ignam
@@ -11,6 +12,11 @@
     <title>Title</title>
 </head>
 <body>
-
+<form>
+    <form action="/asistente/login" method="post">
+        Usuario: <input type="text" name="user"></input> <br>
+        <button type="submit">Iniciar sesión</button>
+    </form>
+</form>
 </body>
 </html>
