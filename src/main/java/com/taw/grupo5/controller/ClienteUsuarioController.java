@@ -14,8 +14,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.CascadeType;
+import javax.persistence.OneToOne;
 import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.util.List;
 /*
 Created by Pedro Ankersmit Carrión
@@ -85,38 +88,71 @@ public class ClienteUsuarioController {
         clienteRepository.save(usuario);
         return "/clienteHome";
     }
-    @GetMapping("/transfer")
-    String doTransferencia(Model model, @RequestParam("id") Integer idcuenta){
+
+   @GetMapping("/transfer")
+    String doTransfer(Model model, @RequestParam("id") Integer idCuenta){
+        CuentaEntity cuentaEmisor = cuentaRepository.findById(idCuenta).orElse(null);
+        CuentaEntity cuentaReceptor = new CuentaEntity();
+        /*cuentaReceptor.setFechaapertura(new Date(System.currentTimeMillis()));
+        cuentaReceptor.setFechacierre(new Date(System.currentTimeMillis()));
+        cuentaReceptor.setIdcuenta(0);
+        cuentaReceptor.setNumerocuenta("0");
+        cuentaReceptor.setSaldo(BigDecimal.ZERO);
+        cuentaReceptor.setClienteByIdcliente(null);*/
         List<CuentaEntity> listaCuentas = cuentaRepository.findAll();
-        CuentaEntity cuentaCliente = cuentaRepository.findById(idcuenta).orElse(null);
-        OperacionEntity operacion = new OperacionEntity();
-        operacion.setCuentaByIdcuenta(cuentaCliente);
+        listaCuentas.remove(cuentaEmisor);
+        model.addAttribute("idAccount", idCuenta);
+        model.addAttribute("accountList", listaCuentas);
+
+        return "clienteElegirCuentaReceptora";
+   }
+   @PostMapping("/transferView")
+    String doExecuteTransfer(Model model, @RequestParam("idCuentaReceptora") Integer idCuentaReceptora,
+                             @RequestParam("idAccount") Integer idCuentaEmisora){
+        CuentaEntity cuentaReceptora = cuentaRepository.findById(idCuentaReceptora).orElse(null);
+        CuentaEntity cuentaEmisora = cuentaRepository.findById(idCuentaEmisora).orElse(null);
+        ClienteEntity clienteEmisor = clienteRepository.findById(cuentaEmisora.getClienteByIdcliente().getIdcliente()).orElse(null);
+
         TransferenciaEntity transferencia = new TransferenciaEntity();
-        transferencia.setOperacionByIdoperacion(operacion);
-        transferencia.setFechainstruccion(new java.sql.Date(System.currentTimeMillis()));
 
-        model.addAttribute("allAccounts", listaCuentas);
+        transferencia.setFechainstruccion(new Date(System.currentTimeMillis()));
+        transferencia.setFechaejecucion(new Date(System.currentTimeMillis()));
+        transferencia.setCantidad(BigDecimal.ZERO);
+
+        OperacionEntity operacion = new OperacionEntity();
+        operacion.setCuentaByIdcuenta(cuentaEmisora);
+        operacion.setIdcliente(clienteEmisor.getIdcliente());
+        operacion.setTransferenciaByIdoperacion(transferencia);
+        //transferenciasRepository.save(transferencia);
+        operacionesRepository.save(operacion);
+
+
+
+        model.addAttribute("sendAccount", cuentaReceptora);
+        model.addAttribute("idAccount", idCuentaEmisora);
         model.addAttribute("transference", transferencia);
-        return "/clienteTransferencia";
-    }
+        model.addAttribute("operation", operacion);
+    return "clienteSeleccionarCantidad";
+   }
 
-    @PostMapping("/ejecutarTransferencia")
-    String doConfirmTransfer(Model model, @ModelAttribute("transference") TransferenciaEntity transferencia){
-        CuentaEntity cuentaEmisora = cuentaRepository.getById(transferencia.getOperacionByIdoperacion().getCuentaByIdcuenta().getIdcuenta());
-        CuentaEntity cuentaObjetivo = cuentaRepository.getById(transferencia.getOperacionByIdoperacion().getCuentaByIdcuenta().getIdcuenta());
-        cuentaObjetivo.setSaldo(cuentaObjetivo.getSaldo().add(transferencia.getCantidad()));
-        OperacionEntity op =  operacionesRepository.findById(transferencia.getOperacionByIdoperacion().getIdoperacion()).orElse(null);
-        transferencia.setFechaejecucion(new java.sql.Date(System.currentTimeMillis()));
-
-        op.setTransferenciaByIdoperacion(transferencia);
-        cuentaObjetivo.getOperacionsByIdcuenta().add(op);
-
-
-
-        transferenciasRepository.save(transferencia);
-        operacionesRepository.save(op);
-        cuentaRepository.save(cuentaObjetivo);
-
-        return "";
-    }
+   @PostMapping("executeTransfer")
+    String doExecuteTransfer(Model model, @RequestParam("idReceivingAccount") Integer idCuentaReceptora, @RequestParam("idAccount") Integer idCuentaEmisora,
+                             @RequestParam("idOperation") Integer idOperacion, @RequestParam("cantidad") Integer cantidad){
+        BigDecimal c = new BigDecimal(cantidad);
+        OperacionEntity operacion= operacionesRepository.findById(idOperacion).orElse(null);
+        TransferenciaEntity transferencia = operacion.getTransferenciaByIdoperacion();
+        transferencia.setCantidad(c);
+        transferencia.setFechaejecucion(new Date(System.currentTimeMillis()));
+        CuentaEntity cuentaReceptora = cuentaRepository.findById(idCuentaReceptora).orElse(null);
+        cuentaReceptora.setSaldo(cuentaReceptora.getSaldo().add(c));
+        CuentaEntity cuentaEmisora = cuentaRepository.findById(idCuentaEmisora).orElse(null);
+        cuentaEmisora.setSaldo(cuentaEmisora.getSaldo().subtract(c));
+        operacion.setTransferenciaByIdoperacion(transferencia);
+        //transferenciasRepository.save(transferencia);
+        operacionesRepository.save(operacion);
+        cuentaRepository.save(cuentaReceptora);
+        cuentaRepository.save(cuentaEmisora);
+        return "redirect:/clienteHome";
+   }
 }
+
