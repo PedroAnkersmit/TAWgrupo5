@@ -28,6 +28,12 @@
              <td>Telefono:</td> <td><input type="text" name="phone"> </td>
          </tr>
          <tr>
+             <td>Numero de Cuenta:</td> <td><input type="text" name="account"> </td>
+         </tr>
+         <tr>
+             <td>Fecha de Cierre:</td> <td><input type="date" name="date"> </td>
+         </tr>
+         <tr>
              <td colspan="2"> <button>Crear cuenta</button></td>
          </tr>
      </table>

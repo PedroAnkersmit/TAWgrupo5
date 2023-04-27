@@ -8,14 +8,12 @@ public class FiltroOperaciones {
     private boolean transferencia;
     private boolean cambioDivisa;
     private boolean sacarDinero;
-    private String fecha;
     private BigDecimal cantidad;
 
     public FiltroOperaciones() {
         transferencia = false;
         cambioDivisa = false;
         sacarDinero = false;
-        fecha = null;
         cantidad = new BigDecimal(0);
     }
 
@@ -23,7 +21,6 @@ public class FiltroOperaciones {
         this.transferencia = transferencia;
         this.cambioDivisa = cambioDivisa;
         this.sacarDinero = sacarDinero;
-        this.fecha = fecha;
         this.cantidad = cantidad;
     }
 
@@ -49,14 +46,6 @@ public class FiltroOperaciones {
 
     public void setSacarDinero(boolean sacarDinero) {
         this.sacarDinero = sacarDinero;
-    }
-
-    public String getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(String fecha) {
-        this.fecha = fecha;
     }
 
     public BigDecimal getCantidad() {

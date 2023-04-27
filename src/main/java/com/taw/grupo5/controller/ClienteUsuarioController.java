@@ -45,30 +45,28 @@ public class ClienteUsuarioController {
     String doMostrarFiltrado(Model model, ClienteEntity usuario, FiltroOperaciones filtro){
         List<CuentaEntity> cuentasUsuario = cuentaRepository.buscarPorCLiente(usuario.getIdcliente());;
         List<OperacionEntity> operaciones = operacionesRepository.buscarPorCliente(usuario.getIdcliente());
-        if(filtro == null || (!filtro.isTransferencia()&&!filtro.isCambioDivisa()&&!filtro.isCambioDivisa()&&filtro.getFecha() == null && filtro.getCantidad().equals(BigDecimal.ZERO))){
+        if(filtro == null){
             filtro = new FiltroOperaciones();
-        }else if(filtro.isCambioDivisa()){
-            if(filtro.getFecha() == null){
-            operaciones = operacionesRepository.buscarCambioDivisa(filtro.getCantidad());
-            } else {
-            operaciones = operacionesRepository.buscarCambioDivisaPorFecha(filtro.getCantidad(), filtro.getFecha());
-            }
-        } else if(filtro.isSacarDinero()){
-            if(filtro.getFecha() == null){
-                operaciones = operacionesRepository.buscarSacarDinero(filtro.getCantidad());
-            } else {
-                operaciones = operacionesRepository.buscarSacarDineroPorFecha(filtro.getCantidad(), filtro.getFecha());
-            }
-        } else if(filtro.isTransferencia()){
-            if(filtro.getFecha() == null){
-                operaciones = operacionesRepository.buscarTransferencia(filtro.getCantidad());
-            } else {
-                operaciones = operacionesRepository.buscarTransferenciaPorFecha(filtro.getCantidad(), filtro.getFecha());
-            }
         }
-        else if (filtro.getFecha() != null) {
-            operaciones = operacionesRepository.buscarPorFecha(filtro.getFecha(), filtro.getCantidad());
-            }
+        if(filtro.getCantidad() == null){
+            filtro.setCantidad(BigDecimal.ZERO);
+        }
+        if(filtro.isCambioDivisa()){
+
+            operaciones = operacionesRepository.buscarCambioDivisa(usuario.getIdcliente());
+
+        } else if(filtro.isSacarDinero()){
+
+                operaciones = operacionesRepository.buscarSacarDinero(filtro.getCantidad(), usuario.getIdcliente());
+
+        } else if(filtro.isTransferencia()){
+
+                operaciones = operacionesRepository.buscarTransferencia(filtro.getCantidad(), usuario.getIdcliente());
+
+        } else{
+            operaciones = operacionesRepository.buscarPorCantidad(filtro.getCantidad(), usuario.getIdcliente());
+        }
+
 
         model.addAttribute("user", usuario);
         model.addAttribute("accounts", cuentasUsuario);

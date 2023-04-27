@@ -78,6 +78,15 @@
         <td><%=c.getFechacierre()%>
         </td>
         <td><a href="/clienteHome/transfer?id=<%=c.getIdcuenta()%>">Hacer transferecia</a></td>
+        <% if (c.getTipoestadoByIdestado().getIdtipoestado() == 1) {
+        %>
+        <td><a href="/solicitarActivacion?id=<%=c.getIdcuenta()%>">Solicitar Activacion</a></td>
+        <%
+        } else if (c.getTipoestadoByIdestado().getIdtipoestado() == 4) {
+        %>
+        <td><a href="/solicitarDesbloqueo?id=<%=c.getIdcuenta()%>">Solicitar Desbloqueo</a></td>
+        <%
+        }%>
     </tr>
     <%
         }
@@ -86,10 +95,11 @@
 <h1>Mis operaciones:</h1>
 <form:form action="/clienteHome/filtrar" method="post" modelAttribute="filtro">
     Tipo de Operacion:</br>
-    Transferencia <form:checkbox path="transferencia" /> Cambio de Divisa <form:checkbox path="cambioDivisa"/> Extraccion <form:checkbox path="sacarDinero"/> </br>
+    Transferencia <form:checkbox path="transferencia"/> Cambio de Divisa <form:checkbox path="cambioDivisa"/> Extraccion
+    <form:checkbox path="sacarDinero"/> </br>
     Cantidad minima:
     <form:input path="cantidad" size="20px" maxlength="5"/></br>
-    Fecha: <form:input type="date" path="fecha"/>
+
     <form:button>Filtrar</form:button>
 </form:form>
 
@@ -126,6 +136,7 @@
             Comprada: <%=o.getCambiodivisaByIdoperacion().getCantidadcompra()%> <%=o.getCambiodivisaByIdoperacion().getMonedacompra()%> </br>
             Moneda
             Vendida: <%=o.getCambiodivisaByIdoperacion().getCantidadventa()%> <%=o.getCambiodivisaByIdoperacion().getMonedaventa()%> </br>
+            Comision: <%=o.getCambiodivisaByIdoperacion().getComision()%>
             <%
                 }
             %>
@@ -138,8 +149,8 @@
 </table>
 
 
-
-<h6> Accediendo con el siguiente sessionid: <%= session.getId() %> </h6>
+<h6> Accediendo con el siguiente sessionid: <%= session.getId() %>
+</h6>
 
 </body>
 </html>
