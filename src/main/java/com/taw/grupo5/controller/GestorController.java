@@ -54,6 +54,9 @@ public class GestorController {
         EmpresaEntity empresaEntity = this.empresaRepository.findById(idEmpresa).orElse(null);
         model.addAttribute("empresa", empresaEntity);
 
+        List<OperacionEntity> operacionRepositoryList = this.operacionRepository.buscarPorCliente(idEmpresa);
+        model.addAttribute("listaOperaciones", operacionRepositoryList);
+
         return "gestorEmpresa";
     }
 }
