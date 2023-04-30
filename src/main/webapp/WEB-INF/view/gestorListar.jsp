@@ -25,12 +25,6 @@
         <tr>
             <th>ID</th>
             <th>Nombre</th>
-            <th>Email</th>
-            <th>Teléfono</th>
-            <th>Fecha de inicio</th>
-            <th>Tipo</th>
-            <th>Empresa</th>
-            <th>Conversación</th>
         </tr>
 
         <%
@@ -39,12 +33,6 @@
                 <tr>
                     <td><%=clienteEntity.getIdcliente()%></td>
                     <td><a href="/gestor/cliente?id=<%=clienteEntity.getIdcliente()%>"><%=clienteEntity.getNombre()%></a></td>
-                    <td><%=clienteEntity.getEmail()%></td>
-                    <td><%=clienteEntity.getTelefono()%></td>
-                    <td><%=clienteEntity.getFechainicio()%></td>
-                    <td><%=clienteEntity.getTipoclienteByIdtipocliente().getNombre()%></td>
-                    <td><%=clienteEntity.getEmpresaByIdempresa() == null ? "Sin empresa" : clienteEntity.getEmpresaByIdempresa().getNombre()%></td>
-                    <td><%=clienteEntity.getConversacionsByIdcliente()%></td>
                 </tr>
         <%
             }
@@ -57,7 +45,6 @@
         <tr>
             <th>ID</th>
             <th>Nombre</th>
-            <th>Fecha de cierre</th>
         </tr>
 
         <%
@@ -66,7 +53,6 @@
         <tr>
             <td><%=empresaEntity.getIdempresa()%></td>
             <td><a href="/gestor/empresa?id=<%=empresaEntity.getIdempresa()%>"><%=empresaEntity.getNombre()%></a></td>
-            <td><%=empresaEntity.getFechacierre()%></td>
         </tr>
         <%
             }
