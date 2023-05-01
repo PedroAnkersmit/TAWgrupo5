@@ -1,17 +1,17 @@
 package com.taw.grupo5.controller;
 
-import com.taw.grupo5.dao.ClienteRepository;
-import com.taw.grupo5.dao.CuentaRepository;
-import com.taw.grupo5.dao.EmpresaRepository;
-import com.taw.grupo5.dao.OperacionRepository;
+import com.taw.grupo5.dao.*;
 import com.taw.grupo5.entity.*;
+import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -30,6 +30,12 @@ public class EmpresaController {
 
     @Autowired
     protected OperacionRepository operacionRepository;
+
+    @Autowired
+    protected TransferenciaRepository transferenciaRepository;
+
+    @Autowired
+    protected CambiodivisaRepository cambiodivisaRepository;
 
     @GetMapping("")
     public String empresaInicio(Model model)
@@ -132,7 +138,15 @@ public class EmpresaController {
     {
         ClienteEntity cliente = this.clienteRepository.findById(idCliente).orElse(null);
         List<ClienteEntity> listaClientes = this.clienteRepository.buscarPorEmpresa(cliente.getEmpresaByIdempresa().getIdempresa());
-        List<OperacionEntity> listaOperaciones = this.operacionRepository.findAll();
+
+        List<Integer> lista = new ArrayList<>();
+
+        for(ClienteEntity c : listaClientes)
+        {
+            lista.add(c.getIdcliente());
+        }
+
+        List<OperacionEntity> listaOperaciones = this.operacionRepository.buscarPorEmpresa(lista);
 
         model.addAttribute("clientePortal", cliente);
         model.addAttribute("listaClientes", listaClientes);
@@ -210,23 +224,95 @@ public class EmpresaController {
     @GetMapping("/transferencia")
     public String transferenciaEmpresa(@RequestParam("id") Integer idCliente, Model model)
     {
+        LocalDate today = LocalDate.now();
+
         ClienteEntity cliente = this.clienteRepository.findById(idCliente).orElse(null);
         CuentaEntity cuenta = this.cuentaRepository.findById(cliente.getCuentasByIdcliente().get(0).getIdcuenta()).orElse(null);
 
+        TransferenciaEntity transferencia = new TransferenciaEntity();
+
+        OperacionEntity operacion = new OperacionEntity();
+        operacion.setIdcliente(cliente.getIdcliente());
+        operacion.setCuentaByIdcuenta(cuenta);
+        operacion.setFecha(Date.valueOf(today));
+
+        this.operacionRepository.save(operacion);
+
+        transferencia.setOperacionByIdoperacion(operacion);
+
         model.addAttribute("clienteTransferencia", cliente);
         model.addAttribute("cuentaTransferencia", cuenta);
+        model.addAttribute("transferencia", transferencia);
+
+        return "empresaTransferencia";
+    }
+
+    @PostMapping("/transferencia/enviar")
+    public String tramitarTransferenciaEmpresa(@ModelAttribute("transferencia") TransferenciaEntity transferencia, Model model)
+    {
+        LocalDate today = LocalDate.now();
+
+        BigDecimal balanceOriginal = transferencia.getOperacionByIdoperacion().getCuentaByIdcuenta().getSaldo();
+        BigDecimal valorARestar = transferencia.getCantidad();
+
+        transferencia.setFechainstruccion(Date.valueOf(today));
+
+        CuentaEntity cuentaOrigen = transferencia.getOperacionByIdoperacion().getCuentaByIdcuenta();
+
+        balanceOriginal = balanceOriginal.subtract(valorARestar);
+        cuentaOrigen.setSaldo(balanceOriginal);
+
+        this.cuentaRepository.save(cuentaOrigen);
+        this.transferenciaRepository.save(transferencia);
 
         return "redirect:/";
     }
 
-    @PostMapping("/transferencia/enviar")
-    public String tramitarTransferenciaEmpresa(@ModelAttribute("") Integer idCliente, Model model)
+    @GetMapping("/cambiodivisa")
+    public String cambioDivisaEmpresa(@RequestParam("id") Integer idCliente, Model model)
     {
+        LocalDate today = LocalDate.now();
+
         ClienteEntity cliente = this.clienteRepository.findById(idCliente).orElse(null);
         CuentaEntity cuenta = this.cuentaRepository.findById(cliente.getCuentasByIdcliente().get(0).getIdcuenta()).orElse(null);
 
+        CambiodivisaEntity cambiodivisa = new CambiodivisaEntity();
+
+        OperacionEntity operacion = new OperacionEntity();
+        operacion.setIdcliente(cliente.getIdcliente());
+        operacion.setCuentaByIdcuenta(cuenta);
+        operacion.setFecha(Date.valueOf(today));
+
+        this.operacionRepository.save(operacion);
+
+        cambiodivisa.setOperacionByIdoperacion(operacion);
+        cambiodivisa.setCantidadcompra(null);
+        cambiodivisa.setComision("2");
+        cambiodivisa.setMonedacompra("euro");
+        cambiodivisa.setMonedaventa("dolar");
+
         model.addAttribute("clienteTransferencia", cliente);
         model.addAttribute("cuentaTransferencia", cuenta);
+        model.addAttribute("cambiodivisa", cambiodivisa);
+
+        return "empresaCambiodivisa";
+    }
+
+    @PostMapping("/cambiodivisa/enviar")
+    public String tramitarCambiodivisaEmpresa(@ModelAttribute("cambiodivisa") CambiodivisaEntity cambiodivisa, Model model)
+    {
+        BigDecimal balanceOriginal = cambiodivisa.getOperacionByIdoperacion().getCuentaByIdcuenta().getSaldo();
+        BigDecimal valorASumar = new BigDecimal(cambiodivisa.getCantidadventa());
+
+        System.out.println(valorASumar);
+
+        CuentaEntity cuentaOrigen = cambiodivisa.getOperacionByIdoperacion().getCuentaByIdcuenta();
+
+        balanceOriginal = balanceOriginal.add(valorASumar);
+        cuentaOrigen.setSaldo(balanceOriginal);
+
+        this.cuentaRepository.save(cuentaOrigen);
+        this.cambiodivisaRepository.save(cambiodivisa);
 
         return "redirect:/";
     }

@@ -9,4 +9,6 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface OperacionRepository extends JpaRepository<OperacionEntity, Integer> {
+    @Query("SELECT o FROM OperacionEntity o WHERE o.idcliente IN :lista")
+    List<OperacionEntity> buscarPorEmpresa(@Param("lista") List<Integer> lista);
 }

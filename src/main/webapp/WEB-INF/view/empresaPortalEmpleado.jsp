@@ -78,16 +78,8 @@
         <th>CLIENTE</th>
     </tr>
     <%
-        List<Integer> lista = new ArrayList<>();
-
-        for(ClienteEntity c : listaClientesDeLaEmpresa)
-        {
-            lista.add(c.getIdcliente());
-        }
         for(OperacionEntity o : listaOperaciones)
         {
-            if(lista.contains(o.getIdcliente()))
-            {
     %>
     <tr>
         <td><%= o.getIdcliente() %></td>
@@ -96,7 +88,6 @@
         <td><%= o.getIdcliente() %></td>
     </tr>
     <%
-        }
         }
     %>
 </table border="1">

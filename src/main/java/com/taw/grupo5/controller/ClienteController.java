@@ -15,10 +15,8 @@ import java.util.List;
 @RequestMapping("/clientes")
 public class ClienteController {
 
-
     @Autowired
     private ClienteRepository clienteRepository;
-
 
     @GetMapping("/")
     public String doListar(Model model, HttpSession session){

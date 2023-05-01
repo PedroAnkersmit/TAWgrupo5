@@ -14,11 +14,13 @@
 <body>
 <h1>Realizar transferencia</h1>
 
-<form:form action="/empresa/transferencia/enviar" method="post" modelAttribute="transferencia">
+<form:form action="/empresa/cambiodivisa/enviar" method="post" modelAttribute="cambiodivisa">
         <form:hidden path="idoperacion"/>
-        Cantidad <form:input path="cantidad"/><br/>
-        Cuenta destino <input/><br/>
-        Fecha de ejecución: <form:input type="date" path="fechaejecucion"/><br/>
+        <form:hidden path="monedaventa"/>
+        <form:hidden path="monedacompra"/>
+        <form:hidden path="cantidadcompra"/>
+        Dólares <form:input path="cantidadventa"/><br/>
+        <form:hidden path="comision"/>
         <form:hidden path="operacionByIdoperacion"/>
         <form:button>Guardar cambios</form:button>
 </form:form>
