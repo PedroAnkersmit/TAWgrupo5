@@ -2,7 +2,6 @@ package com.taw.grupo5.controller;
 
 import com.taw.grupo5.dao.*;
 import com.taw.grupo5.entity.*;
-import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,7 +37,7 @@ public class EmpresaController {
     protected CambiodivisaRepository cambiodivisaRepository;
 
     @Autowired
-    protected TipoclienteRepository tipoclienteRepository;
+    protected TipoClienteRepository tipoclienteRepository;
 
     @GetMapping("")
     public String empresaInicio(Model model)
