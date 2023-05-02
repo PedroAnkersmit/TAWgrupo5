@@ -100,6 +100,7 @@
     Cantidad minima:
     <form:input path="cantidad" size="20px" maxlength="5"/></br>
 
+
     <form:button>Filtrar</form:button>
 </form:form>
 
