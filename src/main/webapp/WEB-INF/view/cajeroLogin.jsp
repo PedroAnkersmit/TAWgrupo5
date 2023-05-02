@@ -13,7 +13,7 @@
 </head>
 <body>
 
-    <form:form>
+    <form:form action="/cajero/login" method="post" modelAttribute="">
 
     </form:form>
 

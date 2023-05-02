@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpSession;
+
 @Controller
 public class CajeroController {
 
@@ -30,12 +32,24 @@ public class CajeroController {
         return "cajeroDatos";
     }
 
-    @PostMapping("/cajero/login")
-    public String doLogin(Model model, @ModelAttribute("cliente") ClienteEntity cliente){
-
-
-
+    @GetMapping("/cajero/login")
+    public String doLogin() {
         return "cajeroLogin";
     }
 
+    @PostMapping("/cajero/login")
+    public String doLoggear(@ModelAttribute("idCliente") Integer idCliente,
+                     Model model, HttpSession session){
+
+        String urlTo = "redirect:/cajero/datos";
+        ClienteEntity usuario = clienteRepository.findById(idCliente).orElse(null);
+        if (usuario == null) {
+            model.addAttribute("error", "Credenciales incorrectas");
+            urlTo = "/cajero/login";
+        } else {
+            session.setAttribute("user", usuario);
+        }
+        return urlTo;
+
+    }
 }
