@@ -13,9 +13,12 @@
 </head>
 <body>
 
-    <form:form action="/cajero/login" method="post" modelAttribute="">
+    <form action="/cajero/login" method="post">
 
-    </form:form>
+        Usuario: <input type="text" name="usuario">
+        <button>Iniciar sesión</button>
+
+    </form>
 
 </body>
 </html>
