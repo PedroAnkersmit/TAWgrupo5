@@ -18,18 +18,19 @@
 </head>
 <body>
 <%
-    CuentaEntity cuentaReceptora = (CuentaEntity) request.getAttribute("sendAccount");
-    Integer idCuentaEmisora = (Integer) request.getAttribute("idAccount");
+    CuentaEntity cuentaReceptora = (CuentaEntity) request.getAttribute("receiveAccount");
+    CuentaEntity cuentaEmisora = (CuentaEntity) request.getAttribute("sendAccount");
     OperacionEntity operacion = (OperacionEntity) request.getAttribute("operation");
     TransferenciaEntity transferencia = (TransferenciaEntity) request.getAttribute("transference");
 %>
 <h1>Introduce la cantidad a Transferir</h1>
-<form action="/executeTransfer" method="post">
-    <input type="number" name="idAccount" value="<%=idCuentaEmisora%>" hidden>
+<form action="executeTransfer" method="post">
+    <input type="number" name="idAccount" value="<%=cuentaEmisora.getIdcuenta()%>" hidden>
     <input type="number" name="idOperation" value="<%=operacion.getIdoperacion()%>" hidden>
     <input type="number" name="idReceivingAccount" value="<%=cuentaReceptora.getIdcuenta()%>" hidden>
-    <input type="number" name="cantidad" size="20px" maxlength="5">
-    <input type="number" name="idTransferencia" value="<%=transferencia.getIdoperacion()%>">
+    <input type="number" name="cantidad" size="20px" maxlength="5" min="1" max="<%=cuentaEmisora.getSaldo()%>">
+    <input type="number" name="idTransferencia" value="<%=transferencia.getIdoperacion()%>" hidden>
+    <button>Ejecutar</button>
 </form>
 
 </body>

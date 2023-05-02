@@ -115,43 +115,45 @@ public class ClienteUsuarioController {
 
         TransferenciaEntity transferencia = new TransferenciaEntity();
 
-        //transferencia.setFechainstruccion(new Date(System.currentTimeMillis()));
-        //transferencia.setFechaejecucion(new Date(System.currentTimeMillis()));
-        //transferencia.setCantidad(BigDecimal.ZERO);
+        transferencia.setFechainstruccion(new Date(System.currentTimeMillis()));
+        transferencia.setFechaejecucion(new Date(System.currentTimeMillis()));
+        transferencia.setCantidad(BigDecimal.ZERO);
 
         OperacionEntity operacion = new OperacionEntity();
         operacion.setCuentaByIdcuenta(cuentaEmisora);
         operacion.setIdcliente(clienteEmisor.getIdcliente());
         operacion.setFecha(new Date(System.currentTimeMillis()));
+
         operacionesRepository.save(operacion);
         transferencia.setOperacionByIdoperacion(operacion);
         //operacion.setTransferenciaByIdoperacion(transferencia);
-        //transferenciasRepository.save(transferencia);
+        transferenciasRepository.save(transferencia);
 
-        model.addAttribute("sendAccount", cuentaReceptora);
-        model.addAttribute("idAccount", idCuentaEmisora);
+        model.addAttribute("receiveAccount", cuentaReceptora);
+        model.addAttribute("sendAccount", cuentaEmisora);
         model.addAttribute("transference", transferencia);
         model.addAttribute("operation", operacion);
     return "clienteSeleccionarCantidad";
    }
 
-   @PostMapping("executeTransfer")
+   @PostMapping("/executeTransfer")
     String doExecuteTransfer(Model model, @RequestParam("idReceivingAccount") Integer idCuentaReceptora, @RequestParam("idAccount") Integer idCuentaEmisora,
-                             @RequestParam("idOperation") Integer idOperacion, @RequestParam("cantidad") Integer cantidad){
+                             @RequestParam("idOperation") Integer idOperacion, @RequestParam("cantidad") Integer cantidad, @RequestParam("idTransferencia") Integer idTransfer){
         BigDecimal c = new BigDecimal(cantidad);
-        OperacionEntity operacion= operacionesRepository.findById(idOperacion).orElse(null);
-        TransferenciaEntity transferencia = operacion.getTransferenciaByIdoperacion();
+        //OperacionEntity operacion= operacionesRepository.findById(idOperacion).orElse(null);
+        TransferenciaEntity transferencia = transferenciasRepository.findById(idTransfer).orElse(null);
         transferencia.setCantidad(c);
         transferencia.setFechaejecucion(new Date(System.currentTimeMillis()));
         CuentaEntity cuentaReceptora = cuentaRepository.findById(idCuentaReceptora).orElse(null);
         cuentaReceptora.setSaldo(cuentaReceptora.getSaldo().add(c));
         CuentaEntity cuentaEmisora = cuentaRepository.findById(idCuentaEmisora).orElse(null);
         cuentaEmisora.setSaldo(cuentaEmisora.getSaldo().subtract(c));
-        operacion.setTransferenciaByIdoperacion(transferencia);
-        //transferenciasRepository.save(transferencia);
-        operacionesRepository.save(operacion);
+        //operacion.setTransferenciaByIdoperacion(transferencia);
+
+        //operacionesRepository.save(operacion);
         cuentaRepository.save(cuentaReceptora);
         cuentaRepository.save(cuentaEmisora);
+        transferenciasRepository.save(transferencia);
         return "redirect:/clienteHome";
    }
 }
