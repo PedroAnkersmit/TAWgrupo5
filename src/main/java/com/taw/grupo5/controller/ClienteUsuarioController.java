@@ -115,18 +115,18 @@ public class ClienteUsuarioController {
 
         TransferenciaEntity transferencia = new TransferenciaEntity();
 
-        transferencia.setFechainstruccion(new Date(System.currentTimeMillis()));
-        transferencia.setFechaejecucion(new Date(System.currentTimeMillis()));
-        transferencia.setCantidad(BigDecimal.ZERO);
+        //transferencia.setFechainstruccion(new Date(System.currentTimeMillis()));
+        //transferencia.setFechaejecucion(new Date(System.currentTimeMillis()));
+        //transferencia.setCantidad(BigDecimal.ZERO);
 
         OperacionEntity operacion = new OperacionEntity();
         operacion.setCuentaByIdcuenta(cuentaEmisora);
         operacion.setIdcliente(clienteEmisor.getIdcliente());
-        operacion.setTransferenciaByIdoperacion(transferencia);
-        //transferenciasRepository.save(transferencia);
+        operacion.setFecha(new Date(System.currentTimeMillis()));
         operacionesRepository.save(operacion);
-
-
+        transferencia.setOperacionByIdoperacion(operacion);
+        //operacion.setTransferenciaByIdoperacion(transferencia);
+        //transferenciasRepository.save(transferencia);
 
         model.addAttribute("sendAccount", cuentaReceptora);
         model.addAttribute("idAccount", idCuentaEmisora);
