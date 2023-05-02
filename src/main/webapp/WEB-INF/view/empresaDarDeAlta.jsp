@@ -24,7 +24,7 @@
     Nombre <form:input path="cliente.nombre"/><br/>
     Email <form:input path="cliente.email"/><br/>
     Telefono <form:input path="cliente.telefono"/><br/>
-    Tipo cliente: <form:input path="cliente.tipoclienteByIdtipocliente.idtipocliente"/><br/>
+    Tipo cliente: <form:select path="cliente.tipoclienteByIdtipocliente.idtipocliente" items="${tiposcliente}" itemValue="idtipocliente" itemLabel="nombre"/><br/>
     <form:hidden value="<%=empresaEntity.getIdempresa()%>" path="cliente.empresaByIdempresa.idempresa"/>
     Fecha cierre de la cuenta: <form:input type="date" path="cuenta.fechacierre"/><br/>
     <form:button>Dar de alta</form:button>

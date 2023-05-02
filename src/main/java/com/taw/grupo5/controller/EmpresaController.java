@@ -37,6 +37,9 @@ public class EmpresaController {
     @Autowired
     protected CambiodivisaRepository cambiodivisaRepository;
 
+    @Autowired
+    protected TipoclienteRepository tipoclienteRepository;
+
     @GetMapping("")
     public String empresaInicio(Model model)
     {
@@ -101,8 +104,12 @@ public class EmpresaController {
         EmpresaEntity empresa = this.empresaRepository.findById(idEmpresa).orElse(null);
         PersonaDeAlta personaDeAlta = new PersonaDeAlta();
 
+        List<TipoclienteEntity> tipoclienteEntityList = this.tipoclienteRepository.findAll();
+        tipoclienteEntityList.remove(0);
+
         model.addAttribute("empresaAlta", empresa);
         model.addAttribute("personaDeAlta", personaDeAlta);
+        model.addAttribute("tiposcliente", tipoclienteEntityList);
 
         return "empresaDarDeAlta";
     }
@@ -190,10 +197,9 @@ public class EmpresaController {
     }
 
     @GetMapping("/bloquear")
-    public String bloquearCliente(@RequestParam("id") Integer idCliente, Model model)
+    public String bloquearCliente(@RequestParam("id") Integer idCuenta, Model model)
     {
-        ClienteEntity cliente = this.clienteRepository.findById(idCliente).orElse(null);
-        CuentaEntity cuenta = this.cuentaRepository.findById(cliente.getCuentasByIdcliente().get(0).getIdcuenta()).orElse(null);
+        CuentaEntity cuenta = this.cuentaRepository.findById(idCuenta).orElse(null);
         TipoestadoEntity estadoCuenta = new TipoestadoEntity();
 
         estadoCuenta.setIdtipoestado(4);
@@ -206,10 +212,9 @@ public class EmpresaController {
     }
 
     @GetMapping("/solicitarActivacion")
-    public String solicitarActivacion(@RequestParam("id") Integer idCliente, Model model)
+    public String solicitarActivacion(@RequestParam("id") Integer idCuenta, Model model)
     {
-        ClienteEntity cliente = this.clienteRepository.findById(idCliente).orElse(null);
-        CuentaEntity cuenta = this.cuentaRepository.findById(cliente.getCuentasByIdcliente().get(0).getIdcuenta()).orElse(null);
+        CuentaEntity cuenta = this.cuentaRepository.findById(idCuenta).orElse(null);
         TipoestadoEntity estadoCuenta = new TipoestadoEntity();
 
         estadoCuenta.setIdtipoestado(1);
@@ -304,12 +309,11 @@ public class EmpresaController {
         BigDecimal balanceOriginal = cambiodivisa.getOperacionByIdoperacion().getCuentaByIdcuenta().getSaldo();
         BigDecimal valorASumar = new BigDecimal(cambiodivisa.getCantidadventa());
 
-        System.out.println(valorASumar);
-
         CuentaEntity cuentaOrigen = cambiodivisa.getOperacionByIdoperacion().getCuentaByIdcuenta();
 
-        balanceOriginal = balanceOriginal.add(valorASumar);
+        balanceOriginal = balanceOriginal.add(valorASumar.multiply(BigDecimal.valueOf(0.85)));
         cuentaOrigen.setSaldo(balanceOriginal);
+        cambiodivisa.setCantidadcompra(String.valueOf(valorASumar.multiply(BigDecimal.valueOf(0.85))));
 
         this.cuentaRepository.save(cuentaOrigen);
         this.cambiodivisaRepository.save(cambiodivisa);
