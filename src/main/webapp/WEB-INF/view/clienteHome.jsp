@@ -97,8 +97,9 @@
 <form:form action="/clienteHome/filtrar" method="post" modelAttribute="filtro">
     <input name="idCliente" value="<%=usuario.getIdcliente()%>" hidden>
     Tipo de Operacion:</br>
-    Transferencia <form:checkbox path="transferencia"/> Cambio de Divisa <form:checkbox path="cambioDivisa"/> Extraccion
-    <form:checkbox path="sacarDinero"/> </br>
+    Transferencia <form:checkbox path="transferencia"/>
+    Cambio de Divisa <form:checkbox path="cambioDivisa"/>
+    Extraccion <form:checkbox path="sacarDinero"/> </br>
     Cantidad minima:
     <form:input path="cantidad" size="20px" maxlength="5"/></br>
 
@@ -126,7 +127,6 @@
             <p>Transferencia:</p>
             Fecha de Ejecucion: <%=o.getTransferenciaByIdoperacion().getFechainstruccion()%></br>
             Movimiento: <%=o.getTransferenciaByIdoperacion().getCantidad()%></br>
-            IdCliente: <%=o.getIdcliente()%>
             <%
             } else if (o.getCambiodivisaByIdoperacion() == null && o.getTransferenciaByIdoperacion() == null && o.getSacardineroByIdoperacion() != null) {
             %>
@@ -141,7 +141,6 @@
             Moneda
             Vendida: <%=o.getCambiodivisaByIdoperacion().getCantidadventa()%> <%=o.getCambiodivisaByIdoperacion().getMonedaventa()%> </br>
             Comision: <%=o.getCambiodivisaByIdoperacion().getComision()%>
-            IdCliente: <%=o.getIdcliente()%>
             <%
                 }
             %>
