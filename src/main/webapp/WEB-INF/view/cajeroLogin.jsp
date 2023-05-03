@@ -15,7 +15,7 @@
 
     <form action="/cajero/login" method="post">
 
-        Usuario: <input type="text" name="usuario">
+        Usuario: <input type="text" name="idCliente">
         <button>Iniciar sesión</button>
 
     </form>
