@@ -20,6 +20,7 @@
 </head>
 <body>
     <h1>Listado de clientes</h1>
+    <p>Añadir filtro por nombre y por tipo</p>
     <!-- Clientes -->
     <table border="1">
         <tr>
@@ -42,6 +43,7 @@
     </table>
 
     <h1>Listado de empresas</h1>
+    <p>Añadir filtro por nombre</p>
     <!-- Empresas -->
     <table border="1">
         <tr>

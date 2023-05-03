@@ -19,7 +19,7 @@
     <title>Empresa</title>
 </head>
 <body>
-    <h1>Datos del cliente: <%=empresaEntity.getNombre()%></h1>
+    <h1>Datos de la empresa: <%=empresaEntity.getNombre()%></h1>
 
     <h2>Información</h2>
     <table border="1">
