@@ -226,13 +226,12 @@ public class EmpresaController {
     }
 
     @GetMapping("/transferencia")
-    public String transferenciaEmpresa(@RequestParam("id") Integer idCliente, Model model)
+    public String transferenciaEmpresa(@RequestParam("id") Integer idCuenta, Model model)
     {
         LocalDate today = LocalDate.now();
 
-        ClienteEntity cliente = this.clienteRepository.findById(idCliente).orElse(null);
-        CuentaEntity cuenta = this.cuentaRepository.findById(cliente.getCuentasByIdcliente().get(0).getIdcuenta()).orElse(null);
-
+        CuentaEntity cuenta = this.cuentaRepository.findById(idCuenta).orElse(null);
+        ClienteEntity cliente = cuenta.getClienteByIdcliente();
         TransferenciaEntity transferencia = new TransferenciaEntity();
 
         OperacionEntity operacion = new OperacionEntity();
@@ -273,12 +272,12 @@ public class EmpresaController {
     }
 
     @GetMapping("/cambiodivisa")
-    public String cambioDivisaEmpresa(@RequestParam("id") Integer idCliente, Model model)
+    public String cambioDivisaEmpresa(@RequestParam("id") Integer idCuenta, Model model)
     {
         LocalDate today = LocalDate.now();
 
-        ClienteEntity cliente = this.clienteRepository.findById(idCliente).orElse(null);
-        CuentaEntity cuenta = this.cuentaRepository.findById(cliente.getCuentasByIdcliente().get(0).getIdcuenta()).orElse(null);
+        CuentaEntity cuenta = this.cuentaRepository.findById(idCuenta).orElse(null);
+        ClienteEntity cliente = cuenta.getClienteByIdcliente();
 
         CambiodivisaEntity cambiodivisa = new CambiodivisaEntity();
 
