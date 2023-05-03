@@ -25,6 +25,7 @@
         <tr>
             <th>ID</th>
             <th>Nombre</th>
+            <th>Tipo</th>
         </tr>
 
         <%
@@ -33,6 +34,7 @@
                 <tr>
                     <td><%=clienteEntity.getIdcliente()%></td>
                     <td><a href="/gestor/cliente?id=<%=clienteEntity.getIdcliente()%>"><%=clienteEntity.getNombre()%></a></td>
+                    <td><%=clienteEntity.getTipoclienteByIdtipocliente().getNombre()%></td>
                 </tr>
         <%
             }
