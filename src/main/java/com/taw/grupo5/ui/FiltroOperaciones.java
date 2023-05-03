@@ -3,6 +3,7 @@ Created by Pedro Ankersmit Carrión
 */
 
 import java.math.BigDecimal;
+import java.util.Objects;
 
 public class FiltroOperaciones {
     private boolean transferencia;
@@ -55,4 +56,5 @@ public class FiltroOperaciones {
     public void setCantidad(BigDecimal cantidad) {
         this.cantidad = cantidad;
     }
+
 }

@@ -24,7 +24,7 @@
 <h1>Selecciona una cuenta</h1>
 
 <form action="transferView" method="post">
-    <input type="number" name="idAccount" value="<%=idCuentaEmisora%>" hidden>
+    <input name="idAccount" value="<%=idCuentaEmisora%>" hidden>
     Numero de Cuenta: <select name="idCuentaReceptora" required="true">
         <%
             for(CuentaEntity c: listaCuentas){

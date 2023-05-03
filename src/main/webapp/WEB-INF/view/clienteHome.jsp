@@ -95,6 +95,7 @@
 </table>
 <h1>Mis operaciones:</h1>
 <form:form action="/clienteHome/filtrar" method="post" modelAttribute="filtro">
+    <input name="idCliente" value="<%=usuario.getIdcliente()%>" hidden>
     Tipo de Operacion:</br>
     Transferencia <form:checkbox path="transferencia"/> Cambio de Divisa <form:checkbox path="cambioDivisa"/> Extraccion
     <form:checkbox path="sacarDinero"/> </br>
@@ -120,18 +121,19 @@
         <td><%=o.getFecha()%>
         </td>
         <td><%
-            if (o.getCambiodivisaByIdoperacion() == null && o.getSacardineroByIdoperacion() == null) {
+            if (o.getCambiodivisaByIdoperacion() == null && o.getSacardineroByIdoperacion() == null && o.getTransferenciaByIdoperacion() != null) {
         %>
             <p>Transferencia:</p>
             Fecha de Ejecucion: <%=o.getTransferenciaByIdoperacion().getFechainstruccion()%></br>
             Movimiento: <%=o.getTransferenciaByIdoperacion().getCantidad()%></br>
+            IdCliente: <%=o.getIdcliente()%>
             <%
-            } else if (o.getCambiodivisaByIdoperacion() == null && o.getTransferenciaByIdoperacion() == null) {
+            } else if (o.getCambiodivisaByIdoperacion() == null && o.getTransferenciaByIdoperacion() == null && o.getSacardineroByIdoperacion() != null) {
             %>
             <p>Extracción:</p>
             Cantidad: <%=o.getSacardineroByIdoperacion().getCantidad()%>
             <%
-            } else {
+            } else if(o.getCambiodivisaByIdoperacion() != null){
             %>
             <p>Cambio de Divisa</p>
             Moneda
@@ -139,6 +141,7 @@
             Moneda
             Vendida: <%=o.getCambiodivisaByIdoperacion().getCantidadventa()%> <%=o.getCambiodivisaByIdoperacion().getMonedaventa()%> </br>
             Comision: <%=o.getCambiodivisaByIdoperacion().getComision()%>
+            IdCliente: <%=o.getIdcliente()%>
             <%
                 }
             %>

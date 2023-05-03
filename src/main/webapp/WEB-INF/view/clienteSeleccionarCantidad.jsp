@@ -27,9 +27,9 @@
 %>
 <h1>Introduce la cantidad a Transferir</h1>
 <form action="executeTransfer" method="post">
-    <input type="number" name="idAccount" value="<%=cuentaEmisora.getIdcuenta()%>" hidden>
-    <input type="number" name="idReceivingAccount" value="<%=cuentaReceptora.getIdcuenta()%>" hidden>
-    <input type="number" name="idOperation" value="<%=idOperacion%>" hidden>
+    <input name="idAccount" value="<%=cuentaEmisora.getIdcuenta()%>" hidden>
+    <input name="idReceivingAccount" value="<%=cuentaReceptora.getIdcuenta()%>" hidden>
+    <input name="idOperation" value="<%=idOperacion%>" hidden>
     <input type="number" name="cantidad" size="20px" maxlength="5" min="1" max="<%=cuentaEmisora.getSaldo()%>">
         <button>Ejecutar</button>
 </form>
