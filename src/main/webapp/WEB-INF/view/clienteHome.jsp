@@ -78,6 +78,7 @@
         <td><%=c.getFechacierre()%>
         </td>
         <td><a href="/clienteHome/transfer?id=<%=c.getIdcuenta()%>">Hacer transferecia</a></td>
+        <td><a href="/clienteHome/cambio?id=<%=c.getIdcuenta()%>">Cambiar divisa</a> </td>
         <% if (c.getTipoestadoByIdestado().getIdtipoestado() == 1) {
         %>
         <td><a href="/solicitarActivacion?id=<%=c.getIdcuenta()%>">Solicitar Activacion</a></td>
