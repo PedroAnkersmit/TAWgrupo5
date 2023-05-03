@@ -42,6 +42,11 @@
         %>
     </table>
 
+    <button style="margin-top: 5px">Clientes esperando el alta</button>
+    <button>Clientes inactivos por bloquear</button> <br/>
+    <button style="margin-top: 5px">Clientes por desbloquear</button>
+    <button>Clientes sospechosos</button> <br/>
+
     <h1>Listado de empresas</h1>
     <p>Añadir filtro por nombre</p>
     <!-- Empresas -->
