@@ -57,7 +57,7 @@ public class ClienteUsuarioController {
             filtro.setSacarDinero(true);
             filtro.setTransferencia(true);
             filtro.setCantidad(BigDecimal.ZERO);
-        } else {
+        }
             if (filtro.isCambioDivisa()) {
 
                 for (OperacionEntity o : operacionesRepository.buscarCambioDivisa(usuario.getIdcliente())) {
@@ -66,15 +66,25 @@ public class ClienteUsuarioController {
                     }
                     }
 
+            } else{
+                for (OperacionEntity o : operacionesRepository.buscarCambioDivisa(usuario.getIdcliente())) {
+                    if (!operaciones.contains(o)) {
+                        operaciones.remove(o);
+                    }
+                }
             }
             if (filtro.isSacarDinero()) {
-
-                for (OperacionEntity o : operacionesRepository.buscarTransferencia(filtro.getCantidad(), usuario.getIdcliente())) {
+                for (OperacionEntity o : operacionesRepository.buscarSacarDinero(filtro.getCantidad(), usuario.getIdcliente())) {
                     if (!operaciones.contains(o)) {
                         operaciones.add(o);
                     }
                 }
-
+            } else{
+                for (OperacionEntity o : operacionesRepository.buscarSacarDinero(filtro.getCantidad(), usuario.getIdcliente())) {
+                    if (!operaciones.contains(o)) {
+                        operaciones.remove(o);
+                    }
+                }
             }
             if (filtro.isTransferencia()) {
 
@@ -84,8 +94,14 @@ public class ClienteUsuarioController {
                     }
                 }
 
+            } else {
+                for (OperacionEntity o : operacionesRepository.buscarTransferencia( filtro.getCantidad(), usuario.getIdcliente())) {
+                    if (!operaciones.contains(o)) {
+                        operaciones.remove(o);
+                    }
+                }
             }
-        }
+
 
 
         model.addAttribute("user", usuario);
@@ -123,14 +139,10 @@ public class ClienteUsuarioController {
         CuentaEntity cuentaEmisora = cuentaRepository.findById(idCuentaEmisora).orElse(null);
 
         OperacionEntity operacion = new OperacionEntity();
-        //TransferenciaEntity transferencia = new TransferenciaEntity();
 
         operacion.setIdcliente(cuentaEmisora.getClienteByIdcliente().getIdcliente());
         operacion.setCuentaByIdcuenta(cuentaEmisora);
         operacion.setFecha(new Date(System.currentTimeMillis()));
-        //operacion.setTransferenciaByIdoperacion(transferencia);
-
-        //transferenciasRepository.save(tra)
         operacionesRepository.save(operacion);
 
         model.addAttribute("idOperacion", operacion.getIdoperacion());
@@ -159,27 +171,29 @@ public class ClienteUsuarioController {
 
         cuentaEmisora.setSaldo(cuentaEmisora.getSaldo().subtract(c));
 
-        //op.setTransferenciaByIdoperacion(transferencia);
-        //op.setCambiodivisaByIdoperacion(null);
-        //op.setSacardineroByIdoperacion(null);
-
         transferenciasRepository.save(transferencia);
+        op.setTransferenciaByIdoperacion(transferencia);
+        op.setCambiodivisaByIdoperacion(null);
+        op.setSacardineroByIdoperacion(null);
+        operacionesRepository.save(op);
         cuentaRepository.save(cuentaReceptora);
         cuentaRepository.save(cuentaEmisora);
-        //operacionesRepository.save(op);
         return doMostrarFiltrado(model, cuentaEmisora.getClienteByIdcliente(), null);
    }
     @GetMapping("/cambio")
     String doCambiar(Model model, @RequestParam("id") Integer idCuenta){
+
         CuentaEntity cuenta = cuentaRepository.findById(idCuenta).orElse(null);
+
         OperacionEntity operacion = new OperacionEntity();
-        CambiodivisaEntity cambiodivisa = new CambiodivisaEntity();
+
+
         operacion.setIdcliente(cuenta.getClienteByIdcliente().getIdcliente());
         operacion.setCuentaByIdcuenta(cuenta);
         operacion.setFecha(new Date(System.currentTimeMillis()));
-        operacion.setCambiodivisaByIdoperacion(cambiodivisa);
 
-        this.operacionesRepository.save(operacion);
+        operacionesRepository.save(operacion);
+
         model.addAttribute("operationId", operacion.getIdoperacion());
         model.addAttribute("accountId", idCuenta);
         return "clienteCambioDivisa";
@@ -188,29 +202,31 @@ public class ClienteUsuarioController {
     String doExecuteCambiar(Model model, @RequestParam("idCuenta") Integer idCuenta,
                             @RequestParam("cantidad") Integer cantidad,
                             @RequestParam("idOperacion") Integer operacion){
+
         CuentaEntity cuenta = cuentaRepository.findById(idCuenta).orElse(null);
-        OperacionEntity op =operacionesRepository.findById(operacion).orElse(null);
+        OperacionEntity op = operacionesRepository.findById(operacion).orElse(null);
 
         BigDecimal c = new BigDecimal(cantidad).multiply(new BigDecimal(0.91)).setScale(2, RoundingMode.HALF_DOWN);
 
-        CambiodivisaEntity cambiodivisa = op.getCambiodivisaByIdoperacion();
+        CambiodivisaEntity cambiodivisa = new CambiodivisaEntity();
+        operacionesRepository.save(op);
 
         cambiodivisa.setMonedaventa("dolar");
         cambiodivisa.setMonedacompra("euro");
         cambiodivisa.setCantidadventa(cantidad.toString());
         Double cantidadAux = c.doubleValue();
         cambiodivisa.setCantidadcompra(cantidadAux.toString());
-
-        cambiodivisa.setOperacionByIdoperacion(op);
+        cambiodivisa.setComision("0");
 
         cuenta.setSaldo(cuenta.getSaldo().add(c));
 
+        cambioDivisaRepository.save(cambiodivisa);
+        op.setCambiodivisaByIdoperacion(cambiodivisa);
         op.setTransferenciaByIdoperacion(null);
         op.setSacardineroByIdoperacion(null);
-
-        cambioDivisaRepository.save(cambiodivisa);
-        cuentaRepository.save(cuenta);
         operacionesRepository.save(op);
+
+        cuentaRepository.save(cuenta);
 
         return doMostrarFiltrado(model, cuenta.getClienteByIdcliente(), null);
     }

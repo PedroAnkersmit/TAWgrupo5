@@ -21,8 +21,8 @@
 %>
 <h1>Introduzca la cantidad de dolares a cambiar</h1>
 <form action="cambio" method="post">
-    <input type="number" name="idCuenta" value="<%=idCuenta%>" hidden>
-    <input type="number" name="idOperacion" value="<%=idOp%>" hidden>
+    <input name="idCuenta" value="<%=idCuenta%>" hidden>
+    <input name="idOperacion" value="<%=idOp%>" hidden>
     <input type="number" name="cantidad" size="20px" maxlength="5" min="1" max="1000"></br>
     <button>Enviar</button>
 </form>

@@ -14,7 +14,7 @@ public interface OperacionesRepository extends JpaRepository<OperacionEntity, In
     @Query("select o from OperacionEntity o where o.idcliente = :idcliente")
     List<OperacionEntity> buscarPorCliente(@Param("idcliente") Integer idcliente);
 
-    @Query("select o from OperacionEntity  o where o.cambiodivisaByIdoperacion is not null and o.idcliente = :idcliente")
+    @Query("select o from OperacionEntity  o where o.cambiodivisaByIdoperacion is not null and o.transferenciaByIdoperacion is null and o.idcliente = :idcliente")
     List<OperacionEntity> buscarCambioDivisa(@Param("idcliente") Integer idcliente);
 
     @Query("select o from OperacionEntity  o where o.sacardineroByIdoperacion is not null and o.sacardineroByIdoperacion.cantidad >= :quantity and o.idcliente = :idcliente")
