@@ -4,12 +4,15 @@ import com.taw.grupo5.dao.ClienteRepository;
 import com.taw.grupo5.dao.ConversacionRepository;
 import com.taw.grupo5.dao.EmpleadoRepository;
 import com.taw.grupo5.dao.MensajeRepository;
+import com.taw.grupo5.entity.ConversacionEntity;
+import com.taw.grupo5.entity.EmpleadoEntity;
 import com.taw.grupo5.entity.MensajeEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -61,11 +64,41 @@ public class AsistenteController {
         model.addAttribute("mensaje", nuevoMensaje);
     }
 
+    @PostMapping("/crear")
+    public String doCrearNuevaConversacion(@ModelAttribute("mensaje")MensajeEntity mensaje,
+                                           @ModelAttribute("conversacion")MensajeEntity conversacion) {
 
+        int id_conver = mensaje.getConversacionByIdconversacion().getIdconversacion();
+        String vuelta;
+
+        formatearFechaYEnviarMensaje(mensaje);
+
+        if(mensaje.getEnviadoporasistente()>0){             //si es asistente
+            vuelta = "redirect:/asistente/conversacion?id=";
+        }else{                                              //si es cliente
+            vuelta = "redirect:/asistente/conversar?id=";
+        }
+        return vuelta + id_conver;
+    }
 
     @PostMapping("/enviar")
     public String doNuevoMensaje(@ModelAttribute("mensaje")MensajeEntity mensaje) {
 
+        int id_conver = mensaje.getConversacionByIdconversacion().getIdconversacion();
+        String vuelta;
+
+        formatearFechaYEnviarMensaje(mensaje);
+
+        if(mensaje.getEnviadoporasistente()>0){             //si es asistente
+            vuelta = "redirect:/asistente/conversacion?id=";
+        }else{                                              //si es cliente
+            vuelta = "redirect:/asistente/conversar?id=";
+        }
+        return vuelta + id_conver;
+    }
+
+
+    private void formatearFechaYEnviarMensaje(MensajeEntity mensaje){
         /*                                  IMPORTANTE - LEER
         Como se comenta en la vista del chat, aquí se añade de manualmente la fecha.
 
@@ -87,9 +120,6 @@ public class AsistenteController {
         real.
          */
 
-        int id_conver = mensaje.getConversacionByIdconversacion().getIdconversacion();
-        String vuelta;
-
         String mensaje_bruto = mensaje.getContenido();
 
         Date fecha = new Date();
@@ -99,13 +129,6 @@ public class AsistenteController {
         mensaje.setContenido(mensaje_bruto + " [" + str_fecha + "]");
 
         mensajeRepository.save(mensaje);
-
-        if(mensaje.getEnviadoporasistente()>0){             //si es asistente
-            vuelta = "redirect:/asistente/conversacion?id=";
-        }else{                                              //si es cliente
-            vuelta = "redirect:/asistente/conversar?id=";
-        }
-        return vuelta + id_conver;
     }
 
     /*
@@ -125,6 +148,19 @@ public class AsistenteController {
         doChatear(model, id_conversacion);
         model.addAttribute("esAsistente", 0);
         return "chat";
+    }
+
+    @GetMapping("/nuevaConversacion")
+    public String doNuevaConversacionCliente(Model model){
+        ConversacionEntity conversacion = new ConversacionEntity();
+        conversacionRepository.save(conversacion);
+
+
+        doChatear(model, id_conversacion);
+        model.addAttribute("esAsistente", 0);
+        model.addAttribute("listaAsistentes", empleadoRepository.listarAsistentes());
+        model.addAttribute("listaClientes", null);
+        return "nuevoChat";
     }
 
     /*
@@ -147,5 +183,14 @@ public class AsistenteController {
         doChatear(model, id_conversacion);
         model.addAttribute("esAsistente", 1);
         return "chat";
+    }
+
+    @GetMapping("/nuevoChat")
+    public String doNuevaConversacionAsistente(Model model, @RequestParam("id") int id_conversacion){
+        doChatear(model, id_conversacion);
+        model.addAttribute("esAsistente", 1);
+        model.addAttribute("listaAsistentes", null);
+        model.addAttribute("listaClientes", clienteRepository.findAll());
+        return "nuevoChat";
     }
 }

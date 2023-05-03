@@ -10,7 +10,8 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%  ConversacionEntity conversacion = (ConversacionEntity) request.getAttribute("conversacion");
-    int esAsistente = (int) request.getAttribute("esAsistente");%>
+    int esAsistente = (int) request.getAttribute("esAsistente");
+%>
 
 <html>
 <head>
