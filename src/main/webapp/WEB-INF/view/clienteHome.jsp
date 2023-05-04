@@ -1,8 +1,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ page import="com.taw.grupo5.entity.ClienteEntity" %>
 <%@ page import="java.util.List" %>
-<%@ page import="com.taw.grupo5.entity.CuentaEntity" %>
-<%@ page import="com.taw.grupo5.entity.OperacionEntity" %>
+<%@ page import="com.taw.grupo5.entity.*" %>
 
 
 <%--
@@ -78,6 +76,7 @@
         <td><%=c.getFechacierre()%>
         </td>
         <td><a href="/clienteHome/transfer?id=<%=c.getIdcuenta()%>">Hacer transferecia</a></td>
+        <td><a href="/clienteHome/cambio?id=<%=c.getIdcuenta()%>">Cambiar divisa</a> </td>
         <% if (c.getTipoestadoByIdestado().getIdtipoestado() == 1) {
         %>
         <td><a href="/solicitarActivacion?id=<%=c.getIdcuenta()%>">Solicitar Activacion</a></td>
@@ -94,11 +93,11 @@
 </table>
 <h1>Mis operaciones:</h1>
 <form:form action="/clienteHome/filtrar" method="post" modelAttribute="filtro">
+    <input name="idCliente" value="<%=usuario.getIdcliente()%>" hidden>
     Tipo de Operacion:</br>
-    Transferencia <form:checkbox path="transferencia"/> Cambio de Divisa <form:checkbox path="cambioDivisa"/> Extraccion
-    <form:checkbox path="sacarDinero"/> </br>
-    Cantidad minima:
-    <form:input path="cantidad" size="20px" maxlength="5"/></br>
+    Transferencia <form:checkbox path="transferencia"/>
+    Cambio de Divisa <form:checkbox path="cambioDivisa"/>
+    Extraccion <form:checkbox path="sacarDinero"/> </br>
 
     <form:button>Filtrar</form:button>
 </form:form>
@@ -118,27 +117,35 @@
         <td><%=o.getFecha()%>
         </td>
         <td><%
-            if (o.getCambiodivisaByIdoperacion() == null && o.getSacardineroByIdoperacion() == null) {
+            if (!o.getTransferenciasByIdoperacion().isEmpty()) {
+                for(TransferenciaEntity t : o.getTransferenciasByIdoperacion()){
         %>
             <p>Transferencia:</p>
-            Fecha de Ejecucion: <%=o.getTransferenciaByIdoperacion().getFechainstruccion()%></br>
-            Movimiento: <%=o.getTransferenciaByIdoperacion().getCantidad()%></br>
+            Fecha de Ejecucion: <%=t.getFechainstruccion()%></br>
+            Movimiento: <%=t.getCantidad()%></br>
             <%
-            } else if (o.getCambiodivisaByIdoperacion() == null && o.getTransferenciaByIdoperacion() == null) {
+                }
+            }
+            if (!o.getSacardinerosByIdoperacion().isEmpty()) {
+                for(SacardineroEntity s : o.getSacardinerosByIdoperacion()){
             %>
             <p>Extracción:</p>
-            Cantidad: <%=o.getSacardineroByIdoperacion().getCantidad()%>
+            Cantidad: <%=s.getCantidad()%>
             <%
-            } else {
+                }
+            }
+            if(!o.getCambiodivisasByIdoperacion().isEmpty()){
+                for(CambiodivisaEntity c: o.getCambiodivisasByIdoperacion()){
             %>
             <p>Cambio de Divisa</p>
             Moneda
-            Comprada: <%=o.getCambiodivisaByIdoperacion().getCantidadcompra()%> <%=o.getCambiodivisaByIdoperacion().getMonedacompra()%> </br>
+            Comprada: <%=c.getCantidadcompra()%> <%=c.getMonedacompra()%> </br>
             Moneda
-            Vendida: <%=o.getCambiodivisaByIdoperacion().getCantidadventa()%> <%=o.getCambiodivisaByIdoperacion().getMonedaventa()%> </br>
-            Comision: <%=o.getCambiodivisaByIdoperacion().getComision()%>
+            Vendida: <%=c.getCantidadventa()%> <%=c.getMonedaventa()%> </br>
+            Comision: <%=c.getComision()%>
             <%
                 }
+            }
             %>
         </td>
     </tr>

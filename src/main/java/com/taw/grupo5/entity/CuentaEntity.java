@@ -1,4 +1,6 @@
-package com.taw.grupo5.entity;
+package com.taw.grupo5.entity;/*
+Created by Pedro Ankersmit Carrión
+*/
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -78,14 +80,15 @@ public class CuentaEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        CuentaEntity that = (CuentaEntity) o;
+        CuentaEntity cuenta = (CuentaEntity) o;
 
-        if (idcuenta != null ? !idcuenta.equals(that.idcuenta) : that.idcuenta != null) return false;
-        if (numerocuenta != null ? !numerocuenta.equals(that.numerocuenta) : that.numerocuenta != null) return false;
-        if (saldo != null ? !saldo.equals(that.saldo) : that.saldo != null) return false;
-        if (fechaapertura != null ? !fechaapertura.equals(that.fechaapertura) : that.fechaapertura != null)
+        if (idcuenta != null ? !idcuenta.equals(cuenta.idcuenta) : cuenta.idcuenta != null) return false;
+        if (numerocuenta != null ? !numerocuenta.equals(cuenta.numerocuenta) : cuenta.numerocuenta != null)
             return false;
-        if (fechacierre != null ? !fechacierre.equals(that.fechacierre) : that.fechacierre != null) return false;
+        if (saldo != null ? !saldo.equals(cuenta.saldo) : cuenta.saldo != null) return false;
+        if (fechaapertura != null ? !fechaapertura.equals(cuenta.fechaapertura) : cuenta.fechaapertura != null)
+            return false;
+        if (fechacierre != null ? !fechacierre.equals(cuenta.fechacierre) : cuenta.fechacierre != null) return false;
 
         return true;
     }
