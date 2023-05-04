@@ -2,6 +2,7 @@ package com.taw.grupo5.controller;
 
 import com.taw.grupo5.dao.*;
 import com.taw.grupo5.entity.*;
+import com.taw.grupo5.ui.FiltroOperacionesEmpresa;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -153,6 +154,35 @@ public class EmpresaController {
         }
 
         List<OperacionEntity> listaOperaciones = this.operacionRepository.buscarPorEmpresa(lista);
+
+        model.addAttribute("clientePortal", cliente);
+        model.addAttribute("listaClientes", listaClientes);
+        model.addAttribute("listaOperaciones", listaOperaciones);
+
+        return "empresaPortalEmpleado";
+    }
+
+    @GetMapping("/portal/filtrar")
+    public String portalEmpleadoFiltrado(@RequestParam("id") Integer idCliente, Model model, FiltroOperacionesEmpresa)
+    {
+        FiltroOperacionesEmpresa filtro;
+        ClienteEntity cliente = this.clienteRepository.findById(idCliente).orElse(null);
+        List<ClienteEntity> listaClientes = this.clienteRepository.buscarPorEmpresa(cliente.getEmpresaByIdempresa().getIdempresa());
+
+        List<Integer> lista = new ArrayList<>();
+
+        for(ClienteEntity c : listaClientes)
+        {
+            lista.add(c.getIdcliente());
+        }
+
+        List<OperacionEntity> listaOperaciones = this.operacionRepository.buscarPorEmpresa(lista);
+        List<OperacionEntity> listaOperacionesFiltrada = new ArrayList<>();
+
+        for(OperacionEntity ope : listaOperaciones)
+        {
+            if(filtro.)
+        }
 
         model.addAttribute("clientePortal", cliente);
         model.addAttribute("listaClientes", listaClientes);

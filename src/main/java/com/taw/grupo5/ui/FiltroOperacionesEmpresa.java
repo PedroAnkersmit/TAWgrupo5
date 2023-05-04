@@ -12,4 +12,28 @@ public class FiltroOperacionesEmpresa {
             this.fechaMinima = Date.valueOf(LocalDate.of(1900, 1, 1));
             this.fechaMaxima = Date.valueOf(LocalDate.of(2100, 1, 1));
         }
+
+    public String getTipoCliente() {
+        return tipoCliente;
+    }
+
+    public void setTipoCliente(String tipoCliente) {
+        this.tipoCliente = tipoCliente;
+    }
+
+    public Date getFechaMinima() {
+        return fechaMinima;
+    }
+
+    public void setFechaMinima(Date fechaMinima) {
+        this.fechaMinima = fechaMinima;
+    }
+
+    public Date getFechaMaxima() {
+        return fechaMaxima;
+    }
+
+    public void setFechaMaxima(Date fechaMaxima) {
+        this.fechaMaxima = fechaMaxima;
+    }
 }
