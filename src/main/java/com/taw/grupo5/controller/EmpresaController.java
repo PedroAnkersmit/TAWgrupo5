@@ -181,7 +181,7 @@ public class EmpresaController {
 
         for(OperacionEntity ope : listaOperaciones)
         {
-            if(filtro.)
+            if(filtro.getFechaMinima() <= ope.getFecha() )
         }
 
         model.addAttribute("clientePortal", cliente);
