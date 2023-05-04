@@ -158,7 +158,12 @@ public class ClienteEntity {
         dto.setEmail(email);
         dto.setFechainicio(fechainicio);
         dto.setTelefono(telefono);
+        if(empresaByIdempresa != null){
         dto.setEmpresa(empresaByIdempresa.toDTO());
+        }else {
+            dto.setEmpresa(null);
+        }
+
         dto.setTipoCliente(tipoclienteByIdtipocliente.toDTO());
         return dto;
     }

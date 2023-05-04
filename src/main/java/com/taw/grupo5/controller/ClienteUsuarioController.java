@@ -1,7 +1,8 @@
 package com.taw.grupo5.controller;
 
 import com.taw.grupo5.dao.*;
-import com.taw.grupo5.entity.*;
+import com.taw.grupo5.dto.*;
+import com.taw.grupo5.service.ClienteUsuarioService;
 import com.taw.grupo5.ui.FiltroOperaciones;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,78 +22,55 @@ Created by Pedro Ankersmit Carrión
 @Controller
 @RequestMapping("/clienteHome")
 public class ClienteUsuarioController {
+
     @Autowired
-    protected ClienteRepository clienteRepository;
-    @Autowired
-    protected CuentaRepository cuentaRepository;
-    @Autowired
-    protected OperacionesRepository operacionesRepository;
-    @Autowired
-    protected TransferenciasRepository transferenciasRepository;
-    @Autowired
-    protected CambioDivisaRepository cambioDivisaRepository;
-    @Autowired
-    protected SacarDineroRepository sacarDineroRepository;
+    protected ClienteUsuarioService clienteUsuarioService;
 
     @GetMapping("/")
     String doMostrar(Model model, HttpSession httpSession){
-        ClienteEntity usuario = (ClienteEntity) httpSession.getAttribute("user");
+        ClienteDTO usuario = (ClienteDTO) httpSession.getAttribute("user");
         return doMostrarFiltrado(model,usuario,null);
     }
     @PostMapping("/filtrar")
     String doFiltrar(Model model,@RequestParam("idCliente") Integer idCliente, @ModelAttribute("filtro") FiltroOperaciones filtro){
-        ClienteEntity usuario = clienteRepository.findById(idCliente).orElse(null);
+        ClienteDTO usuario = clienteUsuarioService.doBuscarUsuario(idCliente);
         return doMostrarFiltrado(model,usuario,filtro);
     }
-    String doMostrarFiltrado(Model model, ClienteEntity usuario, FiltroOperaciones filtro){
-        List<CuentaEntity> cuentasUsuario = cuentaRepository.buscarPorCliente(usuario.getIdcliente());;
-        List<OperacionEntity> operaciones = new ArrayList<>();
+    String doMostrarFiltrado(Model model, ClienteDTO usuario, FiltroOperaciones filtro){
+        List<CuentaDTO> cuentasUsuario = clienteUsuarioService.doBuscarCuentasPorUsuario(usuario.getIdCliente());;
+
         if(filtro == null){
             filtro = new FiltroOperaciones(true, true, true);
         }
-
-        if(filtro.isCambioDivisa()&& filtro.isTransferencia() && filtro.isSacarDinero()){
-            operaciones = operacionesRepository.buscarTodas(usuario.getIdcliente());
-        } else if(filtro.isCambioDivisa() && filtro.isTransferencia()){
-            operaciones = operacionesRepository.buscarCambioDivisaTransferencia(usuario.getIdcliente());
-        } else if(filtro.isCambioDivisa() && filtro.isSacarDinero()){
-            operaciones = operacionesRepository.buscarCambioDivisaSacarDinero(usuario.getIdcliente());
-        } else if (filtro.isTransferencia() && filtro.isSacarDinero()) {
-            operaciones = operacionesRepository.buscarSacarDineroTransferencia(usuario.getIdcliente());
-        } else{
-            if(filtro.isCambioDivisa() && !filtro.isTransferencia() && !filtro.isSacarDinero()) {
-            operaciones = operacionesRepository.buscarCambioDivisa(usuario.getIdcliente());
-        } else if (filtro.isTransferencia() && !filtro.isCambioDivisa() && !filtro.isSacarDinero() ) {
-            operaciones = operacionesRepository.buscarTransferencia(usuario.getIdcliente());
-
-        } else if(filtro.isSacarDinero() && !filtro.isTransferencia() && !filtro.isCambioDivisa()) {
-            operaciones = operacionesRepository.buscarSacarDinero(usuario.getIdcliente());
-        }
-        }
+        List<TransferenciaDTO> transferenciaDTOS = clienteUsuarioService.doFiltrarTransferencias(filtro,usuario);
+        List<CambioDivisaDTO> cambioDivisaDTOS = clienteUsuarioService.doFiltrarCambios(filtro,usuario);
+        List<SacardineroDTO> sacardineroDTOS = clienteUsuarioService.doFiltrarExtracciones(filtro,usuario);
 
 
         model.addAttribute("user", usuario);
         model.addAttribute("accounts", cuentasUsuario);
-        model.addAttribute("operations", operaciones);
+        model.addAttribute("transfer", transferenciaDTOS);
+        model.addAttribute("change", cambioDivisaDTOS);
+        model.addAttribute("extract", sacardineroDTOS);
         model.addAttribute("filtro", filtro);
         return "clienteHome";
     }
     @GetMapping("/editar")
     String doEditar(Model model, @RequestParam("id") Integer idcliente){
-        ClienteEntity usuario = clienteRepository.findById(idcliente).orElse(null);
+        ClienteDTO usuario = clienteUsuarioService.doBuscarUsuario(idcliente);
         model.addAttribute("user",usuario);
         return "clienteEditar";
     }
     @PostMapping("/guardar")
-    String doGuardar(Model model, @ModelAttribute("user") ClienteEntity usuario){
-        clienteRepository.save(usuario);
+    String doGuardar(Model model, @ModelAttribute("user") ClienteDTO usuario){
+        clienteUsuarioService.doGuardarUsuario(usuario);
         return "/clienteHome";
     }
 
    @GetMapping("/transfer")
     String doTransfer(Model model, @RequestParam("id") Integer idCuenta){
-        CuentaEntity cuentaEmisor = cuentaRepository.findById(idCuenta).orElse(null);
-        List<CuentaEntity> listaCuentas = cuentaRepository.findAll();
+        CuentaDTO cuentaEmisor = clienteUsuarioService.doBuscarCuenta(idCuenta);
+        List<CuentaDTO> listaCuentas = clienteUsuarioService.doCogerCuentas();
         listaCuentas.remove(cuentaEmisor);
         model.addAttribute("idAccount", idCuenta);
         model.addAttribute("accountList", listaCuentas);
@@ -102,17 +80,12 @@ public class ClienteUsuarioController {
    @PostMapping("/transferView")
     String doViewTransfer(Model model, @RequestParam("idCuentaReceptora") Integer idCuentaReceptora,
                              @RequestParam("idAccount") Integer idCuentaEmisora){
-        CuentaEntity cuentaReceptora = cuentaRepository.findById(idCuentaReceptora).orElse(null);
-        CuentaEntity cuentaEmisora = cuentaRepository.findById(idCuentaEmisora).orElse(null);
+        CuentaDTO cuentaReceptora = clienteUsuarioService.doBuscarCuenta(idCuentaReceptora);
+        CuentaDTO cuentaEmisora = clienteUsuarioService.doBuscarCuenta(idCuentaEmisora);
 
-        OperacionEntity operacion = new OperacionEntity();
+        OperacionDTO operacion= clienteUsuarioService.doCrearOperacion(cuentaEmisora);
 
-        operacion.setIdcliente(cuentaEmisora.getClienteByIdcliente().getIdcliente());
-        operacion.setCuentaByIdcuenta(cuentaEmisora);
-        operacion.setFecha(new Date(System.currentTimeMillis()));
-        operacionesRepository.save(operacion);
-
-        model.addAttribute("idOperacion", operacion.getIdoperacion());
+        model.addAttribute("idOperacion", operacion.getIdOperacion());
         model.addAttribute("receiveAccount", cuentaReceptora);
         model.addAttribute("sendAccount", cuentaEmisora);
     return "clienteSeleccionarCantidad";
@@ -123,47 +96,34 @@ public class ClienteUsuarioController {
                              @RequestParam("idAccount") Integer idCuentaEmisora,
                              @RequestParam("cantidad") Integer cantidad, @RequestParam("idOperation") Integer idOp) {
         BigDecimal c = new BigDecimal(cantidad);
-        CuentaEntity cuentaReceptora = cuentaRepository.findById(idCuentaReceptora).orElse(null);
-        CuentaEntity cuentaEmisora = cuentaRepository.findById(idCuentaEmisora).orElse(null);
-        OperacionEntity op = operacionesRepository.findById(idOp).orElse(null);
+        CuentaDTO cuentaReceptora = clienteUsuarioService.doBuscarCuenta(idCuentaReceptora);
+        CuentaDTO cuentaEmisora = clienteUsuarioService.doBuscarCuenta(idCuentaEmisora);
+        OperacionDTO op = clienteUsuarioService.doBuscarOperacion(idOp);
 
-        TransferenciaEntity transferencia = new TransferenciaEntity();
-
-        transferencia.setOperacionByIdoperacion(op);
-        operacionesRepository.save(op);
-        transferencia.setFechainstruccion(new Date(System.currentTimeMillis()));
-        transferencia.setFechaejecucion(new Date(System.currentTimeMillis()));
+        TransferenciaDTO transferencia = new TransferenciaDTO();
+        transferencia.setFechaInstruccion(new Date(System.currentTimeMillis()));
+        transferencia.setFechaEjecucion(new Date(System.currentTimeMillis()));
         transferencia.setCantidad(c);
+        transferencia.setOperacion(op.getIdOperacion());
 
         cuentaReceptora.setSaldo(cuentaReceptora.getSaldo().add(c));
 
         cuentaEmisora.setSaldo(cuentaEmisora.getSaldo().subtract(c));
-        List<TransferenciaEntity> transfers = new ArrayList<>();
-        transfers.add(transferencia);
-        transferenciasRepository.save(transferencia);
-        op.setTransferenciasByIdoperacion(transfers);
-        op.setCambiodivisasByIdoperacion(new ArrayList<CambiodivisaEntity>());
-        op.setSacardinerosByIdoperacion(new ArrayList<SacardineroEntity>());
-        operacionesRepository.save(op);
-        cuentaRepository.save(cuentaReceptora);
-        cuentaRepository.save(cuentaEmisora);
-        return doMostrarFiltrado(model, cuentaEmisora.getClienteByIdcliente(), null);
+
+        transferencia = clienteUsuarioService.doGuardarTransferencia(transferencia);
+        clienteUsuarioService.doGuardarOperacion(op,transferencia,null,null);
+        clienteUsuarioService.doGuardarCuenta(cuentaReceptora);
+        clienteUsuarioService.doGuardarCuenta(cuentaEmisora);
+        return doMostrarFiltrado(model, cuentaEmisora.getCliente(), null);
    }
     @GetMapping("/cambio")
     String doCambiar(Model model, @RequestParam("id") Integer idCuenta){
 
-        CuentaEntity cuenta = cuentaRepository.findById(idCuenta).orElse(null);
+        CuentaDTO cuenta = clienteUsuarioService.doBuscarCuenta(idCuenta);
 
-        OperacionEntity operacion = new OperacionEntity();
+        OperacionDTO operacion = clienteUsuarioService.doCrearOperacion(cuenta);
 
-
-        operacion.setIdcliente(cuenta.getClienteByIdcliente().getIdcliente());
-        operacion.setCuentaByIdcuenta(cuenta);
-        operacion.setFecha(new Date(System.currentTimeMillis()));
-
-        operacionesRepository.save(operacion);
-
-        model.addAttribute("operationId", operacion.getIdoperacion());
+        model.addAttribute("operationId", operacion.getIdOperacion());
         model.addAttribute("accountId", idCuenta);
         return "clienteCambioDivisa";
     }
@@ -172,15 +132,11 @@ public class ClienteUsuarioController {
                             @RequestParam("cantidad") Integer cantidad,
                             @RequestParam("idOperacion") Integer operacion){
 
-        CuentaEntity cuenta = cuentaRepository.findById(idCuenta).orElse(null);
-        OperacionEntity op = operacionesRepository.findById(operacion).orElse(null);
-
+        CuentaDTO cuenta = clienteUsuarioService.doBuscarCuenta(idCuenta);
+        OperacionDTO op = clienteUsuarioService.doBuscarOperacion(operacion);
         BigDecimal c = new BigDecimal(cantidad).multiply(new BigDecimal(0.91)).setScale(2, RoundingMode.HALF_DOWN);
-
-        CambiodivisaEntity cambiodivisa = new CambiodivisaEntity();
-        operacionesRepository.save(op);
-
-        cambiodivisa.setOperacionByIdoperacion(op);
+        CambioDivisaDTO cambiodivisa = new CambioDivisaDTO();
+        cambiodivisa.setOperacion(op);
         cambiodivisa.setMonedaventa("dolar");
         cambiodivisa.setMonedacompra("euro");
         cambiodivisa.setCantidadventa(cantidad.toString());
@@ -189,17 +145,12 @@ public class ClienteUsuarioController {
         cambiodivisa.setComision("0");
 
         cuenta.setSaldo(cuenta.getSaldo().add(c));
-        List<CambiodivisaEntity> cambios = new ArrayList<>();
-        cambios.add(cambiodivisa);
-        cambioDivisaRepository.save(cambiodivisa);
-        op.setCambiodivisasByIdoperacion(cambios);
-        op.setSacardinerosByIdoperacion(new ArrayList<SacardineroEntity>());
-        op.setTransferenciasByIdoperacion(new ArrayList<TransferenciaEntity>());
-        operacionesRepository.save(op);
 
-        cuentaRepository.save(cuenta);
+        cambiodivisa = clienteUsuarioService.doGuardarCambioDivisa(cambiodivisa);
+        clienteUsuarioService.doGuardarOperacion(op, null, cambiodivisa, null);
+        clienteUsuarioService.doGuardarCuenta(cuenta);
 
-        return doMostrarFiltrado(model, cuenta.getClienteByIdcliente(), null);
+        return doMostrarFiltrado(model, cuenta.getCliente(), null);
     }
 }
 

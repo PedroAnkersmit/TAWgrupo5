@@ -1,6 +1,4 @@
-<%@ page import="com.taw.grupo5.entity.CuentaEntity" %>
-<%@ page import="com.taw.grupo5.entity.OperacionEntity" %>
-<%@ page import="com.taw.grupo5.entity.TransferenciaEntity" %>
+<%@ page import="com.taw.grupo5.dto.CuentaDTO" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
@@ -18,11 +16,10 @@
 </head>
 <body>
 <%
-    CuentaEntity cuentaReceptora = (CuentaEntity) request.getAttribute("receiveAccount");
-    CuentaEntity cuentaEmisora = (CuentaEntity) request.getAttribute("sendAccount");
+    CuentaDTO cuentaReceptora = (CuentaDTO) request.getAttribute("receiveAccount");
+    CuentaDTO cuentaEmisora = (CuentaDTO) request.getAttribute("sendAccount");
     Integer idOperacion = (Integer) request.getAttribute("idOperacion");
-    //TransferenciaEntity transferencia = (TransferenciaEntity) request.getAttribute("transference");
-    //<input type="number" name="idTransferencia" value="transferencia.getIdoperacion()" hidden>
+
 
 %>
 <h1>Introduce la cantidad a Transferir</h1>

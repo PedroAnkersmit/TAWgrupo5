@@ -2,10 +2,13 @@ package com.taw.grupo5.dto;/*
 Created by Pedro Ankersmit Carrión
 */
 
+
+
 import java.sql.Date;
+import java.util.List;
 
 public class OperacionDTO {
-    private OperacionDTO idOperacion;
+    private Integer idOperacion;
 
     private Date fecha;
 
@@ -13,11 +16,12 @@ public class OperacionDTO {
 
     private CuentaDTO cuenta;
 
-    public OperacionDTO getIdOperacion() {
+
+    public Integer getIdOperacion() {
         return idOperacion;
     }
 
-    public void setIdOperacion(OperacionDTO idOperacion) {
+    public void setIdOperacion(Integer idOperacion) {
         this.idOperacion = idOperacion;
     }
 
@@ -44,4 +48,6 @@ public class OperacionDTO {
     public void setCuenta(CuentaDTO cuenta) {
         this.cuenta = cuenta;
     }
+
+
 }

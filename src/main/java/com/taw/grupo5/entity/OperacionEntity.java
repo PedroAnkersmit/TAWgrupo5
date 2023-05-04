@@ -2,10 +2,14 @@ package com.taw.grupo5.entity;/*
 Created by Pedro Ankersmit Carrión
 */
 
+import com.taw.grupo5.dto.CambioDivisaDTO;
 import com.taw.grupo5.dto.OperacionDTO;
+import com.taw.grupo5.dto.SacardineroDTO;
+import com.taw.grupo5.dto.TransferenciaDTO;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -14,7 +18,7 @@ public class OperacionEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "idoperacion", nullable = false)
-    private OperacionDTO idoperacion;
+    private Integer idoperacion;
     @Basic
     @Column(name = "fecha", nullable = true)
     private Date fecha;
@@ -31,11 +35,11 @@ public class OperacionEntity {
     @OneToMany(mappedBy = "operacionByIdoperacion")
     private List<TransferenciaEntity> transferenciasByIdoperacion;
 
-    public OperacionDTO getIdoperacion() {
+    public Integer getIdoperacion() {
         return idoperacion;
     }
 
-    public void setIdoperacion(OperacionDTO idoperacion) {
+    public void setIdoperacion(Integer idoperacion) {
         this.idoperacion = idoperacion;
     }
 
@@ -115,6 +119,7 @@ public class OperacionEntity {
         dto.setIdOperacion(idoperacion);
         dto.setCliente(idcliente);
         dto.setCuenta(cuentaByIdcuenta.toDTO());
+
         return dto;
     }
 }

@@ -15,7 +15,7 @@ public class TransferenciaDTO implements Serializable {
 
     private Date fechaEjecucion;
 
-    private OperacionDTO operacion;
+    private Integer operacion;
 
     public Integer getIdTransferencia() {
         return idTransferencia;
@@ -49,11 +49,11 @@ public class TransferenciaDTO implements Serializable {
         this.fechaEjecucion = fechaEjecucion;
     }
 
-    public OperacionDTO getOperacion() {
+    public Integer getOperacion() {
         return operacion;
     }
 
-    public void setOperacion(OperacionDTO operacion) {
+    public void setOperacion(Integer operacion) {
         this.operacion = operacion;
     }
 }

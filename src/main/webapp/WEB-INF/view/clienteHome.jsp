@@ -1,6 +1,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page import="java.util.List" %>
-<%@ page import="com.taw.grupo5.entity.*" %>
+<%@ page import="com.taw.grupo5.dto.*" %>
 
 
 <%--
@@ -14,9 +14,11 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    ClienteEntity usuario = (ClienteEntity) request.getAttribute("user");
-    List<CuentaEntity> cuentas = (List<CuentaEntity>) request.getAttribute("accounts");
-    List<OperacionEntity> operaciones = (List<OperacionEntity>) request.getAttribute("operations");
+    ClienteDTO usuario = (ClienteDTO) request.getAttribute("user");
+    List<CuentaDTO> cuentas = (List<CuentaDTO>) request.getAttribute("accounts");
+    List<TransferenciaDTO> transferencias = (List<TransferenciaDTO>) request.getAttribute("transfers");
+    List<CambioDivisaDTO> cambios = (List<CambioDivisaDTO>) request.getAttribute("changes");
+    List<SacardineroDTO> extracciones = (List<SacardineroDTO>) request.getAttribute("extracts");
 %>
 <html>
 <head>
@@ -37,9 +39,9 @@
     </tr>
 
     <tr>
-        <td><%= usuario.getIdcliente()%>
+        <td><%= usuario.getIdCliente()%>
         </td>
-        <td><%= usuario.getIdconversacion()%>
+        <td><%= usuario.getIdConversacion()%>
         </td>
         <td><%= usuario.getNombre()%>
         </td>
@@ -49,7 +51,7 @@
         </td>
         <td><%= usuario.getFechainicio()%>
         </td>
-        <td><a href="/clienteHome/editar?id=<%= usuario.getIdcliente()%>"> Editar datos</a></td>
+        <td><a href="/clienteHome/editar?id=<%= usuario.getIdCliente()%>"> Editar datos</a></td>
     </tr>
 </table>
 <h1>Mis cuentas:</h1>
@@ -62,12 +64,12 @@
         <th>FECHA DE CIERRE</th>
     </tr>
     <%
-        for (CuentaEntity c : cuentas) {
+        for (CuentaDTO c : cuentas) {
     %>
     <tr>
         <td><%=c.getNumerocuenta()%>
         </td>
-        <td><%=c.getTipoestadoByIdestado().getNombre()%>
+        <td><%=c.getTipoEstado().getNombre()%>
         </td>
         <td><%=c.getSaldo()%>
         </td>
@@ -77,11 +79,11 @@
         </td>
         <td><a href="/clienteHome/transfer?id=<%=c.getIdcuenta()%>">Hacer transferecia</a></td>
         <td><a href="/clienteHome/cambio?id=<%=c.getIdcuenta()%>">Cambiar divisa</a> </td>
-        <% if (c.getTipoestadoByIdestado().getIdtipoestado() == 1) {
+        <% if (c.getTipoEstado().getIdTipoestado() == 1) {
         %>
         <td><a href="/solicitarActivacion?id=<%=c.getIdcuenta()%>">Solicitar Activacion</a></td>
         <%
-        } else if (c.getTipoestadoByIdestado().getIdtipoestado() == 4) {
+        } else if (c.getTipoEstado().getIdTipoestado() == 4) {
         %>
         <td><a href="/solicitarDesbloqueo?id=<%=c.getIdcuenta()%>">Solicitar Desbloqueo</a></td>
         <%
@@ -93,7 +95,7 @@
 </table>
 <h1>Mis operaciones:</h1>
 <form:form action="/clienteHome/filtrar" method="post" modelAttribute="filtro">
-    <input name="idCliente" value="<%=usuario.getIdcliente()%>" hidden>
+    <input name="idCliente" value="<%=usuario.getIdCliente()%>" hidden>
     Tipo de Operacion:</br>
     Transferencia <form:checkbox path="transferencia"/>
     Cambio de Divisa <form:checkbox path="cambioDivisa"/>
@@ -106,37 +108,47 @@
     <tr>
         <th>IDENTIFICADOR</th>
         <th>FECHA DE INSTRUCCION</th>
-        <th>TIPO</th>
+        <th>DETALLES</th>
     </tr>
     <%
-        for (OperacionEntity o : operaciones) {
+      if(transferencias != null){   for(TransferenciaDTO t : transferencias){
     %>
     <tr>
-        <td><%=o.getIdoperacion()%>
+        <td><%=t.getOperacion()%>
         </td>
-        <td><%=o.getFecha()%>
+        <td><%=t.getFechaInstruccion()%>
         </td>
-        <td><%
-            if (!o.getTransferenciasByIdoperacion().isEmpty()) {
-                for(TransferenciaEntity t : o.getTransferenciasByIdoperacion()){
-        %>
+        <td>
             <p>Transferencia:</p>
-            Fecha de Ejecucion: <%=t.getFechainstruccion()%></br>
+            Fecha de Ejecucion: <%=t.getFechaEjecucion()%></br>
             Movimiento: <%=t.getCantidad()%></br>
             <%
                 }
-            }
-            if (!o.getSacardinerosByIdoperacion().isEmpty()) {
-                for(SacardineroEntity s : o.getSacardinerosByIdoperacion()){
+                }%>
+        </td>
+    </tr>
+    <tr> <%
+        if(extracciones != null){
+            for(SacardineroDTO s : extracciones){
             %>
+        <td><%=s.getOperacion()%>
+        </td>
+        <td><%=s.getOperacion().getFecha()%>
+        </td>
             <p>Extracción:</p>
             Cantidad: <%=s.getCantidad()%>
             <%
-                }
-            }
-            if(!o.getCambiodivisasByIdoperacion().isEmpty()){
-                for(CambiodivisaEntity c: o.getCambiodivisasByIdoperacion()){
+                }}
             %>
+    </td>
+    </tr>
+    <tr><%
+            if(cambios != null){    for(CambioDivisaDTO c: cambios){
+            %>
+        <td><%=c.getOperacion()%>
+        </td>
+        <td><%=c.getOperacion().getFecha()%>
+        </td>
             <p>Cambio de Divisa</p>
             Moneda
             Comprada: <%=c.getCantidadcompra()%> <%=c.getMonedacompra()%> </br>
@@ -144,15 +156,10 @@
             Vendida: <%=c.getCantidadventa()%> <%=c.getMonedaventa()%> </br>
             Comision: <%=c.getComision()%>
             <%
-                }
-            }
+                }}
             %>
         </td>
     </tr>
-
-    <%
-        }
-    %>
 </table>
 
 

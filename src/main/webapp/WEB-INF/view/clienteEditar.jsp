@@ -20,12 +20,13 @@
 
 <h1>Mis Datos:</h1>
 <form:form action="/clienteHome/guardar" modelAttribute="user" method="post">
-    <form:hidden path="idcliente"/>
-    <form:hidden path="idconversacion"/>
+    <form:hidden path="idCliente"/>
+    <form:hidden path="idConversacion"/>
     Nombre: <form:input path="nombre" size="30px" maxlength="30"/> </br>
     Email: <form:input path="email" size="60px" maxlength="80"/> </br>
     Telefono: <form:input path="telefono" size="30px" maxlength="15"/> </br>
-    <form:hidden path="tipoclienteByIdtipocliente"/>
+    <form:hidden path="tipocliente"/>
+    <form:hidden path="empresa"/>
     <form:hidden path="fechainicio"/>
     <form:button>Guardar</form:button>
 </form:form>

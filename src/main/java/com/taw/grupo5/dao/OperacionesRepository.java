@@ -35,7 +35,8 @@ public interface OperacionesRepository extends JpaRepository<OperacionEntity, In
     @Query("select o from OperacionEntity o where o.idcliente = :idcliente")
     List<OperacionEntity> buscarTodas(@Param("idcliente") Integer idcliente);
 
-
+    @Query("select o from OperacionEntity o where o.cuentaByIdcuenta.idcuenta = :idcuenta")
+    List<OperacionEntity> buscarPorCuenta(@Param("idcuenta") Integer idcuenta);
 
 
 }

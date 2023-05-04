@@ -1,5 +1,5 @@
-<%@ page import="com.taw.grupo5.entity.CuentaEntity" %>
 <%@ page import="java.util.List" %>
+<%@ page import="com.taw.grupo5.dto.CuentaDTO" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
@@ -19,7 +19,7 @@
 
 <%
     Integer idCuentaEmisora = (Integer) request.getAttribute("idAccount");
-    List<CuentaEntity> listaCuentas = (List<CuentaEntity>) request.getAttribute("accountList");
+    List<CuentaDTO> listaCuentas = (List<CuentaDTO>) request.getAttribute("accountList");
 %>
 <h1>Selecciona una cuenta</h1>
 
@@ -27,7 +27,7 @@
     <input name="idAccount" value="<%=idCuentaEmisora%>" hidden>
     Numero de Cuenta: <select name="idCuentaReceptora" required="true">
         <%
-            for(CuentaEntity c: listaCuentas){
+            for(CuentaDTO c: listaCuentas){
         %>
         <option value="<%=c.getIdcuenta()%>"> <%=c.getNumerocuenta()%></option>
     <%

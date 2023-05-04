@@ -58,7 +58,7 @@ public class LoginService {
         cuenta.setTipoestadoByIdestado(tipoEstadoRepository.getById(cuentaDTO.getTipoEstado().getIdTipoestado()));
         cuenta.setOperacionsByIdcuenta(new ArrayList<>());
         cuenta.setClienteByIdcliente(cliente);
-
+        cuentaRepository.save(cuenta);
         cuentas.add(cuenta);
 
         cliente.setIdcliente(clienteDTO.getIdCliente());
@@ -70,9 +70,9 @@ public class LoginService {
         cliente.setEmpresaByIdempresa(null);
         cliente.setCuentasByIdcliente(cuentas);
         cliente.setConversacionsByIdcliente(new ArrayList<>());
-
-        cuentaRepository.save(cuenta);
         clienteRepository.save(cliente);
+
+
 
     }
 
