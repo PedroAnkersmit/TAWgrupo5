@@ -1,9 +1,11 @@
-package com.taw.grupo5.entity;
+package com.taw.grupo5.entity;/*
+Created by Pedro Ankersmit Carrión
+*/
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Date;
-import java.util.List;
+import java.util.Collection;
 
 @Entity
 @Table(name = "cuenta", schema = "grupo5", catalog = "")
@@ -31,7 +33,7 @@ public class CuentaEntity {
     @JoinColumn(name = "idestado", referencedColumnName = "idtipoestado", nullable = false)
     private TipoestadoEntity tipoestadoByIdestado;
     @OneToMany(mappedBy = "cuentaByIdcuenta")
-    private List<OperacionEntity> operacionsByIdcuenta;
+    private Collection<OperacionEntity> operacionsByIdcuenta;
 
     public Integer getIdcuenta() {
         return idcuenta;
@@ -78,14 +80,15 @@ public class CuentaEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        CuentaEntity that = (CuentaEntity) o;
+        CuentaEntity cuenta = (CuentaEntity) o;
 
-        if (idcuenta != null ? !idcuenta.equals(that.idcuenta) : that.idcuenta != null) return false;
-        if (numerocuenta != null ? !numerocuenta.equals(that.numerocuenta) : that.numerocuenta != null) return false;
-        if (saldo != null ? !saldo.equals(that.saldo) : that.saldo != null) return false;
-        if (fechaapertura != null ? !fechaapertura.equals(that.fechaapertura) : that.fechaapertura != null)
+        if (idcuenta != null ? !idcuenta.equals(cuenta.idcuenta) : cuenta.idcuenta != null) return false;
+        if (numerocuenta != null ? !numerocuenta.equals(cuenta.numerocuenta) : cuenta.numerocuenta != null)
             return false;
-        if (fechacierre != null ? !fechacierre.equals(that.fechacierre) : that.fechacierre != null) return false;
+        if (saldo != null ? !saldo.equals(cuenta.saldo) : cuenta.saldo != null) return false;
+        if (fechaapertura != null ? !fechaapertura.equals(cuenta.fechaapertura) : cuenta.fechaapertura != null)
+            return false;
+        if (fechacierre != null ? !fechacierre.equals(cuenta.fechacierre) : cuenta.fechacierre != null) return false;
 
         return true;
     }
@@ -116,11 +119,11 @@ public class CuentaEntity {
         this.tipoestadoByIdestado = tipoestadoByIdestado;
     }
 
-    public List<OperacionEntity> getOperacionsByIdcuenta() {
+    public Collection<OperacionEntity> getOperacionsByIdcuenta() {
         return operacionsByIdcuenta;
     }
 
-    public void setOperacionsByIdcuenta(List<OperacionEntity> operacionsByIdcuenta) {
+    public void setOperacionsByIdcuenta(Collection<OperacionEntity> operacionsByIdcuenta) {
         this.operacionsByIdcuenta = operacionsByIdcuenta;
     }
 }

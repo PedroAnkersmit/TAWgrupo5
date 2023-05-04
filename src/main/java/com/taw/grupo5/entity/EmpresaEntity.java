@@ -1,8 +1,10 @@
-package com.taw.grupo5.entity;
+package com.taw.grupo5.entity;/*
+Created by Pedro Ankersmit Carrión
+*/
 
 import javax.persistence.*;
 import java.sql.Date;
-import java.util.List;
+import java.util.Collection;
 
 @Entity
 @Table(name = "empresa", schema = "grupo5", catalog = "")
@@ -18,7 +20,7 @@ public class EmpresaEntity {
     @Column(name = "fechacierre", nullable = true)
     private Date fechacierre;
     @OneToMany(mappedBy = "empresaByIdempresa")
-    private List<ClienteEntity> clientesByIdempresa;
+    private Collection<ClienteEntity> clientesByIdempresa;
 
     public Integer getIdempresa() {
         return idempresa;
@@ -66,11 +68,11 @@ public class EmpresaEntity {
         return result;
     }
 
-    public List<ClienteEntity> getClientesByIdempresa() {
+    public Collection<ClienteEntity> getClientesByIdempresa() {
         return clientesByIdempresa;
     }
 
-    public void setClientesByIdempresa(List<ClienteEntity> clientesByIdempresa) {
+    public void setClientesByIdempresa(Collection<ClienteEntity> clientesByIdempresa) {
         this.clientesByIdempresa = clientesByIdempresa;
     }
 }

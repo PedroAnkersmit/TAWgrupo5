@@ -14,22 +14,22 @@ public interface OperacionesRepository extends JpaRepository<OperacionEntity, In
     @Query("select o from OperacionEntity o where o.idcliente = :idcliente")
     List<OperacionEntity> buscarPorCliente(@Param("idcliente") Integer idcliente);
 
-    @Query("select o from OperacionEntity  o where o.cambiodivisaByIdoperacion is not null and o.transferenciaByIdoperacion is null and o.sacardineroByIdoperacion is null and o.idcliente = :idcliente")
+    @Query("select o from OperacionEntity  o where o.cambiodivisasByIdoperacion is not empty and o.transferenciasByIdoperacion is empty and o.sacardinerosByIdoperacion is empty and o.idcliente = :idcliente")
     List<OperacionEntity> buscarCambioDivisa(@Param("idcliente") Integer idcliente);
 
-    @Query("select o from OperacionEntity  o where o.sacardineroByIdoperacion is not null  and o.cambiodivisaByIdoperacion is null  and  o.transferenciaByIdoperacion is null and o.idcliente = :idcliente")
+    @Query("select o from OperacionEntity  o where o.sacardinerosByIdoperacion is not empty  and o.cambiodivisasByIdoperacion is empty  and  o.transferenciasByIdoperacion is empty and o.idcliente = :idcliente")
     List<OperacionEntity> buscarSacarDinero( @Param("idcliente") Integer idcliente);
 
-    @Query("select o from OperacionEntity  o where o.transferenciaByIdoperacion is not null  and o.cambiodivisaByIdoperacion is null and o.sacardineroByIdoperacion is null and o.idcliente = :idcliente")
+    @Query("select o from OperacionEntity  o where o.transferenciasByIdoperacion is not empty  and o.cambiodivisasByIdoperacion is empty and o.sacardinerosByIdoperacion is empty and o.idcliente = :idcliente")
     List<OperacionEntity> buscarTransferencia(@Param("idcliente") Integer idcliente);
 
-    @Query("select o from OperacionEntity o where o.idcliente = :idcliente and (o.cambiodivisaByIdoperacion is not null or (o.sacardineroByIdoperacion is not null ))")
+    @Query("select o from OperacionEntity o where o.idcliente = :idcliente and (o.cambiodivisasByIdoperacion is not empty or (o.sacardinerosByIdoperacion is not empty ))")
     List<OperacionEntity> buscarCambioDivisaSacarDinero(@Param("idcliente") Integer idcliente);
 
-    @Query("select o from OperacionEntity o where o.idcliente = :idcliente and (o.cambiodivisaByIdoperacion is not null or (o.transferenciaByIdoperacion is not null ))")
+    @Query("select o from OperacionEntity o where o.idcliente = :idcliente and (o.cambiodivisasByIdoperacion is not empty or (o.transferenciasByIdoperacion is not empty ))")
     List<OperacionEntity> buscarCambioDivisaTransferencia(@Param("idcliente") Integer idcliente);
 
-    @Query("select o from OperacionEntity o where o.idcliente = :idcliente and (o.sacardineroByIdoperacion is not null  or o.transferenciaByIdoperacion is not null )")
+    @Query("select o from OperacionEntity o where o.idcliente = :idcliente and (o.sacardinerosByIdoperacion is not empty  or o.transferenciasByIdoperacion is not empty )")
     List<OperacionEntity> buscarSacarDineroTransferencia(@Param("idcliente") Integer idcliente);
 
     @Query("select o from OperacionEntity o where o.idcliente = :idcliente")

@@ -1,7 +1,10 @@
-package com.taw.grupo5.entity;
+package com.taw.grupo5.entity;/*
+Created by Pedro Ankersmit Carrión
+*/
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.Collection;
 
 @Entity
 @Table(name = "operacion", schema = "grupo5", catalog = "")
@@ -16,15 +19,15 @@ public class OperacionEntity {
     @Basic
     @Column(name = "idcliente", nullable = false)
     private Integer idcliente;
-    @OneToOne(mappedBy = "operacionByIdoperacion")
-    private CambiodivisaEntity cambiodivisaByIdoperacion;
+    @OneToMany(mappedBy = "operacionByIdoperacion")
+    private Collection<CambiodivisaEntity> cambiodivisasByIdoperacion;
     @ManyToOne
     @JoinColumn(name = "idcuenta", referencedColumnName = "idcuenta", nullable = false)
     private CuentaEntity cuentaByIdcuenta;
-    @OneToOne(mappedBy = "operacionByIdoperacion")
-    private SacardineroEntity sacardineroByIdoperacion;
-    @OneToOne(mappedBy = "operacionByIdoperacion")
-    private TransferenciaEntity transferenciaByIdoperacion;
+    @OneToMany(mappedBy = "operacionByIdoperacion")
+    private Collection<SacardineroEntity> sacardinerosByIdoperacion;
+    @OneToMany(mappedBy = "operacionByIdoperacion")
+    private Collection<TransferenciaEntity> transferenciasByIdoperacion;
 
     public Integer getIdoperacion() {
         return idoperacion;
@@ -55,11 +58,12 @@ public class OperacionEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        OperacionEntity that = (OperacionEntity) o;
+        OperacionEntity operacion = (OperacionEntity) o;
 
-        if (idoperacion != null ? !idoperacion.equals(that.idoperacion) : that.idoperacion != null) return false;
-        if (fecha != null ? !fecha.equals(that.fecha) : that.fecha != null) return false;
-        if (idcliente != null ? !idcliente.equals(that.idcliente) : that.idcliente != null) return false;
+        if (idoperacion != null ? !idoperacion.equals(operacion.idoperacion) : operacion.idoperacion != null)
+            return false;
+        if (fecha != null ? !fecha.equals(operacion.fecha) : operacion.fecha != null) return false;
+        if (idcliente != null ? !idcliente.equals(operacion.idcliente) : operacion.idcliente != null) return false;
 
         return true;
     }
@@ -72,12 +76,12 @@ public class OperacionEntity {
         return result;
     }
 
-    public CambiodivisaEntity getCambiodivisaByIdoperacion() {
-        return cambiodivisaByIdoperacion;
+    public Collection<CambiodivisaEntity> getCambiodivisasByIdoperacion() {
+        return cambiodivisasByIdoperacion;
     }
 
-    public void setCambiodivisaByIdoperacion(CambiodivisaEntity cambiodivisaByIdoperacion) {
-        this.cambiodivisaByIdoperacion = cambiodivisaByIdoperacion;
+    public void setCambiodivisasByIdoperacion(Collection<CambiodivisaEntity> cambiodivisasByIdoperacion) {
+        this.cambiodivisasByIdoperacion = cambiodivisasByIdoperacion;
     }
 
     public CuentaEntity getCuentaByIdcuenta() {
@@ -88,19 +92,19 @@ public class OperacionEntity {
         this.cuentaByIdcuenta = cuentaByIdcuenta;
     }
 
-    public SacardineroEntity getSacardineroByIdoperacion() {
-        return sacardineroByIdoperacion;
+    public Collection<SacardineroEntity> getSacardinerosByIdoperacion() {
+        return sacardinerosByIdoperacion;
     }
 
-    public void setSacardineroByIdoperacion(SacardineroEntity sacardineroByIdoperacion) {
-        this.sacardineroByIdoperacion = sacardineroByIdoperacion;
+    public void setSacardinerosByIdoperacion(Collection<SacardineroEntity> sacardinerosByIdoperacion) {
+        this.sacardinerosByIdoperacion = sacardinerosByIdoperacion;
     }
 
-    public TransferenciaEntity getTransferenciaByIdoperacion() {
-        return transferenciaByIdoperacion;
+    public Collection<TransferenciaEntity> getTransferenciasByIdoperacion() {
+        return transferenciasByIdoperacion;
     }
 
-    public void setTransferenciaByIdoperacion(TransferenciaEntity transferenciaByIdoperacion) {
-        this.transferenciaByIdoperacion = transferenciaByIdoperacion;
+    public void setTransferenciasByIdoperacion(Collection<TransferenciaEntity> transferenciasByIdoperacion) {
+        this.transferenciasByIdoperacion = transferenciasByIdoperacion;
     }
 }

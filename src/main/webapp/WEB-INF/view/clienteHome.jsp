@@ -1,8 +1,6 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ page import="com.taw.grupo5.entity.ClienteEntity" %>
 <%@ page import="java.util.List" %>
-<%@ page import="com.taw.grupo5.entity.CuentaEntity" %>
-<%@ page import="com.taw.grupo5.entity.OperacionEntity" %>
+<%@ page import="com.taw.grupo5.entity.*" %>
 
 
 <%--
@@ -122,27 +120,35 @@
         <td><%=o.getFecha()%>
         </td>
         <td><%
-            if (o.getTransferenciaByIdoperacion() != null) {
+            if (!o.getTransferenciasByIdoperacion().isEmpty()) {
+                for(TransferenciaEntity t : o.getTransferenciasByIdoperacion()){
         %>
             <p>Transferencia:</p>
-            Fecha de Ejecucion: <%=o.getTransferenciaByIdoperacion().getFechainstruccion()%></br>
-            Movimiento: <%=o.getTransferenciaByIdoperacion().getCantidad()%></br>
+            Fecha de Ejecucion: <%=t.getFechainstruccion()%></br>
+            Movimiento: <%=t.getCantidad()%></br>
             <%
-            } else if (o.getSacardineroByIdoperacion() != null) {
+                }
+            }
+            if (!o.getSacardinerosByIdoperacion().isEmpty()) {
+                for(SacardineroEntity s : o.getSacardinerosByIdoperacion()){
             %>
             <p>Extracción:</p>
-            Cantidad: <%=o.getSacardineroByIdoperacion().getCantidad()%>
+            Cantidad: <%=s.getCantidad()%>
             <%
-            } else if(o.getCambiodivisaByIdoperacion() != null){
+                }
+            }
+            if(!o.getCambiodivisasByIdoperacion().isEmpty()){
+                for(CambiodivisaEntity c: o.getCambiodivisasByIdoperacion()){
             %>
             <p>Cambio de Divisa</p>
             Moneda
-            Comprada: <%=o.getCambiodivisaByIdoperacion().getCantidadcompra()%> <%=o.getCambiodivisaByIdoperacion().getMonedacompra()%> </br>
+            Comprada: <%=c.getCantidadcompra()%> <%=c.getMonedacompra()%> </br>
             Moneda
-            Vendida: <%=o.getCambiodivisaByIdoperacion().getCantidadventa()%> <%=o.getCambiodivisaByIdoperacion().getMonedaventa()%> </br>
-            Comision: <%=o.getCambiodivisaByIdoperacion().getComision()%>
+            Vendida: <%=c.getCantidadventa()%> <%=c.getMonedaventa()%> </br>
+            Comision: <%=c.getComision()%>
             <%
                 }
+            }
             %>
         </td>
     </tr>

@@ -14,6 +14,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.sql.Date;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 /*
 Created by Pedro Ankersmit Carrión
@@ -131,7 +132,7 @@ public class ClienteUsuarioController {
 
         TransferenciaEntity transferencia = new TransferenciaEntity();
 
-        transferencia.setIdoperacion(idOp);
+        transferencia.setOperacionByIdoperacion(op);
         operacionesRepository.save(op);
         transferencia.setFechainstruccion(new Date(System.currentTimeMillis()));
         transferencia.setFechaejecucion(new Date(System.currentTimeMillis()));
@@ -140,11 +141,12 @@ public class ClienteUsuarioController {
         cuentaReceptora.setSaldo(cuentaReceptora.getSaldo().add(c));
 
         cuentaEmisora.setSaldo(cuentaEmisora.getSaldo().subtract(c));
-
+        Collection<TransferenciaEntity> transfers = new ArrayList<>();
+        transfers.add(transferencia);
         transferenciasRepository.save(transferencia);
-        op.setTransferenciaByIdoperacion(transferencia);
-        op.setCambiodivisaByIdoperacion(null);
-        op.setSacardineroByIdoperacion(null);
+        op.setTransferenciasByIdoperacion(transfers);
+        op.setCambiodivisasByIdoperacion(new ArrayList<CambiodivisaEntity>());
+        op.setSacardinerosByIdoperacion(new ArrayList<SacardineroEntity>());
         operacionesRepository.save(op);
         cuentaRepository.save(cuentaReceptora);
         cuentaRepository.save(cuentaEmisora);
@@ -181,7 +183,7 @@ public class ClienteUsuarioController {
         CambiodivisaEntity cambiodivisa = new CambiodivisaEntity();
         operacionesRepository.save(op);
 
-        cambiodivisa.setIdoperacion(op.getIdoperacion());
+        cambiodivisa.setOperacionByIdoperacion(op);
         cambiodivisa.setMonedaventa("dolar");
         cambiodivisa.setMonedacompra("euro");
         cambiodivisa.setCantidadventa(cantidad.toString());
@@ -190,11 +192,12 @@ public class ClienteUsuarioController {
         cambiodivisa.setComision("0");
 
         cuenta.setSaldo(cuenta.getSaldo().add(c));
-
+        Collection<CambiodivisaEntity> cambios = new ArrayList<>();
+        cambios.add(cambiodivisa);
         cambioDivisaRepository.save(cambiodivisa);
-        op.setCambiodivisaByIdoperacion(cambiodivisa);
-        op.setTransferenciaByIdoperacion(null);
-        op.setSacardineroByIdoperacion(null);
+        op.setCambiodivisasByIdoperacion(cambios);
+        op.setSacardinerosByIdoperacion(new ArrayList<SacardineroEntity>());
+        op.setTransferenciasByIdoperacion(new ArrayList<TransferenciaEntity>());
         operacionesRepository.save(op);
 
         cuentaRepository.save(cuenta);
