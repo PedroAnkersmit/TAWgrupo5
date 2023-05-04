@@ -4,7 +4,7 @@ Created by Pedro Ankersmit Carrión
 
 import javax.persistence.*;
 import java.sql.Date;
-import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name = "operacion", schema = "grupo5", catalog = "")
@@ -20,14 +20,14 @@ public class OperacionEntity {
     @Column(name = "idcliente", nullable = false)
     private Integer idcliente;
     @OneToMany(mappedBy = "operacionByIdoperacion")
-    private Collection<CambiodivisaEntity> cambiodivisasByIdoperacion;
+    private List<CambiodivisaEntity> cambiodivisasByIdoperacion;
     @ManyToOne
     @JoinColumn(name = "idcuenta", referencedColumnName = "idcuenta", nullable = false)
     private CuentaEntity cuentaByIdcuenta;
     @OneToMany(mappedBy = "operacionByIdoperacion")
-    private Collection<SacardineroEntity> sacardinerosByIdoperacion;
+    private List<SacardineroEntity> sacardinerosByIdoperacion;
     @OneToMany(mappedBy = "operacionByIdoperacion")
-    private Collection<TransferenciaEntity> transferenciasByIdoperacion;
+    private List<TransferenciaEntity> transferenciasByIdoperacion;
 
     public Integer getIdoperacion() {
         return idoperacion;
@@ -76,11 +76,11 @@ public class OperacionEntity {
         return result;
     }
 
-    public Collection<CambiodivisaEntity> getCambiodivisasByIdoperacion() {
+    public List<CambiodivisaEntity> getCambiodivisasByIdoperacion() {
         return cambiodivisasByIdoperacion;
     }
 
-    public void setCambiodivisasByIdoperacion(Collection<CambiodivisaEntity> cambiodivisasByIdoperacion) {
+    public void setCambiodivisasByIdoperacion(List<CambiodivisaEntity> cambiodivisasByIdoperacion) {
         this.cambiodivisasByIdoperacion = cambiodivisasByIdoperacion;
     }
 
@@ -92,19 +92,19 @@ public class OperacionEntity {
         this.cuentaByIdcuenta = cuentaByIdcuenta;
     }
 
-    public Collection<SacardineroEntity> getSacardinerosByIdoperacion() {
+    public List<SacardineroEntity> getSacardinerosByIdoperacion() {
         return sacardinerosByIdoperacion;
     }
 
-    public void setSacardinerosByIdoperacion(Collection<SacardineroEntity> sacardinerosByIdoperacion) {
+    public void setSacardinerosByIdoperacion(List<SacardineroEntity> sacardinerosByIdoperacion) {
         this.sacardinerosByIdoperacion = sacardinerosByIdoperacion;
     }
 
-    public Collection<TransferenciaEntity> getTransferenciasByIdoperacion() {
+    public List<TransferenciaEntity> getTransferenciasByIdoperacion() {
         return transferenciasByIdoperacion;
     }
 
-    public void setTransferenciasByIdoperacion(Collection<TransferenciaEntity> transferenciasByIdoperacion) {
+    public void setTransferenciasByIdoperacion(List<TransferenciaEntity> transferenciasByIdoperacion) {
         this.transferenciasByIdoperacion = transferenciasByIdoperacion;
     }
 }

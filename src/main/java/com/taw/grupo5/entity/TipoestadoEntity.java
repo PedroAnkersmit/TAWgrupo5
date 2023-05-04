@@ -3,7 +3,7 @@ Created by Pedro Ankersmit Carrión
 */
 
 import javax.persistence.*;
-import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name = "tipoestado", schema = "grupo5", catalog = "")
@@ -16,7 +16,7 @@ public class TipoestadoEntity {
     @Column(name = "nombre", nullable = false, length = 45)
     private String nombre;
     @OneToMany(mappedBy = "tipoestadoByIdestado")
-    private Collection<CuentaEntity> cuentasByIdtipoestado;
+    private List<CuentaEntity> cuentasByIdtipoestado;
 
     public Integer getIdtipoestado() {
         return idtipoestado;
@@ -54,11 +54,11 @@ public class TipoestadoEntity {
         return result;
     }
 
-    public Collection<CuentaEntity> getCuentasByIdtipoestado() {
+    public List<CuentaEntity> getCuentasByIdtipoestado() {
         return cuentasByIdtipoestado;
     }
 
-    public void setCuentasByIdtipoestado(Collection<CuentaEntity> cuentasByIdtipoestado) {
+    public void setCuentasByIdtipoestado(List<CuentaEntity> cuentasByIdtipoestado) {
         this.cuentasByIdtipoestado = cuentasByIdtipoestado;
     }
 }

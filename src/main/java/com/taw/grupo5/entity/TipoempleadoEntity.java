@@ -3,7 +3,7 @@ Created by Pedro Ankersmit Carrión
 */
 
 import javax.persistence.*;
-import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name = "tipoempleado", schema = "grupo5", catalog = "")
@@ -16,7 +16,7 @@ public class TipoempleadoEntity {
     @Column(name = "puesto", nullable = false, length = 50)
     private String puesto;
     @OneToMany(mappedBy = "tipoempleadoByIdtipoempleado")
-    private Collection<EmpleadoEntity> empleadosByIdtipoempleado;
+    private List<EmpleadoEntity> empleadosByIdtipoempleado;
 
     public Integer getIdtipoempleado() {
         return idtipoempleado;
@@ -55,11 +55,11 @@ public class TipoempleadoEntity {
         return result;
     }
 
-    public Collection<EmpleadoEntity> getEmpleadosByIdtipoempleado() {
+    public List<EmpleadoEntity> getEmpleadosByIdtipoempleado() {
         return empleadosByIdtipoempleado;
     }
 
-    public void setEmpleadosByIdtipoempleado(Collection<EmpleadoEntity> empleadosByIdtipoempleado) {
+    public void setEmpleadosByIdtipoempleado(List<EmpleadoEntity> empleadosByIdtipoempleado) {
         this.empleadosByIdtipoempleado = empleadosByIdtipoempleado;
     }
 }

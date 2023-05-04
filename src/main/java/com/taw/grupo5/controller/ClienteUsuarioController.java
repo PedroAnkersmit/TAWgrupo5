@@ -14,7 +14,6 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.sql.Date;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 /*
 Created by Pedro Ankersmit Carrión
@@ -49,9 +48,7 @@ public class ClienteUsuarioController {
         List<CuentaEntity> cuentasUsuario = cuentaRepository.buscarPorCLiente(usuario.getIdcliente());;
         List<OperacionEntity> operaciones = new ArrayList<>();
         if(filtro == null){
-            filtro = new FiltroOperaciones(true,true,true,BigDecimal.ZERO);
-        } else if(filtro.getCantidad() == null){
-            filtro.setCantidad(BigDecimal.ZERO);
+            filtro = new FiltroOperaciones(true, true, true);
         }
 
         if(filtro.isCambioDivisa()&& filtro.isTransferencia() && filtro.isSacarDinero()){
@@ -141,7 +138,7 @@ public class ClienteUsuarioController {
         cuentaReceptora.setSaldo(cuentaReceptora.getSaldo().add(c));
 
         cuentaEmisora.setSaldo(cuentaEmisora.getSaldo().subtract(c));
-        Collection<TransferenciaEntity> transfers = new ArrayList<>();
+        List<TransferenciaEntity> transfers = new ArrayList<>();
         transfers.add(transferencia);
         transferenciasRepository.save(transferencia);
         op.setTransferenciasByIdoperacion(transfers);
@@ -192,7 +189,7 @@ public class ClienteUsuarioController {
         cambiodivisa.setComision("0");
 
         cuenta.setSaldo(cuenta.getSaldo().add(c));
-        Collection<CambiodivisaEntity> cambios = new ArrayList<>();
+        List<CambiodivisaEntity> cambios = new ArrayList<>();
         cambios.add(cambiodivisa);
         cambioDivisaRepository.save(cambiodivisa);
         op.setCambiodivisasByIdoperacion(cambios);

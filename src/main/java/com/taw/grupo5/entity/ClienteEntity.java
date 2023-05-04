@@ -4,7 +4,7 @@ Created by Pedro Ankersmit Carrión
 
 import javax.persistence.*;
 import java.sql.Date;
-import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name = "cliente", schema = "grupo5", catalog = "")
@@ -35,9 +35,9 @@ public class ClienteEntity {
     @JoinColumn(name = "idempresa", referencedColumnName = "idempresa")
     private EmpresaEntity empresaByIdempresa;
     @OneToMany(mappedBy = "clienteByIdcliente")
-    private Collection<ConversacionEntity> conversacionsByIdcliente;
+    private List<ConversacionEntity> conversacionsByIdcliente;
     @OneToMany(mappedBy = "clienteByIdcliente")
-    private Collection<CuentaEntity> cuentasByIdcliente;
+    private List<CuentaEntity> cuentasByIdcliente;
 
     public Integer getIdcliente() {
         return idcliente;
@@ -132,19 +132,19 @@ public class ClienteEntity {
         this.empresaByIdempresa = empresaByIdempresa;
     }
 
-    public Collection<ConversacionEntity> getConversacionsByIdcliente() {
+    public List<ConversacionEntity> getConversacionsByIdcliente() {
         return conversacionsByIdcliente;
     }
 
-    public void setConversacionsByIdcliente(Collection<ConversacionEntity> conversacionsByIdcliente) {
+    public void setConversacionsByIdcliente(List<ConversacionEntity> conversacionsByIdcliente) {
         this.conversacionsByIdcliente = conversacionsByIdcliente;
     }
 
-    public Collection<CuentaEntity> getCuentasByIdcliente() {
+    public List<CuentaEntity> getCuentasByIdcliente() {
         return cuentasByIdcliente;
     }
 
-    public void setCuentasByIdcliente(Collection<CuentaEntity> cuentasByIdcliente) {
+    public void setCuentasByIdcliente(List<CuentaEntity> cuentasByIdcliente) {
         this.cuentasByIdcliente = cuentasByIdcliente;
     }
 }
