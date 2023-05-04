@@ -165,7 +165,7 @@ public class EmpresaController {
     @GetMapping("/portal/filtrar")
     public String portalEmpleadoFiltrado(@RequestParam("id") Integer idCliente, Model model, FiltroOperacionesEmpresa)
     {
-        FiltroOperacionesEmpresa filtro;
+        FiltroOperacionesEmpresa filtro = new FiltroOperacionesEmpresa();
         ClienteEntity cliente = this.clienteRepository.findById(idCliente).orElse(null);
         List<ClienteEntity> listaClientes = this.clienteRepository.buscarPorEmpresa(cliente.getEmpresaByIdempresa().getIdempresa());
 
@@ -181,7 +181,7 @@ public class EmpresaController {
 
         for(OperacionEntity ope : listaOperaciones)
         {
-            if(filtro.getFechaMinima() <= ope.getFecha())
+            if(filtro.getFechaMinima().getTime() <= ope.getFecha().getTime())
             {
 
             }
