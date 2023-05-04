@@ -17,8 +17,8 @@
 
 <form method="post" action="/cajero/transferencia">
   <input name="idCuenta" hidden="true" value="<%=cuenta.getIdcuenta()%>">
-  <input name="cantidad" type="number" min="1" max="<%=cuenta.getSaldo()%>">
-  <input name="idDestino" type="number">
+  Cantidad: <input name="cantidad" type="number" min="1" max="<%=cuenta.getSaldo()%>">
+  Cuenta destino: <input name="idDestino" type="number">
   <button>Enviar dinero</button>
 </form>
 

@@ -29,8 +29,10 @@
           <td><%= c.getNumerocuenta() %></td>
           <td><%= c.getSaldo() %></td>
           <td><%= c.getTipoestadoByIdestado().getNombre()%></td>
-          <td><a href="/cajero/datos/operaciones?idCuenta=<%= c.getIdcuenta() %>">Ver operaciones</a></td>
 
+          <% if(c.getTipoestadoByIdestado().getNombre().equals("operativa")){ %> <td><a href="/cajero/datos/operaciones?idCuenta=<%= c.getIdcuenta() %>">Ver operaciones</a></td>
+          <% } else if(c.getTipoestadoByIdestado().getNombre().equals("bloqueada")){ %> <td><a href="/cajero/solicitudDesbloqueo?idCuenta=<%= c.getIdcuenta() %>">Solicitar desbloqueo</a></td>
+          <% } %>
         <%}%>
       </tr>
 
