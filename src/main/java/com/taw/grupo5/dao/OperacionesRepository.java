@@ -14,17 +14,27 @@ public interface OperacionesRepository extends JpaRepository<OperacionEntity, In
     @Query("select o from OperacionEntity o where o.idcliente = :idcliente")
     List<OperacionEntity> buscarPorCliente(@Param("idcliente") Integer idcliente);
 
-    @Query("select o from OperacionEntity  o where o.cambiodivisaByIdoperacion is not null and o.transferenciaByIdoperacion is null and o.idcliente = :idcliente")
+    @Query("select o from OperacionEntity  o where o.cambiodivisaByIdoperacion is not null and o.transferenciaByIdoperacion is null and o.sacardineroByIdoperacion is null and o.idcliente = :idcliente")
     List<OperacionEntity> buscarCambioDivisa(@Param("idcliente") Integer idcliente);
 
-    @Query("select o from OperacionEntity  o where o.sacardineroByIdoperacion is not null and o.sacardineroByIdoperacion.cantidad >= :quantity and o.idcliente = :idcliente")
-    List<OperacionEntity> buscarSacarDinero(@Param("quantity") BigDecimal cantidad, @Param("idcliente") Integer idcliente);
+    @Query("select o from OperacionEntity  o where o.sacardineroByIdoperacion is not null  and o.cambiodivisaByIdoperacion is null  and  o.transferenciaByIdoperacion is null and o.idcliente = :idcliente")
+    List<OperacionEntity> buscarSacarDinero( @Param("idcliente") Integer idcliente);
 
-    @Query("select o from OperacionEntity  o where o.transferenciaByIdoperacion is not null and o.transferenciaByIdoperacion.cantidad >= :quantity and o.idcliente = :idcliente")
-    List<OperacionEntity> buscarTransferencia(@Param("quantity") BigDecimal cantidad, @Param("idcliente") Integer idcliente);
+    @Query("select o from OperacionEntity  o where o.transferenciaByIdoperacion is not null  and o.cambiodivisaByIdoperacion is null and o.sacardineroByIdoperacion is null and o.idcliente = :idcliente")
+    List<OperacionEntity> buscarTransferencia(@Param("idcliente") Integer idcliente);
 
-    @Query("select o from OperacionEntity o where o.idcliente = :idcliente and o.transferenciaByIdoperacion.cantidad >= :quantity or o.sacardineroByIdoperacion.cantidad >= :quantity or o.cambiodivisaByIdoperacion.cantidadventa >= :quantity")
-    List<OperacionEntity> buscarPorCantidad(@Param("quantity") BigDecimal cantidad, @Param("idcliente") Integer idcliente);
+    @Query("select o from OperacionEntity o where o.idcliente = :idcliente and (o.cambiodivisaByIdoperacion is not null or (o.sacardineroByIdoperacion is not null ))")
+    List<OperacionEntity> buscarCambioDivisaSacarDinero(@Param("idcliente") Integer idcliente);
+
+    @Query("select o from OperacionEntity o where o.idcliente = :idcliente and (o.cambiodivisaByIdoperacion is not null or (o.transferenciaByIdoperacion is not null ))")
+    List<OperacionEntity> buscarCambioDivisaTransferencia(@Param("idcliente") Integer idcliente);
+
+    @Query("select o from OperacionEntity o where o.idcliente = :idcliente and (o.sacardineroByIdoperacion is not null  or o.transferenciaByIdoperacion is not null )")
+    List<OperacionEntity> buscarSacarDineroTransferencia(@Param("idcliente") Integer idcliente);
+
+    @Query("select o from OperacionEntity o where o.idcliente = :idcliente")
+    List<OperacionEntity> buscarTodas(@Param("idcliente") Integer idcliente);
+
 
 
 

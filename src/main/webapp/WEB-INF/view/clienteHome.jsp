@@ -122,13 +122,13 @@
         <td><%=o.getFecha()%>
         </td>
         <td><%
-            if (o.getCambiodivisaByIdoperacion() == null && o.getSacardineroByIdoperacion() == null && o.getTransferenciaByIdoperacion() != null) {
+            if (o.getTransferenciaByIdoperacion() != null) {
         %>
             <p>Transferencia:</p>
             Fecha de Ejecucion: <%=o.getTransferenciaByIdoperacion().getFechainstruccion()%></br>
             Movimiento: <%=o.getTransferenciaByIdoperacion().getCantidad()%></br>
             <%
-            } else if (o.getCambiodivisaByIdoperacion() == null && o.getTransferenciaByIdoperacion() == null && o.getSacardineroByIdoperacion() != null) {
+            } else if (o.getSacardineroByIdoperacion() != null) {
             %>
             <p>Extracción:</p>
             Cantidad: <%=o.getSacardineroByIdoperacion().getCantidad()%>

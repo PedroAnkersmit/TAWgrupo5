@@ -47,61 +47,30 @@ public class ClienteUsuarioController {
     String doMostrarFiltrado(Model model, ClienteEntity usuario, FiltroOperaciones filtro){
         List<CuentaEntity> cuentasUsuario = cuentaRepository.buscarPorCLiente(usuario.getIdcliente());;
         List<OperacionEntity> operaciones = new ArrayList<>();
-
-        if(filtro != null && filtro.getCantidad() == null){
-            filtro.setCantidad(BigDecimal.ZERO);
-        }
         if(filtro == null){
-            filtro = new FiltroOperaciones();
-            filtro.setCambioDivisa(true);
-            filtro.setSacarDinero(true);
-            filtro.setTransferencia(true);
+            filtro = new FiltroOperaciones(true,true,true,BigDecimal.ZERO);
+        } else if(filtro.getCantidad() == null){
             filtro.setCantidad(BigDecimal.ZERO);
         }
-            if (filtro.isCambioDivisa()) {
 
-                for (OperacionEntity o : operacionesRepository.buscarCambioDivisa(usuario.getIdcliente())) {
-                    if (!operaciones.contains(o)) {
-                        operaciones.add(o);
-                    }
-                    }
+        if(filtro.isCambioDivisa()&& filtro.isTransferencia() && filtro.isSacarDinero()){
+            operaciones = operacionesRepository.buscarTodas(usuario.getIdcliente());
+        } else if(filtro.isCambioDivisa() && filtro.isTransferencia()){
+            operaciones = operacionesRepository.buscarCambioDivisaTransferencia(usuario.getIdcliente());
+        } else if(filtro.isCambioDivisa() && filtro.isSacarDinero()){
+            operaciones = operacionesRepository.buscarCambioDivisaSacarDinero(usuario.getIdcliente());
+        } else if (filtro.isTransferencia() && filtro.isSacarDinero()) {
+            operaciones = operacionesRepository.buscarSacarDineroTransferencia(usuario.getIdcliente());
+        } else{
+            if(filtro.isCambioDivisa() && !filtro.isTransferencia() && !filtro.isSacarDinero()) {
+            operaciones = operacionesRepository.buscarCambioDivisa(usuario.getIdcliente());
+        } else if (filtro.isTransferencia() && !filtro.isCambioDivisa() && !filtro.isSacarDinero() ) {
+            operaciones = operacionesRepository.buscarTransferencia(usuario.getIdcliente());
 
-            } else{
-                for (OperacionEntity o : operacionesRepository.buscarCambioDivisa(usuario.getIdcliente())) {
-                    if (!operaciones.contains(o)) {
-                        operaciones.remove(o);
-                    }
-                }
-            }
-            if (filtro.isSacarDinero()) {
-                for (OperacionEntity o : operacionesRepository.buscarSacarDinero(filtro.getCantidad(), usuario.getIdcliente())) {
-                    if (!operaciones.contains(o)) {
-                        operaciones.add(o);
-                    }
-                }
-            } else{
-                for (OperacionEntity o : operacionesRepository.buscarSacarDinero(filtro.getCantidad(), usuario.getIdcliente())) {
-                    if (!operaciones.contains(o)) {
-                        operaciones.remove(o);
-                    }
-                }
-            }
-            if (filtro.isTransferencia()) {
-
-                for (OperacionEntity o : operacionesRepository.buscarTransferencia( filtro.getCantidad(), usuario.getIdcliente())) {
-                    if (!operaciones.contains(o)) {
-                        operaciones.add(o);
-                    }
-                }
-
-            } else {
-                for (OperacionEntity o : operacionesRepository.buscarTransferencia( filtro.getCantidad(), usuario.getIdcliente())) {
-                    if (!operaciones.contains(o)) {
-                        operaciones.remove(o);
-                    }
-                }
-            }
-
+        } else if(filtro.isSacarDinero() && !filtro.isTransferencia() && !filtro.isCambioDivisa()) {
+            operaciones = operacionesRepository.buscarSacarDinero(usuario.getIdcliente());
+        }
+        }
 
 
         model.addAttribute("user", usuario);
@@ -161,8 +130,9 @@ public class ClienteUsuarioController {
         OperacionEntity op = operacionesRepository.findById(idOp).orElse(null);
 
         TransferenciaEntity transferencia = new TransferenciaEntity();
-        operacionesRepository.save(op);
 
+        transferencia.setIdoperacion(idOp);
+        operacionesRepository.save(op);
         transferencia.setFechainstruccion(new Date(System.currentTimeMillis()));
         transferencia.setFechaejecucion(new Date(System.currentTimeMillis()));
         transferencia.setCantidad(c);
@@ -211,6 +181,7 @@ public class ClienteUsuarioController {
         CambiodivisaEntity cambiodivisa = new CambiodivisaEntity();
         operacionesRepository.save(op);
 
+        cambiodivisa.setIdoperacion(op.getIdoperacion());
         cambiodivisa.setMonedaventa("dolar");
         cambiodivisa.setMonedacompra("euro");
         cambiodivisa.setCantidadventa(cantidad.toString());

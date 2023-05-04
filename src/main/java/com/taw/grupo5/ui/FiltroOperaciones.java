@@ -18,7 +18,7 @@ public class FiltroOperaciones {
         cantidad = new BigDecimal(0);
     }
 
-    public FiltroOperaciones(boolean transferencia, boolean cambioDivisa, boolean sacarDinero, String fecha, BigDecimal cantidad) {
+    public FiltroOperaciones(boolean transferencia, boolean cambioDivisa, boolean sacarDinero, BigDecimal cantidad) {
         this.transferencia = transferencia;
         this.cambioDivisa = cambioDivisa;
         this.sacarDinero = sacarDinero;
