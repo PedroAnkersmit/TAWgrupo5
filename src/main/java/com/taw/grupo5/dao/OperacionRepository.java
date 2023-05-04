@@ -10,4 +10,7 @@ import java.util.List;
 public interface OperacionRepository extends JpaRepository<OperacionEntity, Integer> {
     @Query("select o from OperacionEntity o where o.idcliente = :idCliente")
     List<OperacionEntity> buscarPorCliente(@Param("idCliente") Integer idCliente);
+
+    @Query("select o from OperacionEntity o where o.idcliente in :lista")
+    List<OperacionEntity> buscarPorEmpresa(@Param("lista") List<Integer> lista);
 }
