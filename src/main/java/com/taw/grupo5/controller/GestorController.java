@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -57,7 +58,12 @@ public class GestorController {
         List<ClienteEntity> clienteEntityList = this.clienteRepository.buscarPorEmpresa(idEmpresa);
         model.addAttribute("listadoClientes", clienteEntityList);
 
-        List<OperacionEntity> operacionRepositoryList = this.operacionRepository.buscarPorCliente(idEmpresa);
+        List<Integer> listaIdClientes = new ArrayList<>();
+        for(ClienteEntity cliente : clienteEntityList) {
+            listaIdClientes.add(cliente.getIdcliente());
+        }
+
+        List<OperacionEntity> operacionRepositoryList = this.operacionRepository.buscarPorEmpresa(listaIdClientes);
         model.addAttribute("listaOperaciones", operacionRepositoryList);
 
         return "gestorEmpresa";
