@@ -68,4 +68,11 @@ public class GestorController {
 
         return "gestorEmpresa";
     }
+
+    @GetMapping("darAlta")
+    public String mostrarListadoDarDeAlta() {
+        
+
+        return "gestorDarAlta";
+    }
 }
