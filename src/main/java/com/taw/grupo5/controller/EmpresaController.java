@@ -256,6 +256,10 @@ public class EmpresaController {
         LocalDate today = LocalDate.now();
 
         BigDecimal balanceOriginal = transferencia.getOperacionByIdoperacion().getCuentaByIdcuenta().getSaldo();
+
+        if(balanceOriginal == null)
+            balanceOriginal = BigDecimal.valueOf(0);
+
         BigDecimal valorARestar = transferencia.getCantidad();
 
         transferencia.setFechainstruccion(Date.valueOf(today));

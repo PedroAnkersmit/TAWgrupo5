@@ -15,7 +15,7 @@
 <h1>Realizar transferencia</h1>
 
 <form:form action="/empresa/cambiodivisa/enviar" method="post" modelAttribute="cambiodivisa">
-        <form:hidden path="idoperacion"/>
+        <form:hidden path="idCambioDivisa"/>
         <form:hidden path="monedaventa"/>
         <form:hidden path="monedacompra"/>
         <form:hidden path="cantidadcompra"/>

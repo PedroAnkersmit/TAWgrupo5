@@ -15,7 +15,7 @@
 <h1>Realizar transferencia</h1>
 
 <form:form action="/empresa/transferencia/enviar" method="post" modelAttribute="transferencia">
-        <form:hidden path="idoperacion"/>
+        <form:hidden path="idTransferencia"/>
         Cantidad <form:input path="cantidad"/><br/>
         Cuenta destino <input/><br/>
         Fecha de ejecución: <form:input type="date" path="fechaejecucion"/><br/>
