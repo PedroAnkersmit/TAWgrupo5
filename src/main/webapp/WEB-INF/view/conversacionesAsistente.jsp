@@ -9,7 +9,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%  EmpleadoEntity empleado = (EmpleadoEntity) request.getAttribute("empleado");
+<%  //EmpleadoEntity empleado = (EmpleadoEntity) request.getAttribute("empleado");
+    EmpleadoEntity empleado = (EmpleadoEntity) pageContext.getSession().getAttribute("usuario");
     List<ConversacionEntity> lista = (List<ConversacionEntity>) request.getAttribute("lista"); %>
 <html>
 <head>
@@ -18,9 +19,11 @@
 <body>
     <h1>Conversaciones</h1>
 
+    <a href="/asistente/cerrarSesion"><button>Cerrar sesion</button></a>
     <%if(!empleado.getTipoempleadoByIdtipoempleado().getPuesto().equalsIgnoreCase("asistente")){ // NO es gestor%>
     <p>No tienes conversaciones porque no eres asistente.</p>
     <%}else{%>
+    <a href="/asistente/nuevoChat"><button>Crear nueva conversación</button></a>
     <p>Filtros:</p>
 
     <table border="1">

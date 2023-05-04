@@ -4,6 +4,7 @@ import com.taw.grupo5.dao.ClienteRepository;
 import com.taw.grupo5.dao.ConversacionRepository;
 import com.taw.grupo5.dao.EmpleadoRepository;
 import com.taw.grupo5.dao.MensajeRepository;
+import com.taw.grupo5.entity.ClienteEntity;
 import com.taw.grupo5.entity.ConversacionEntity;
 import com.taw.grupo5.entity.EmpleadoEntity;
 import com.taw.grupo5.entity.MensajeEntity;
@@ -41,36 +42,66 @@ public class AsistenteController {
 
      */
 
+    @GetMapping("/")
+    public String doIniciar(){
+        return "prueba";
+    }
 
-
-    /*
     @PostMapping("/login")
-    public String dologin(Model model, HttpSession session, @RequestParam("user")String usuario){
+    public String dologinCLIENTE(Model model, HttpSession session, @RequestParam("correo")String correo){
         String vuelta = "prueba";
 
-
-        EmpleadoEntity empleado = clienteRepository.autenticar(usuario);
-        if(empleado!=null){
-            vuelta = "redirect:/asistente";
-            model.addAttribute("empleado", empleado);
+        ClienteEntity cliente = clienteRepository.autenticar(correo);
+        if(cliente!=null){
+            vuelta = "redirect:/asistente/misconversaciones";
+            //model.addAttribute("empleado", empleado);
+            session.setAttribute("usuario", cliente);
         }
-
         return vuelta;
     }
-*/
+
+    @GetMapping("/login")
+    public String doLoginASISTENTE(Model model, HttpSession session){
+        String vuelta = "prueba";
+        EmpleadoEntity empleado = empleadoRepository.getById(2);
+        if(empleado!=null){
+            vuelta = "redirect:/asistente/conversaciones?id=2";
+            session.setAttribute("usuario", empleado);
+            //model.addAttribute("empleado", empleado);
+        }
+        return vuelta;
+    }
+
+    @GetMapping("/cerrarSesion")
+    public String doCerrarSesion(HttpSession session){
+        session.invalidate();
+        return "prueba";
+    }
+
+
+
+
     public void doChatear(Model model, int id_conversacion){
         model.addAttribute("conversacion", conversacionRepository.findById(id_conversacion).orElse(null));
         MensajeEntity nuevoMensaje = new MensajeEntity();
         model.addAttribute("mensaje", nuevoMensaje);
     }
+    public void doConversacion(Model model){
+        MensajeEntity nuevoMensaje = new MensajeEntity();
 
+        ConversacionEntity nuevaConversacion = new ConversacionEntity();
+        //model.addAttribute("conversacion", nuevaConversacion);
+        nuevoMensaje.setConversacionByIdconversacion(nuevaConversacion);
+
+        model.addAttribute("mensaje", nuevoMensaje);
+    }
     @PostMapping("/crear")
-    public String doCrearNuevaConversacion(@ModelAttribute("mensaje")MensajeEntity mensaje,
-                                           @ModelAttribute("conversacion")MensajeEntity conversacion) {
-
-        int id_conver = mensaje.getConversacionByIdconversacion().getIdconversacion();
+    public String doCrearNuevaConversacion(@ModelAttribute("mensaje")MensajeEntity mensaje) {
+        // UPDATE EN MENSAJE LA CONVERSACION
         String vuelta;
 
+        conversacionRepository.save(mensaje.getConversacionByIdconversacion());
+        //mensaje.setConversacionByIdconversacion(conversacion);
         formatearFechaYEnviarMensaje(mensaje);
 
         if(mensaje.getEnviadoporasistente()>0){             //si es asistente
@@ -78,7 +109,9 @@ public class AsistenteController {
         }else{                                              //si es cliente
             vuelta = "redirect:/asistente/conversar?id=";
         }
-        return vuelta + id_conver;
+
+        int idNuevaConversacion = mensaje.getConversacionByIdconversacion().getIdconversacion();
+        return vuelta + idNuevaConversacion;
     }
 
     @PostMapping("/enviar")
@@ -152,11 +185,8 @@ public class AsistenteController {
 
     @GetMapping("/nuevaConversacion")
     public String doNuevaConversacionCliente(Model model){
-        ConversacionEntity conversacion = new ConversacionEntity();
-        conversacionRepository.save(conversacion);
+        doConversacion(model);
 
-
-        doChatear(model, id_conversacion);
         model.addAttribute("esAsistente", 0);
         model.addAttribute("listaAsistentes", empleadoRepository.listarAsistentes());
         model.addAttribute("listaClientes", null);
@@ -166,7 +196,7 @@ public class AsistenteController {
     /*
             LADO DEL ASISTENTE
      */
-    @GetMapping("") //CAMBIAR TRAS HACER HTTPSESSION
+    @GetMapping("/conversaciones") //CAMBIAR TRAS HACER HTTPSESSION
     public String doListarAsistente(Model model, @RequestParam("id") int id_asistente){
         model.addAttribute("lista", conversacionRepository.findAll());
         model.addAttribute("empleado", empleadoRepository.findById(id_asistente).orElse(null));
@@ -186,8 +216,9 @@ public class AsistenteController {
     }
 
     @GetMapping("/nuevoChat")
-    public String doNuevaConversacionAsistente(Model model, @RequestParam("id") int id_conversacion){
-        doChatear(model, id_conversacion);
+    public String doNuevaConversacionAsistente(Model model){
+        doConversacion(model);
+
         model.addAttribute("esAsistente", 1);
         model.addAttribute("listaAsistentes", null);
         model.addAttribute("listaClientes", clienteRepository.findAll());

@@ -24,26 +24,33 @@
 
 
 <h1>Asunto:<%%></h1>
-
-<%if(esAsistente>0){     //Botones del asistente%>
-<a href="/asistente/volver?id=<%=conversacion.getEmpleadoByIdempleado().getIdempleado()%>">
-        <%}else{                //Botones del cliente%>
-    <a href="/asistente/misconversaciones?id=<%=conversacion.getClienteByIdcliente().getIdcliente()%>">
-        <%}%>
+<!-- SOLUCIONAR CON HTTPSESSION PORQUE DEPENDE DE QUIENE ESTÉ
+< %if(esAsistente>0){     //Botones del asistente%>
+<a href="/asistente/volver?id=< %=conversacion.getEmpleadoByIdempleado().getIdempleado()%>">
+        < %}else{                //Botones del cliente%>
+    <a href="/asistente/misconversaciones?id=< %=conversacion.getClienteByIdcliente().getIdcliente()%>">
+        < %}%>
         <button>Volver a conversaciones</button></a><br><br>
+-->
+<form:form modelAttribute="mensaje" action="/asistente/crear" method="post">
+        <form:hidden path="conversacionByIdconversacion.abierto" value="1"/>
+        Asunto:
+        <form:input path="conversacionByIdconversacion.asunto"></form:input>
 
-    <form:form modelAttribute="conversacion" action="/asistente/enviar" method="post">
-        <form:hidden pathvalue="1"/>
-    </form:form>
 
+    <%if(esAsistente>0){%>
+    <form:hidden path="conversacionByIdconversacion.empleadoByIdempleado" value="2"/> <!-- PROVISIONAL HASTA TENER HTTPSESSION-->
+    <%}else{%>
+    <form:hidden path="conversacionByIdconversacion.clienteByIdcliente" value="1"/> <!-- PROVISIONAL HASTA TENER HTTPSESSION-->
+    <%}%>
     <table border="1">
         <tr>
             <%if(esAsistente>0){     //Headings del asistente%>
             <th>Usted</th>
-            <th><%=conversacion.getClienteByIdcliente().getNombre()%></th>
+            <th>Cliente</th>
 
             <%}else{                //Headings del cliente%>
-            <th>Su asistente</th>
+            <th>Asistente</th>
             <th>Usted</th>
             <%}%>
 
@@ -68,23 +75,12 @@
         aunque están comentadas. Los < %=%> están separados por un espacio adrede para que no los reconozca.
         -->
 
-
-        <tr>
-            <td> </td>
-            <td> </td>
-            <td> </td>
-
-            <td> </td>
-            <td> </td>
-            <td> </td>
-        </tr>
     </table>
 
-<form:form modelAttribute="mensaje" action="/asistente/enviar" method="post">
         <form:hidden path="idmensaje"/>
         <form:textarea path="contenido"></form:textarea>
         <form:hidden path="enviadoporasistente" value="<%=esAsistente%>"/>
-        <form:hidden path="conversacionByIdconversacion.idconversacion" value="<%=conversacion.getIdconversacion()%>"/>
+        <form:hidden path="conversacionByIdconversacion"/>
     <!--
     Guardar la fecha en la base de datos: (separado por espacios adrede para evitar que lo detecte.
         Se usa SimpleDateFormat para que el campo ya se guarde como un String formateado en la base de datos
@@ -92,8 +88,15 @@
         hacer así pero resulta más complicado)
     < form :hidden path="fecha" value="< %= new SimpleDateFormat("dd/MM/yy, HH:mm").format(new Date())%>"/>
     -->
-    Enviar mensaje a: <form:select path="conversacionByIdconversacion.clienteByIdcliente"
-                                   items="${}"></form:select><br/>
+
+    Enviar mensaje a:
+    <%if(esAsistente>0){%>
+    <form:select path="conversacionByIdconversacion.clienteByIdcliente"
+                                   items="${listaClientes}" itemLabel="nombre" itemValue="idcliente"></form:select><br/>
+    <%}else{%>
+    <form:select path="conversacionByIdconversacion.empleadoByIdempleado"
+                                   items="${listaAsistentes}" itemLabel="nombre" itemValue="idcliente"></form:select><br/>
+    <%}%>
     <form:button>Enviar</form:button>
  </form:form>
 </body>

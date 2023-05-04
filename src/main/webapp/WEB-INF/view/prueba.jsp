@@ -9,14 +9,16 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>Login</title>
 </head>
 <body>
-<form>
+    <h2>Iniciar sesion como cliente:</h2><br>
     <form action="/asistente/login" method="post">
-        Usuario: <input type="text" name="user"></input> <br>
+        Correo: <input type="text" name="correo"> <br>
         <button type="submit">Iniciar sesión</button>
     </form>
-</form>
+
+    <h2>Iniciar sesion como asistente:</h2><br>
+    <a href="/asistente/login"><button>Iniciar sesion como asistente id=2</button></a>
 </body>
 </html>
