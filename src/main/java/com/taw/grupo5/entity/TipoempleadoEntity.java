@@ -2,6 +2,8 @@ package com.taw.grupo5.entity;/*
 Created by Pedro Ankersmit Carrión
 */
 
+import com.taw.grupo5.dto.TipoempleadoDTO;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -61,5 +63,11 @@ public class TipoempleadoEntity {
 
     public void setEmpleadosByIdtipoempleado(List<EmpleadoEntity> empleadosByIdtipoempleado) {
         this.empleadosByIdtipoempleado = empleadosByIdtipoempleado;
+    }
+    public TipoempleadoDTO toDTO(){
+        TipoempleadoDTO dto = new TipoempleadoDTO();
+        dto.setIdTipoempleado(idtipoempleado);
+        dto.setPuesto(puesto);
+        return dto;
     }
 }

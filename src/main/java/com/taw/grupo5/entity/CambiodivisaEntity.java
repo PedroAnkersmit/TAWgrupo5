@@ -2,6 +2,8 @@ package com.taw.grupo5.entity;/*
 Created by Pedro Ankersmit Carrión
 */
 
+import com.taw.grupo5.dto.CambioDivisaDTO;
+
 import javax.persistence.*;
 
 @Entity
@@ -115,5 +117,14 @@ public class CambiodivisaEntity {
 
     public void setOperacionByIdoperacion(OperacionEntity operacionByIdoperacion) {
         this.operacionByIdoperacion = operacionByIdoperacion;
+    }
+    public CambioDivisaDTO toDTO(){
+        CambioDivisaDTO dto = new CambioDivisaDTO();
+        dto.setIdCambioDivisa(idCambioDivisa);
+        dto.setCantidadcompra(cantidadcompra);
+        dto.setCantidadventa(cantidadventa);
+        dto.setComision(comision);
+        dto.setOperacion(operacionByIdoperacion.toDTO());
+        return dto;
     }
 }

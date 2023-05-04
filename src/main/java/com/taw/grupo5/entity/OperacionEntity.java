@@ -2,6 +2,8 @@ package com.taw.grupo5.entity;/*
 Created by Pedro Ankersmit Carrión
 */
 
+import com.taw.grupo5.dto.OperacionDTO;
+
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.List;
@@ -12,7 +14,7 @@ public class OperacionEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "idoperacion", nullable = false)
-    private Integer idoperacion;
+    private OperacionDTO idoperacion;
     @Basic
     @Column(name = "fecha", nullable = true)
     private Date fecha;
@@ -29,11 +31,11 @@ public class OperacionEntity {
     @OneToMany(mappedBy = "operacionByIdoperacion")
     private List<TransferenciaEntity> transferenciasByIdoperacion;
 
-    public Integer getIdoperacion() {
+    public OperacionDTO getIdoperacion() {
         return idoperacion;
     }
 
-    public void setIdoperacion(Integer idoperacion) {
+    public void setIdoperacion(OperacionDTO idoperacion) {
         this.idoperacion = idoperacion;
     }
 
@@ -106,5 +108,13 @@ public class OperacionEntity {
 
     public void setTransferenciasByIdoperacion(List<TransferenciaEntity> transferenciasByIdoperacion) {
         this.transferenciasByIdoperacion = transferenciasByIdoperacion;
+    }
+
+    public OperacionDTO toDTO(){
+        OperacionDTO dto = new OperacionDTO();
+        dto.setIdOperacion(idoperacion);
+        dto.setCliente(idcliente);
+        dto.setCuenta(cuentaByIdcuenta.toDTO());
+        return dto;
     }
 }

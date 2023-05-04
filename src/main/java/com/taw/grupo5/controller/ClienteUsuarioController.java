@@ -45,7 +45,7 @@ public class ClienteUsuarioController {
         return doMostrarFiltrado(model,usuario,filtro);
     }
     String doMostrarFiltrado(Model model, ClienteEntity usuario, FiltroOperaciones filtro){
-        List<CuentaEntity> cuentasUsuario = cuentaRepository.buscarPorCLiente(usuario.getIdcliente());;
+        List<CuentaEntity> cuentasUsuario = cuentaRepository.buscarPorCliente(usuario.getIdcliente());;
         List<OperacionEntity> operaciones = new ArrayList<>();
         if(filtro == null){
             filtro = new FiltroOperaciones(true, true, true);

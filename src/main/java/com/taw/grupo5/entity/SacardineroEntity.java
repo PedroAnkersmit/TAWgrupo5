@@ -2,6 +2,8 @@ package com.taw.grupo5.entity;/*
 Created by Pedro Ankersmit Carrión
 */
 
+import com.taw.grupo5.dto.SacardineroDTO;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 
@@ -62,5 +64,12 @@ public class SacardineroEntity {
 
     public void setOperacionByIdoperacion(OperacionEntity operacionByIdoperacion) {
         this.operacionByIdoperacion = operacionByIdoperacion;
+    }
+    public SacardineroDTO toDTO(){
+        SacardineroDTO dto = new SacardineroDTO();
+        dto.setIdSacarDinero(idSacarDinero);
+        dto.setCantidad(cantidad);
+        dto.setOperacion(operacionByIdoperacion.toDTO());
+        return dto;
     }
 }

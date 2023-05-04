@@ -11,5 +11,5 @@ Created by Pedro Ankersmit Carrión
 */
 public interface CuentaRepository extends JpaRepository<CuentaEntity, Integer> {
     @Query("select c from CuentaEntity c where c.clienteByIdcliente.idcliente = :id")
-    List<CuentaEntity> buscarPorCLiente(@Param("id") Integer idcliente);
+    List<CuentaEntity> buscarPorCliente(@Param("id") Integer idcliente);
 }

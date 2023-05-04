@@ -2,6 +2,8 @@ package com.taw.grupo5.entity;/*
 Created by Pedro Ankersmit Carrión
 */
 
+import com.taw.grupo5.dto.EmpresaDTO;
+
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.List;
@@ -74,5 +76,12 @@ public class EmpresaEntity {
 
     public void setClientesByIdempresa(List<ClienteEntity> clientesByIdempresa) {
         this.clientesByIdempresa = clientesByIdempresa;
+    }
+    public EmpresaDTO toDTO(){
+        EmpresaDTO dto = new EmpresaDTO();
+        dto.setIdempresa(idempresa);
+        dto.setFechacierre(fechacierre);
+        dto.setNombre(nombre);
+        return dto;
     }
 }

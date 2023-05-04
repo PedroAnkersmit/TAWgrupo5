@@ -2,6 +2,8 @@ package com.taw.grupo5.entity;/*
 Created by Pedro Ankersmit Carrión
 */
 
+import com.taw.grupo5.dto.TipoclienteDTO;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -62,4 +64,12 @@ public class TipoclienteEntity {
     public void setClientesByIdtipocliente(List<ClienteEntity> clientesByIdtipocliente) {
         this.clientesByIdtipocliente = clientesByIdtipocliente;
     }
+
+    public TipoclienteDTO toDTO(){
+        TipoclienteDTO dto = new TipoclienteDTO();
+        dto.setIdTipocliente(idtipocliente);
+        dto.setNombre(nombre);
+        return dto;
+    }
+
 }

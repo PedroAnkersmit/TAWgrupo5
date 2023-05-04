@@ -1,13 +1,12 @@
 package com.taw.grupo5.controller;
 
-import com.taw.grupo5.dao.ClienteRepository;
-import com.taw.grupo5.dao.CuentaRepository;
-import com.taw.grupo5.dao.TipoClienteRepository;
-import com.taw.grupo5.dao.TipoEstadoRepository;
-import com.taw.grupo5.entity.ClienteEntity;
-import com.taw.grupo5.entity.CuentaEntity;
-import com.taw.grupo5.entity.TipoclienteEntity;
-import com.taw.grupo5.entity.TipoestadoEntity;
+
+import com.taw.grupo5.dto.ClienteDTO;
+import com.taw.grupo5.dto.CuentaDTO;
+import com.taw.grupo5.dto.TipoclienteDTO;
+import com.taw.grupo5.dto.TipoestadoDTO;
+
+import com.taw.grupo5.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
-import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
@@ -27,13 +25,7 @@ Created by Pedro Ankersmit Carrión
 @Controller
 public class LoginController {
     @Autowired
-    protected ClienteRepository clienteRepository;
-    @Autowired
-    protected TipoClienteRepository tipoClienteRepository;
-    @Autowired
-    protected TipoEstadoRepository tipoEstadoRepository;
-    @Autowired
-    protected CuentaRepository cuentaRepository;
+    protected LoginService loginService;
 
     @GetMapping("/")
     String doLogin() {
@@ -48,7 +40,7 @@ public class LoginController {
     String doAutenticar( String mail,
                         Model model, HttpSession session) {
         String urlTo = "redirect:/clienteHome/";
-        ClienteEntity usuario = clienteRepository.buscarCuenta(mail);
+        ClienteDTO usuario = loginService.doBuscarUsuario(mail);
         if (usuario == null) {
             model.addAttribute("error", "Credenciales incorrectas");
             urlTo = "/";
@@ -68,9 +60,9 @@ public class LoginController {
                         @RequestParam("phone") String phone,@RequestParam("account") String nCuenta,
                         @RequestParam("date") String date,
                         Model model, HttpSession httpSession) throws ParseException {
-        ClienteEntity cliente = new ClienteEntity();
-        CuentaEntity cuenta = new CuentaEntity();
-        TipoestadoEntity tipoestadoEntity = tipoEstadoRepository.getById(1);
+        ClienteDTO cliente = new ClienteDTO();
+        CuentaDTO cuenta = new CuentaDTO();
+        TipoestadoDTO tipoestadoDTO = loginService.doBuscarTipoEstado(1);
 
         SimpleDateFormat obj = new SimpleDateFormat("dd-MM-yyyy");
         long epoch = obj.parse(date).getTime();
@@ -78,20 +70,19 @@ public class LoginController {
         cuenta.setFechaapertura(new java.sql.Date(System.currentTimeMillis()));
         cuenta.setFechacierre(fechaCierre);
         cuenta.setSaldo(BigDecimal.ZERO);
-        cuenta.setClienteByIdcliente(cliente);
-        cuenta.setTipoestadoByIdestado(tipoestadoEntity);
+        cuenta.setCliente(cliente);
+        cuenta.setTipoEstado(tipoestadoDTO);
         cuenta.setNumerocuenta(nCuenta);
 
-        TipoclienteEntity tipocliente = tipoClienteRepository.findById(1).orElse(null);
+        TipoclienteDTO tipocliente = loginService.doBuscarTipoCliente(1);
 
         cliente.setNombre(name);
         cliente.setEmail(mail);
         cliente.setTelefono(phone);
         cliente.setFechainicio(new java.sql.Date(System.currentTimeMillis()));
-        cliente.setTipoclienteByIdtipocliente(tipocliente);
+        cliente.setTipoCliente(tipocliente);
 
-        clienteRepository.save(cliente);
-        cuentaRepository.save(cuenta);
+        loginService.GuardarClienteYCuenta(cliente,cuenta);
         return doAutenticar(mail, model, httpSession);
     }
 }

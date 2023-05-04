@@ -2,6 +2,8 @@ package com.taw.grupo5.entity;/*
 Created by Pedro Ankersmit Carrión
 */
 
+import com.taw.grupo5.dto.TransferenciaDTO;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Date;
@@ -91,5 +93,14 @@ public class TransferenciaEntity {
 
     public void setOperacionByIdoperacion(OperacionEntity operacionByIdoperacion) {
         this.operacionByIdoperacion = operacionByIdoperacion;
+    }
+    public TransferenciaDTO toDTO(){
+        TransferenciaDTO dto = new TransferenciaDTO();
+        dto.setIdTransferencia(idTransferencia);
+        dto.setCantidad(cantidad);
+        dto.setFechaEjecucion(fechaejecucion);
+        dto.setFechaInstruccion(fechainstruccion);
+        dto.setOperacion(operacionByIdoperacion.getIdoperacion());
+        return dto;
     }
 }

@@ -2,6 +2,8 @@ package com.taw.grupo5.entity;/*
 Created by Pedro Ankersmit Carrión
 */
 
+import com.taw.grupo5.dto.CuentaDTO;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Date;
@@ -125,5 +127,17 @@ public class CuentaEntity {
 
     public void setOperacionsByIdcuenta(List<OperacionEntity> operacionsByIdcuenta) {
         this.operacionsByIdcuenta = operacionsByIdcuenta;
+    }
+
+    public CuentaDTO toDTO(){
+        CuentaDTO dto = new CuentaDTO();
+        dto.setIdcuenta(idcuenta);
+        dto.setFechaapertura(fechaapertura);
+        dto.setFechacierre(fechacierre);
+        dto.setNumerocuenta(numerocuenta);
+        dto.setSaldo(saldo);
+        dto.setTipoEstado(tipoestadoByIdestado.toDTO());
+        dto.setCliente(clienteByIdcliente.toDTO());
+        return dto;
     }
 }

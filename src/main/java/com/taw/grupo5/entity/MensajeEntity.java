@@ -2,6 +2,8 @@ package com.taw.grupo5.entity;/*
 Created by Pedro Ankersmit Carrión
 */
 
+import com.taw.grupo5.dto.MensajeDTO;
+
 import javax.persistence.*;
 
 @Entity
@@ -74,5 +76,14 @@ public class MensajeEntity {
 
     public void setConversacionByIdconversacion(ConversacionEntity conversacionByIdconversacion) {
         this.conversacionByIdconversacion = conversacionByIdconversacion;
+    }
+
+    public MensajeDTO toDTO(){
+        MensajeDTO dto = new MensajeDTO();
+        dto.setIdmensaje(idmensaje);
+        dto.setContenido(contenido);
+        dto.setEnviadoporasistente(enviadoporasistente);
+        dto.setConversacion(conversacionByIdconversacion.toDTO());
+        return dto;
     }
 }
