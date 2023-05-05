@@ -43,8 +43,8 @@
     </table>
 
     <h2>Gestión de clientes</h2>
-    <button><a href="/gestor/listadoDarAlta">Esperando el alta</a></button>
-    <button>Inactivos por bloquear</button>
+    <button><a href="/gestor/listadoDarAlta">Dar de alta</a></button>
+    <button>Bloquear inactivos</button>
     <button>Sospechosos</button>
 
     <h1>Listado de empresas</h1>
