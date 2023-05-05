@@ -1,6 +1,5 @@
-<%@ page import="com.taw.grupo5.entity.EmpresaEntity" %>
-<%@ page import="com.taw.grupo5.entity.OperacionEntity" %>
-<%@ page import="java.util.List" %><%--
+<%@ page import="java.util.List" %>
+<%@ page import="com.taw.grupo5.entity.*" %><%--
   Created by IntelliJ IDEA.
   User: ignam
   Date: 24/04/2023
@@ -49,19 +48,38 @@
             <td><%=operacionEntity.getIdoperacion()%></td>
             <td><%=operacionEntity.getFecha()%></td>
             <td>
-                <%if (operacionEntity.getCambiodivisaByIdoperacion() == null && operacionEntity.getSacardineroByIdoperacion() == null) {%>
+                <%if (!operacionEntity.getTransferenciasByIdoperacion().isEmpty()) {
+                    for(TransferenciaEntity t : operacionEntity.getTransferenciasByIdoperacion()) {
+                %>
                 <p>Transferencia:</p>
-                Fecha de ejecución: <%=operacionEntity.getTransferenciaByIdoperacion().getFechainstruccion()%> </br>
-                Movimiento: <%=operacionEntity.getTransferenciaByIdoperacion().getCantidad()%> </br>
-                <%} else if (operacionEntity.getCambiodivisaByIdoperacion() == null && operacionEntity.getTransferenciaByIdoperacion() == null) {%>
+                Fecha de Ejecución: <%=t.getFechainstruccion()%></br>
+                Movimiento: <%=t.getCantidad()%></br>
+                <%
+                        }
+                    }
+
+                    if (!operacionEntity.getSacardinerosByIdoperacion().isEmpty()) {
+                        for(SacardineroEntity s : operacionEntity.getSacardinerosByIdoperacion()) {
+                %>
                 <p>Extracción:</p>
-                Cantidad: <%=operacionEntity.getSacardineroByIdoperacion().getCantidad()%>
-                <%} else {%>
+                Cantidad: <%=s.getCantidad()%>
+                <%
+                        }
+                    }
+
+                    if(!operacionEntity.getCambiodivisasByIdoperacion().isEmpty()) {
+                        for(CambiodivisaEntity c: operacionEntity.getCambiodivisasByIdoperacion()) {
+                %>
                 <p>Cambio de Divisa</p>
-                Moneda compra: <%=operacionEntity.getCambiodivisaByIdoperacion().getCantidadcompra()%> <%=operacionEntity.getCambiodivisaByIdoperacion().getMonedacompra()%> </br>
-                Moneda venta: <%=operacionEntity.getCambiodivisaByIdoperacion().getCantidadventa()%> <%=operacionEntity.getCambiodivisaByIdoperacion().getMonedaventa()%> </br>
-                Comisión: <%=operacionEntity.getCambiodivisaByIdoperacion().getComision()%>
-                <%}%>
+                Moneda
+                Comprada: <%=c.getCantidadcompra()%> <%=c.getMonedacompra()%> </br>
+                Moneda
+                Vendida: <%=c.getCantidadventa()%> <%=c.getMonedaventa()%> </br>
+                Comisión: <%=c.getComision()%>
+                <%
+                        }
+                    }
+                %>
             </td>
         </tr>
         <%}%>
