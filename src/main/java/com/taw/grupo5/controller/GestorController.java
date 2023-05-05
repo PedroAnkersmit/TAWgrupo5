@@ -80,10 +80,11 @@ public class GestorController {
         return "gestorListadoDarVistoBuenoAlta";
     }
 
-    @GetMapping("darAlta")
-    public String darDeAlta(@Param("idCuenta") Integer idCuenta, Model model) {
+    @GetMapping("darVistoBuenoAlta")
+    public String darDeAlta(@RequestParam("id") Integer idCuenta) {
         CuentaEntity cuenta = this.cuentaRepository.findById(idCuenta).orElse(null);
         TipoestadoEntity estadoCuenta = new TipoestadoEntity();
+
         estadoCuenta.setIdtipoestado(2);
 
         cuenta.setTipoestadoByIdestado(estadoCuenta);

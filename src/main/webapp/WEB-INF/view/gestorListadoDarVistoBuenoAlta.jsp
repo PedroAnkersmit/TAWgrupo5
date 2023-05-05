@@ -1,6 +1,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.taw.grupo5.entity.ClienteEntity" %>
-<%@ page import="com.taw.grupo5.entity.ConversacionEntity" %><%--
+<%@ page import="com.taw.grupo5.entity.ConversacionEntity" %>
+<%@ page import="com.taw.grupo5.entity.CuentaEntity" %><%--
   Created by IntelliJ IDEA.
   User: ignam
   Date: 04/05/2023
@@ -57,7 +58,12 @@
                     }
                 %>
             </td>
-            <td><a href="/gestor/darAlta?id=<%=%>">Dar de alta</a></td>
+            <td>
+                <%
+                    List<CuentaEntity> cuentasCliente = clienteEntity.getCuentasByIdcliente();
+                %>
+                <a href="/gestor/darVistoBuenoAlta?id=<%=cuentasCliente.get(0).getIdcuenta()%>">Dar de alta</a>
+            </td>
         </tr>
         <%
             }
