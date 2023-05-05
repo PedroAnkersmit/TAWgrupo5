@@ -90,6 +90,6 @@ public class GestorController {
         cuenta.setTipoestadoByIdestado(estadoCuenta);
         this.cuentaRepository.save(cuenta);
 
-        return "redirect:/";
+        return "redirect:/gestor/";
     }
 }

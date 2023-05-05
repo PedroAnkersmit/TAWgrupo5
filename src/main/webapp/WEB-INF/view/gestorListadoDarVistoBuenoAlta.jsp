@@ -59,10 +59,7 @@
                 %>
             </td>
             <td>
-                <%
-                    List<CuentaEntity> cuentasCliente = clienteEntity.getCuentasByIdcliente();
-                %>
-                <a href="/gestor/darVistoBuenoAlta?id=<%=cuentasCliente.get(0).getIdcuenta()%>">Dar de alta</a>
+                <a href="/gestor/darVistoBuenoAlta?id=<%=clienteEntity.getCuentasByIdcliente().get(0).getIdcuenta()%>">Dar de alta</a>
             </td>
         </tr>
         <%
