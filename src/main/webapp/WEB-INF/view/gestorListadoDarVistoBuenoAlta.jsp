@@ -19,7 +19,7 @@
     <title>Gestión de clientes - Dar de alta</title>
 </head>
 <body>
-    <h1>Listado de clientes pendientes de tener el alta</h1>
+    <h1>Listado de clientes pendientes del visto bueno del alta</h1>
 
     <table border="1">
         <tr>
@@ -59,7 +59,7 @@
                 %>
             </td>
             <td>
-                <a href="/gestor/darVistoBuenoAlta?id=<%=clienteEntity.getCuentasByIdcliente().get(0).getIdcuenta()%>">Dar de alta</a>
+                <a href="/gestor/darVistoBuenoAlta?id=<%=clienteEntity.getCuentasByIdcliente().get(0).getIdcuenta()%>">Dar visto bueno</a>
             </td>
         </tr>
         <%
