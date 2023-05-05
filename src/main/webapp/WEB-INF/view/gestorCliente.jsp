@@ -40,7 +40,19 @@
             <td><%=clienteEntity.getFechainicio()%></td>
             <td><%=clienteEntity.getTipoclienteByIdtipocliente().getNombre()%></td>
             <td><%=clienteEntity.getEmpresaByIdempresa() == null ? "Sin empresa" : clienteEntity.getEmpresaByIdempresa().getNombre()%></td>
-            <td><%=clienteEntity.getConversacionsByIdcliente()%></td>
+            <td>
+                <%
+                    List<ConversacionEntity> listaConvers = clienteEntity.getConversacionsByIdcliente();
+                    int i = 0;
+
+                    for(ConversacionEntity conver : listaConvers) {
+                        i++;
+                %>
+                        Conversación nº<%=i%> - Asunto: <%=conver.getAsunto()%><br/>
+                <%
+                    }
+                %>
+            </td>
         </tr>
     </table>
 
@@ -61,7 +73,7 @@
                         for(TransferenciaEntity t : operacionEntity.getTransferenciasByIdoperacion()) {
                     %>
                             <p>Transferencia:</p>
-                            Fecha de Ejecucion: <%=t.getFechainstruccion()%></br>
+                            Fecha de Ejecución: <%=t.getFechainstruccion()%></br>
                             Movimiento: <%=t.getCantidad()%></br>
                     <%
                         }
@@ -73,25 +85,25 @@
                             <p>Extracción:</p>
                             Cantidad: <%=s.getCantidad()%>
                     <%
-                            }
                         }
-                        if(!operacionEntity.getCambiodivisasByIdoperacion().isEmpty()){
-                            for(CambiodivisaEntity c: operacionEntity.getCambiodivisasByIdoperacion()){
+                    }
+
+                    if(!operacionEntity.getCambiodivisasByIdoperacion().isEmpty()) {
+                        for(CambiodivisaEntity c: operacionEntity.getCambiodivisasByIdoperacion()) {
                     %>
-                    <p>Cambio de Divisa</p>
-                    Moneda
-                    Comprada: <%=c.getCantidadcompra()%> <%=c.getMonedacompra()%> </br>
-                    Moneda
-                    Vendida: <%=c.getCantidadventa()%> <%=c.getMonedaventa()%> </br>
-                    Comision: <%=c.getComision()%>
+                            <p>Cambio de Divisa</p>
+                            Moneda
+                            Comprada: <%=c.getCantidadcompra()%> <%=c.getMonedacompra()%> </br>
+                            Moneda
+                            Vendida: <%=c.getCantidadventa()%> <%=c.getMonedaventa()%> </br>
+                            Comisión: <%=c.getComision()%>
                     <%
-                            }
                         }
+                    }
                     %>
                 </td>
             </tr>
         <%}%>
-
     </table>
 </body>
 </html>
