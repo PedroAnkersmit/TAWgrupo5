@@ -18,6 +18,9 @@ public interface ClienteRepository extends JpaRepository<ClienteEntity, Integer>
     @Query("select c.clienteByIdcliente from CuentaEntity c where c.tipoestadoByIdestado.idtipoestado = 1")
     List<ClienteEntity> listadoClientesDarAlta();
 
+    @Query("select c.idcliente from OperacionEntity c where days_between(c.fecha, getdate()) >= 30")
+    List<ClienteEntity> listadoClientesInactivos();
+
     @Query("select c from ClienteEntity c where  c.email like CONCAT('%', :mail, '%')")
     ClienteEntity buscarCuenta ( @Param("mail") String correo);
 
