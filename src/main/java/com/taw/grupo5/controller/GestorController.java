@@ -92,4 +92,12 @@ public class GestorController {
 
         return "redirect:/gestor/";
     }
+
+    @GetMapping("listadoInactivos")
+    public String mostrarListadoInactivos(Model model) {
+        List<ClienteEntity> listadoClientesInactivos = this.clienteRepository.listadoClientesInactivos();
+        model.addAttribute("listadoClientesInactivos", listadoClientesInactivos);
+
+        return "gestorListadoInactivos";
+    }
 }
