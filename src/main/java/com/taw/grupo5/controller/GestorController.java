@@ -1,12 +1,12 @@
 package com.taw.grupo5.controller;
 
 import com.taw.grupo5.dao.ClienteRepository;
+import com.taw.grupo5.dao.CuentaRepository;
 import com.taw.grupo5.dao.EmpresaRepository;
 import com.taw.grupo5.dao.OperacionRepository;
-import com.taw.grupo5.entity.ClienteEntity;
-import com.taw.grupo5.entity.EmpresaEntity;
-import com.taw.grupo5.entity.OperacionEntity;
+import com.taw.grupo5.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,6 +27,9 @@ public class GestorController {
 
     @Autowired
     OperacionRepository operacionRepository;
+
+    @Autowired
+    CuentaRepository cuentaRepository;
 
     @GetMapping("/")
     public String mostrarClientesYEmpresas(Model model) {
@@ -77,5 +80,15 @@ public class GestorController {
         return "gestorListadoDarAlta";
     }
 
+    @GetMapping("darAlta")
+    public String darDeAlta(@Param("idCuenta") Integer idCuenta, Model model) {
+        CuentaEntity cuenta = this.cuentaRepository.findById(idCuenta).orElse(null);
+        TipoestadoEntity estadoCuenta = new TipoestadoEntity();
+        estadoCuenta.setIdtipoestado(2);
 
+        cuenta.setTipoestadoByIdestado(estadoCuenta);
+        this.cuentaRepository.save(cuenta);
+
+        return "redirect:/";
+    }
 }

@@ -1,5 +1,6 @@
 <%@ page import="java.util.List" %>
-<%@ page import="com.taw.grupo5.entity.ClienteEntity" %><%--
+<%@ page import="com.taw.grupo5.entity.ClienteEntity" %>
+<%@ page import="com.taw.grupo5.entity.ConversacionEntity" %><%--
   Created by IntelliJ IDEA.
   User: ignam
   Date: 04/05/2023
@@ -29,6 +30,7 @@
             <th>Tipo</th>
             <th>Empresa</th>
             <th>Conversación</th>
+            <th></th>
         </tr>
 
         <%
@@ -42,7 +44,20 @@
             <td><%=clienteEntity.getFechainicio()%></td>
             <td><%=clienteEntity.getTipoclienteByIdtipocliente().getNombre()%></td>
             <td><%=clienteEntity.getEmpresaByIdempresa() == null ? "Sin empresa" : clienteEntity.getEmpresaByIdempresa().getNombre()%></td>
-            <td><%=clienteEntity.getConversacionsByIdcliente()%></td>
+            <td>
+                <%
+                    List<ConversacionEntity> listaConvers = clienteEntity.getConversacionsByIdcliente();
+                    int i = 0;
+
+                    for(ConversacionEntity conver : listaConvers) {
+                        i++;
+                %>
+                Conversación nº<%=i%> - Asunto: <%=conver.getAsunto()%><br/>
+                <%
+                    }
+                %>
+            </td>
+            <td><a href="/gestor/darAlta?id=<%=clienteEntity.getCuentasByIdcliente().get(1).getIdcuenta()%>">Dar de alta</a></td>
         </tr>
         <%
             }
