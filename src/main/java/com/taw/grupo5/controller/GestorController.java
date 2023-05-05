@@ -6,7 +6,6 @@ import com.taw.grupo5.dao.EmpresaRepository;
 import com.taw.grupo5.dao.OperacionRepository;
 import com.taw.grupo5.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -81,7 +80,7 @@ public class GestorController {
     }
 
     @GetMapping("darVistoBuenoAlta")
-    public String darDeAlta(@RequestParam("id") Integer idCuenta) {
+    public String darVistoBuenoAlta(@RequestParam("id") Integer idCuenta) {
         CuentaEntity cuenta = this.cuentaRepository.findById(idCuenta).orElse(null);
         TipoestadoEntity estadoCuenta = new TipoestadoEntity();
 
@@ -99,5 +98,18 @@ public class GestorController {
         model.addAttribute("listadoClientesInactivos", listadoClientesInactivos);
 
         return "gestorListadoInactivos";
+    }
+
+    @GetMapping("desactivarCuenta")
+    public String desactivarCuenta(@RequestParam("id") Integer idCuenta) {
+        CuentaEntity cuenta = this.cuentaRepository.findById(idCuenta).orElse(null);
+        TipoestadoEntity estadoCuenta = new TipoestadoEntity();
+
+        estadoCuenta.setIdtipoestado(4);
+
+        cuenta.setTipoestadoByIdestado(estadoCuenta);
+        this.cuentaRepository.save(cuenta);
+
+        return "redirect:/gestor/";
     }
 }

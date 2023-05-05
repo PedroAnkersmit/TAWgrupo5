@@ -44,7 +44,7 @@
 
     <h2>Gestión de clientes</h2>
     <button><a href="/gestor/listadoDarVistoBuenoAlta">Dar visto bueno al alta</a></button>
-    <button>Bloquear inactivos</button>
+    <button><a href="/gestor/listadoInactivos">Bloquear inactivos</a></button>
     <button>Sospechosos</button>
 
     <h1>Listado de empresas</h1>
