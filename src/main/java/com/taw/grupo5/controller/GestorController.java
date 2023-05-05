@@ -72,12 +72,12 @@ public class GestorController {
         return "gestorEmpresa";
     }
 
-    @GetMapping("listadoDarAlta")
+    @GetMapping("listadoDarVistoBuenoAlta")
     public String mostrarListadoDarDeAlta(Model model) {
         List<ClienteEntity> clienteEntityList = this.clienteRepository.listadoClientesDarAlta();
         model.addAttribute("listadoClientesAlta", clienteEntityList);
 
-        return "gestorListadoDarAlta";
+        return "gestorListadoDarVistoBuenoAlta";
     }
 
     @GetMapping("darAlta")

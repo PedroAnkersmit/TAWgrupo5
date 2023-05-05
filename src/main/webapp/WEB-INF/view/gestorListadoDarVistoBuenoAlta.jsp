@@ -57,7 +57,7 @@
                     }
                 %>
             </td>
-            <td><a href="/gestor/darAlta?id=<%=clienteEntity.getCuentasByIdcliente().get(1).getIdcuenta()%>">Dar de alta</a></td>
+            <td><a href="/gestor/darAlta?id=<%=%>">Dar de alta</a></td>
         </tr>
         <%
             }
