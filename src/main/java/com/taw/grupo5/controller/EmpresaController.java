@@ -2,6 +2,7 @@ package com.taw.grupo5.controller;
 
 import com.taw.grupo5.dao.*;
 import com.taw.grupo5.entity.*;
+import com.taw.grupo5.ui.FiltroClientesEmpresa;
 import com.taw.grupo5.ui.FiltroOperacionesEmpresa;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -140,50 +141,68 @@ public class EmpresaController {
         return "redirect:/";
     }
 
-    @GetMapping("/portal")
-    public String portalEmpleado(@RequestParam("id") Integer idCliente, Model model)
+    protected String procesadorFiltrado(Integer idCliente, FiltroClientesEmpresa filtroClientes, FiltroOperacionesEmpresa filtroOperaciones, Model model)
     {
         ClienteEntity cliente = this.clienteRepository.findById(idCliente).orElse(null);
         List<ClienteEntity> listaClientes = this.clienteRepository.buscarPorEmpresa(cliente.getEmpresaByIdempresa().getIdempresa());
-
+        List<ClienteEntity> listaClientesFiltrada = new ArrayList<>();
         List<Integer> lista = new ArrayList<>();
+
+        if(filtroClientes == null)
+            filtroClientes = new FiltroClientesEmpresa();
+
+        if(filtroOperaciones == null)
+            filtroOperaciones = new FiltroOperacionesEmpresa();
 
         for(ClienteEntity c : listaClientes)
         {
-            lista.add(c.getIdcliente());
+            if(filtroClientes.getTipoCliente().equals(""))
+                listaClientesFiltrada.add(c);
+            else if(filtroClientes.getTipoCliente().equals("socio") && c.getTipoclienteByIdtipocliente().getIdtipocliente() == 2)
+                listaClientesFiltrada.add(c);
+            else if (filtroClientes.getTipoCliente().equals("autorizado") && c.getTipoclienteByIdtipocliente().getIdtipocliente() == 3)
+                listaClientesFiltrada.add(c);
+        }
+
+        for(ClienteEntity c : listaClientes)
+        {
+            if(filtroOperaciones.getTipoCliente().equals(""))
+                lista.add(c.getIdcliente());
+            else if(filtroOperaciones.getTipoCliente().equals("socio") && c.getTipoclienteByIdtipocliente().getIdtipocliente() == 2)
+                lista.add(c.getIdcliente());
+            else if (filtroOperaciones.getTipoCliente().equals("autorizado") && c.getTipoclienteByIdtipocliente().getIdtipocliente() == 3)
+                lista.add(c.getIdcliente());
         }
 
         List<OperacionEntity> listaOperaciones = this.operacionRepository.buscarPorEmpresa(lista);
+        filtroClientes.setIdClienteDelPortal(idCliente);
+        filtroOperaciones.setIdClienteDelPortal(idCliente);
 
         model.addAttribute("clientePortal", cliente);
-        model.addAttribute("listaClientes", listaClientes);
+        model.addAttribute("listaClientes", listaClientesFiltrada);
         model.addAttribute("listaOperaciones", listaOperaciones);
+        model.addAttribute("filtroClientes", filtroClientes);
+        model.addAttribute("filtroOperaciones", filtroOperaciones);
 
         return "empresaPortalEmpleado";
     }
 
-    @GetMapping("/portal/filtrar")
-    public String portalEmpleadoFiltrado(@RequestParam("id") Integer idCliente, Model model)
+    @GetMapping("/portal")
+    public String portalEmpleado(@RequestParam("id") Integer idCliente, Model model)
     {
-        FiltroOperacionesEmpresa filtro = new FiltroOperacionesEmpresa();
-        ClienteEntity cliente = this.clienteRepository.findById(idCliente).orElse(null);
-        List<ClienteEntity> listaClientes = this.clienteRepository.buscarPorEmpresa(cliente.getEmpresaByIdempresa().getIdempresa());
+        return procesadorFiltrado(idCliente, null, null, model);
+    }
 
-        List<Integer> lista = new ArrayList<>();
+    @PostMapping("/portal/filtrarClientes")
+    public String portalEmpleadoFiltrado(@ModelAttribute("filtroClientes") FiltroClientesEmpresa filtroClientes, @ModelAttribute("filtroOperaciones") FiltroOperacionesEmpresa filtroOperaciones, Model model)
+    {
+        return procesadorFiltrado(filtroClientes.getIdClienteDelPortal(), filtroClientes, null, model);
+    }
 
-        for(ClienteEntity c : listaClientes)
-        {
-            lista.add(c.getIdcliente());
-        }
-
-        List<OperacionEntity> listaOperaciones = this.operacionRepository.buscarPorEmpresa(lista);
-        List<OperacionEntity> listaOperacionesFiltrada = new ArrayList<>();
-
-        model.addAttribute("clientePortal", cliente);
-        model.addAttribute("listaClientes", listaClientes);
-        model.addAttribute("listaOperaciones", listaOperaciones);
-
-        return "empresaPortalEmpleado";
+    @PostMapping("/portal/filtrarOperaciones")
+    public String portalOperacionesFiltrado(@ModelAttribute("filtroOperaciones") FiltroOperacionesEmpresa filtroOperaciones, @ModelAttribute("filtroClientes") FiltroClientesEmpresa filtroClientes, Model model)
+    {
+        return procesadorFiltrado(filtroOperaciones.getIdClienteDelPortal(), null, filtroOperaciones, model);
     }
 
     @GetMapping("/editarcliente")

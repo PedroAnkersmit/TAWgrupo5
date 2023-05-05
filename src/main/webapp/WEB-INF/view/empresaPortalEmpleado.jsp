@@ -1,3 +1,4 @@
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page import="com.taw.grupo5.entity.ClienteEntity" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.taw.grupo5.entity.OperacionEntity" %>
@@ -18,7 +19,84 @@
     List<ClienteEntity> listaClientesDeLaEmpresa = (List<ClienteEntity>) request.getAttribute("listaClientes");
     List<OperacionEntity> listaOperaciones = (List<OperacionEntity>) request.getAttribute("listaOperaciones");
 %>
+<style>
+    /* set body margin and font */
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+        text-align: center;
+    }
 
+    /* set heading styles */
+    h1, h2 {
+        text-align: center;
+        color: #333;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    /* style the buttons */
+    button {
+        padding: 10px 20px;
+        border-radius: 5px;
+        border: none;
+        background-color: #007bff;
+        color: #fff;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+        background-color: #0062cc;
+    }
+
+    /* style the table */
+    table {
+        border-collapse: collapse;
+        margin: 20px auto;
+    }
+
+    th, td {
+        padding: 10px;
+        border: 1px solid #ddd;
+        text-align: center;
+    }
+
+    th {
+        background-color: #f5f5f5;
+    }
+
+    /* style the form */
+    form {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+
+    label, input, select {
+        margin: 5px;
+    }
+
+    input, select {
+        padding: 5px;
+        border-radius: 5px;
+        border: 1px solid #ddd;
+    }
+
+    button[type="submit"] {
+        background-color: #28a745;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    button[type="submit"]:hover {
+        background-color: #218838;
+    }
+</style>
 <html>
 <head>
     <title>Portal empleado</title>
@@ -34,11 +112,15 @@
 %>
 <h2>Listado de compañeros de empresa</h2>
 
-<form:form action="/empresa/portal/filtrar" method="post" modelAttribute="filtro">
+<form:form action="/empresa/portal/filtrarClientes" method="post" modelAttribute="filtroClientes">
     Buscar por: <br/>
-    <form:select multiple="true" path="" size="6" >
+    <form:hidden path="idClienteDelPortal"/>
+    <form:input type="date" path="fechaMinima"/>
+    <form:input type="date" path="fechaMaxima"/>
+    <form:select path="tipoCliente">
         <form:option value="" label="------" />
-        <form:options items="${supermercados}" itemLabel="zipCode" itemValue="zipCode" />
+        <form:option value="socio" label="Socios" />
+        <form:option value="autorizado" label="Autorizados" />
     </form:select>
     <button>Filtrar</button>
 </form:form>
@@ -117,7 +199,18 @@
     }
 %>
 <h2>Listado de operaciones de compañeros de empresa</h2>
-
+<form:form action="/empresa/portal/filtrarOperaciones" method="post" modelAttribute="filtroOperaciones">
+    Buscar por: <br/>
+    <form:hidden path="idClienteDelPortal"/>
+    <form:input type="date" path="fechaMinima"/>
+    <form:input type="date" path="fechaMaxima"/>
+    <form:select path="tipoCliente">
+        <form:option value="" label="------" />
+        <form:option value="socio" label="Socios" />
+        <form:option value="autorizado" label="Autorizados" />
+    </form:select>
+    <button>Filtrar</button>
+</form:form>
 <table border="1">
     <tr>
         <th>OPERACIÓN</th>

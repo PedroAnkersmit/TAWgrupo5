@@ -3,13 +3,13 @@ package com.taw.grupo5.ui;
 import java.sql.Date;
 import java.time.LocalDate;
 
-public class FiltroOperacionesEmpresa {
+public class FiltroClientesEmpresa {
 
         private Integer idClienteDelPortal;
         private String tipoCliente;
         private Date fechaMinima, fechaMaxima;
 
-        public FiltroOperacionesEmpresa(){
+        public FiltroClientesEmpresa(){
             this.idClienteDelPortal = null;
             this.tipoCliente = "";
             this.fechaMinima = Date.valueOf(LocalDate.of(1900, 1, 1));
