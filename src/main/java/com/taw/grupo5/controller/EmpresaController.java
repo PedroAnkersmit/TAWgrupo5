@@ -286,24 +286,32 @@ public class EmpresaController {
     @PostMapping("/transferencia/enviar")
     public String tramitarTransferenciaEmpresa(@ModelAttribute("transferencia") TransferenciaEntity transferencia, Model model)
     {
-        CuentaEntity cuentaDestino = this.cuentaRepository.findBy(transferencia);
+        CuentaEntity cuentaDestino = this.cuentaRepository.findById(transferencia.getIdcuentadestino()).orElse(null);
         LocalDate today = LocalDate.now();
 
-        BigDecimal balanceOriginal = transferencia.getOperacionByIdoperacion().getCuentaByIdcuenta().getSaldo();
+        BigDecimal balanceOrigen = transferencia.getOperacionByIdoperacion().getCuentaByIdcuenta().getSaldo();
+        BigDecimal balanceDestino = transferencia.getOperacionByIdoperacion().getCuentaByIdcuenta().getSaldo();
 
-        if(balanceOriginal == null)
-            balanceOriginal = BigDecimal.valueOf(0);
+        if(balanceOrigen == null)
+            balanceOrigen = BigDecimal.valueOf(0);
 
-        BigDecimal valorARestar = transferencia.getCantidad();
+        if(balanceDestino == null)
+            balanceDestino = BigDecimal.valueOf(0);
+
+        BigDecimal cantidadTransferencia = transferencia.getCantidad();
 
         transferencia.setFechainstruccion(Date.valueOf(today));
 
         CuentaEntity cuentaOrigen = transferencia.getOperacionByIdoperacion().getCuentaByIdcuenta();
 
-        balanceOriginal = balanceOriginal.subtract(valorARestar);
-        cuentaOrigen.setSaldo(balanceOriginal);
+        balanceOrigen = balanceOrigen.subtract(cantidadTransferencia);
+        cuentaOrigen.setSaldo(balanceOrigen);
+
+        balanceDestino = balanceDestino.add(cantidadTransferencia);
+        cuentaDestino.setSaldo(balanceDestino);
 
         this.cuentaRepository.save(cuentaOrigen);
+        this.cuentaRepository.save(cuentaDestino);
         this.transferenciaRepository.save(transferencia);
 
         return "redirect:/";
