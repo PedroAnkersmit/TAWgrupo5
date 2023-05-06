@@ -32,7 +32,7 @@ public class CuentaEntity {
     @JoinColumn(name = "idestado", referencedColumnName = "idtipoestado", nullable = false)
     private TipoestadoEntity tipoestadoByIdestado;
     @OneToMany(mappedBy = "cuentaByIdcuenta")
-    private Collection<OperacionEntity> operacionsByIdcuenta;
+    private List<OperacionEntity> operacionsByIdcuenta;
 
     public Integer getIdcuenta() {
         return idcuenta;
@@ -122,7 +122,7 @@ public class CuentaEntity {
         return operacionsByIdcuenta;
     }
 
-    public void setOperacionsByIdcuenta(Collection<OperacionEntity> operacionsByIdcuenta) {
+    public void setOperacionsByIdcuenta(List<OperacionEntity> operacionsByIdcuenta) {
         this.operacionsByIdcuenta = operacionsByIdcuenta;
     }
 }
