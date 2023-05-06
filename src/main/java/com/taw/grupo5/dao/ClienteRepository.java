@@ -8,9 +8,11 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface ClienteRepository extends JpaRepository<ClienteEntity, Integer>{
-
     @Query("select c from ClienteEntity  c where c.nombre like CONCAT('%', :filtro, '%') or c.email like CONCAT('%', :filtro, '%')")
     List<ClienteEntity> buscarPorNombre (@Param("filtro") String filtro);
+
+    @Query("select c from ClienteEntity c where  c.email like CONCAT('%', :mail, '%')")
+    ClienteEntity buscarCuenta ( @Param("mail") String correo);
 
     @Query("select c from ClienteEntity c where c.empresaByIdempresa.idempresa = :filtro")
     List<ClienteEntity> buscarPorEmpresa(@Param("filtro") Integer filtro);
@@ -20,8 +22,4 @@ public interface ClienteRepository extends JpaRepository<ClienteEntity, Integer>
 
     @Query("select o.cuentaByIdcuenta.clienteByIdcliente from OperacionEntity o where datediff(curdate(), o.fecha) >= 30")
     List<ClienteEntity> listadoClientesInactivos();
-
-    @Query("select c from ClienteEntity c where  c.email like CONCAT('%', :mail, '%')")
-    ClienteEntity buscarCuenta ( @Param("mail") String correo);
-
 }
