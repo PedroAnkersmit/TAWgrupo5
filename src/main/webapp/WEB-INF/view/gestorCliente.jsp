@@ -83,8 +83,8 @@
     </table>
 
     <h2>Operaciones bancarias</h2>
-    <form:form action="/gestor/cliente" method="post" modelAttribute="filtro">
-        <input name="idCliente" value="<%=clienteEntity.getIdcliente()%>" hidden>
+    <form:form action="/gestor/clienteFiltrar?id=${cliente.idcliente}" method="post" modelAttribute="filtro">
+        <input name="idcliente" value="<%=clienteEntity.getIdcliente()%>" hidden>
         Tipo de Operación:</br>
         Transferencia <form:checkbox path="transferencia"/>
         Cambio de Divisa <form:checkbox path="cambioDivisa"/>

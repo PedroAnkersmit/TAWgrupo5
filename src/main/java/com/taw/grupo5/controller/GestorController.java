@@ -40,13 +40,14 @@ public class GestorController {
         return "gestorListar";
     }
 
+    @GetMapping("cliente")
     public String mostrarDatosCliente(@RequestParam("id") Integer idCliente, Model model) {
         ClienteEntity clienteEntity = this.clienteRepository.findById(idCliente).orElse(null);
         model.addAttribute("cliente", clienteEntity);
 
         return doMostrarFiltrado(model, clienteEntity, null);
     }
-    @GetMapping("cliente")
+    @PostMapping("clienteFiltrar")
     public String mostrarDatosClienteFiltro(@RequestParam("id") Integer idCliente, Model model, @ModelAttribute("filtro") FiltroOperaciones filtro) {
         ClienteEntity clienteEntity = this.clienteRepository.findById(idCliente).orElse(null);
         model.addAttribute("cliente", clienteEntity);
