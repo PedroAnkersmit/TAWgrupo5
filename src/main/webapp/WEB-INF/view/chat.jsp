@@ -30,7 +30,7 @@
     <a href="/asistente/conversaciones?id=<%=conversacion.getEmpleadoByIdempleado().getIdempleado()%>">
 
     <%}else{                //Botones del cliente%>
-    <a href="/asistente/misconversaciones?id=<%=conversacion.getClienteByIdcliente().getIdcliente()%>">
+    <a href="/asistente/misconversaciones">
     <%}%>
 
 

@@ -1,6 +1,4 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ page import="com.taw.grupo5.entity.ConversacionEntity" %>
-<%@ page import="com.taw.grupo5.entity.MensajeEntity" %>
 <%@ page import="com.taw.grupo5.entity.EmpleadoEntity" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.taw.grupo5.entity.ClienteEntity" %>
@@ -26,15 +24,13 @@
 <body>
 
 
-<h1>Asunto:<%%></h1>
-<!-- SOLUCIONAR CON HTTPSESSION PORQUE DEPENDE DE QUIENE ESTÉ
-< %if(esAsistente>0){     //Botones del asistente%>
+<%if(esAsistente>0){     //Botones del asistente%>
 <a href="/asistente/volver?id=< %=conversacion.getEmpleadoByIdempleado().getIdempleado()%>">
-        < %}else{                //Botones del cliente%>
-    <a href="/asistente/misconversaciones?id=< %=conversacion.getClienteByIdcliente().getIdcliente()%>">
-        < %}%>
+        <%}else{                //Botones del cliente%>
+    <a href="/asistente/misconversaciones">
+        <%}%>
         <button>Volver a conversaciones</button></a><br><br>
--->
+
 <form:form modelAttribute="mensaje" action="/asistente/crear" method="post">
         <form:hidden path="conversacionByIdconversacion.abierto" value="1"/>
         Asunto:

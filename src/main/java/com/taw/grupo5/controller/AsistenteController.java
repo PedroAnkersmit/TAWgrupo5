@@ -44,19 +44,6 @@ public class AsistenteController {
     }
 
     @PostMapping("/login")
-    public String dologinCLIENTE(Model model, HttpSession session, @RequestParam("correo")String correo){
-        String vuelta = "prueba";
-
-        ClienteEntity cliente = clienteRepository.autenticar(correo);
-        if(cliente!=null){
-            vuelta = "redirect:/asistente/misconversaciones"+cliente.getIdcliente();
-            //model.addAttribute("cliente", cliente);
-            //session.setAttribute("usuario", cliente);
-        }
-        return vuelta;
-    }
-
-    @GetMapping("/login")
     public String doLoginASISTENTE(Model model, HttpSession session){
         String vuelta = "prueba";
         EmpleadoEntity empleado = empleadoRepository.getById(2);
@@ -93,7 +80,6 @@ public class AsistenteController {
     }
     @PostMapping("/crear")
     public String doCrearNuevaConversacion(@ModelAttribute("mensaje")MensajeEntity mensaje) {
-        // UPDATE EN MENSAJE LA CONVERSACION
         String vuelta;
 
         conversacionRepository.save(mensaje.getConversacionByIdconversacion());
@@ -133,11 +119,12 @@ public class AsistenteController {
 
 
     @GetMapping("/misconversaciones")
-    public String doListarCliente(Model model, @RequestParam("id") int id_cliente) {
-    //public String doListarCliente(Model model, HttpSession session) {
-        //session.getAttributeNames(); PENDIENTE
+    public String doListarCliente(Model model, HttpSession session) {
+
+
+        ClienteEntity usuario = (ClienteEntity) session.getAttribute("user");
+        model.addAttribute("cliente", usuario);
         model.addAttribute("lista", conversacionRepository.findAll());
-        model.addAttribute("cliente", clienteRepository.findById(id_cliente).orElse(null));
         return "conversacionesCliente";
     }
 
@@ -149,7 +136,7 @@ public class AsistenteController {
     }
 
     @GetMapping("/nuevaConversacion")
-    public String doNuevaConversacionCliente(Model model, @RequestParam("id") int id_cliente){
+    public String doNuevaConversacionCliente(HttpSession session, Model model){
         doConversacion(model);
 
 
@@ -159,18 +146,18 @@ public class AsistenteController {
 
 
         model.addAttribute("empleado", null);
-        model.addAttribute("cliente", clienteRepository.findById(id_cliente).orElse(null));
+        ClienteEntity usuario = (ClienteEntity) session.getAttribute("user");
+        model.addAttribute("cliente", usuario);
         return "nuevoChat";
     }
 
     @GetMapping("/cerrarConversacion")
     public String doCerrarConversacion(@RequestParam("id") int idconversacion){
         ConversacionEntity conversacion = conversacionRepository.findById(idconversacion).orElse(null);
-        int idcliente = conversacion.getClienteByIdcliente().getIdcliente();
 
         conversacion.setAbierto((byte) 0);
         conversacionRepository.save(conversacion);
-        return "redirect:/asistente/misconversaciones?id="+idcliente;
+        return "redirect:/asistente/misconversaciones";
     }
 
 

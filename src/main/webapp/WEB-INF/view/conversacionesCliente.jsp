@@ -10,7 +10,6 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%  ClienteEntity cliente = (ClienteEntity) request.getAttribute("cliente");
-    //ClienteEntity cliente = (ClienteEntity)session.getAttribute("usuario");
     List<ConversacionEntity> lista = (List<ConversacionEntity>) request.getAttribute("lista"); %>
 
 <html>
@@ -21,8 +20,8 @@
   <h1><%=cliente.getNombre()%></h1>
   <h2>Tus conversaciones</h2>
   <!--<a href="/asistente/cerrarSesion"><button>Cerrar sesion</button></a>-->
-  <a href="/clienteHome"><button>Volver a tu portal</button></a><br>
-  <a href="/asistente/nuevaConversacion?id=<%=cliente.getIdcliente()%>"><button>Crear nueva conversación</button></a>
+  <a href="/clienteHome/"><button>Volver a tu portal</button></a><br>
+  <a href="/asistente/nuevaConversacion"><button>Crear nueva conversación</button></a>
 
   <table border="1">
     <tr>
