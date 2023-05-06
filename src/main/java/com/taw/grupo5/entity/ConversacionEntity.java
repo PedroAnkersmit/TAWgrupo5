@@ -1,8 +1,7 @@
 package com.taw.grupo5.entity;
 
 import javax.persistence.*;
-import java.util.List;
-import java.util.List;
+import java.util.Collection;
 
 @Entity
 @Table(name = "conversacion", schema = "grupo5", catalog = "")
@@ -24,7 +23,7 @@ public class ConversacionEntity {
     @JoinColumn(name = "idcliente", referencedColumnName = "idcliente", nullable = false)
     private ClienteEntity clienteByIdcliente;
     @OneToMany(mappedBy = "conversacionByIdconversacion")
-    private List<MensajeEntity> mensajesByIdconversacion;
+    private Collection<MensajeEntity> mensajesByIdconversacion;
 
     public Integer getIdconversacion() {
         return idconversacion;
@@ -89,15 +88,11 @@ public class ConversacionEntity {
         this.clienteByIdcliente = clienteByIdcliente;
     }
 
-    public List<MensajeEntity> getMensajesByIdconversacion() {
+    public Collection<MensajeEntity> getMensajesByIdconversacion() {
         return mensajesByIdconversacion;
     }
 
-    public void setMensajesByIdconversacion(List<MensajeEntity> mensajesByIdconversacion) {
-        this.mensajesByIdconversacion = mensajesByIdconversacion;
-    }
-
-    public void setMensajesByIdconversacion(List<MensajeEntity> mensajesByIdconversacion) {
+    public void setMensajesByIdconversacion(Collection<MensajeEntity> mensajesByIdconversacion) {
         this.mensajesByIdconversacion = mensajesByIdconversacion;
     }
 }
