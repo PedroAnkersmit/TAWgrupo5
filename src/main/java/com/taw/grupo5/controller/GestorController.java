@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 @Controller
 @RequestMapping("/gestor")
@@ -115,6 +116,17 @@ public class GestorController {
         return "gestorListadoDarVistoBuenoAlta";
     }
 
+    private String generateBankNumber() {
+        Random random = new Random();
+        StringBuilder bankNumberBuilder = new StringBuilder();
+
+        for (int i = 0; i < 10; i++) {
+            bankNumberBuilder.append(random.nextInt(10));
+        }
+
+        return bankNumberBuilder.toString();
+    }
+
     @GetMapping("darVistoBuenoAlta")
     public String darVistoBuenoAlta(@RequestParam("id") Integer idCuenta) {
         CuentaEntity cuenta = this.cuentaRepository.findById(idCuenta).orElse(null);
@@ -123,6 +135,7 @@ public class GestorController {
         estadoCuenta.setIdtipoestado(2);
 
         cuenta.setTipoestadoByIdestado(estadoCuenta);
+        cuenta.setNumerocuenta(generateBankNumber());
         this.cuentaRepository.save(cuenta);
 
         return "redirect:/gestor/";
