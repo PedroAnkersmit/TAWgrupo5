@@ -56,7 +56,7 @@ public class GestorController {
         return doMostrarFiltrado(model, clienteEntity, filtro);
     }
 
-    String doMostrarFiltrado(Model model, ClienteEntity cliente, FiltroOperaciones filtro){
+    String doMostrarFiltrado(Model model, ClienteEntity cliente, FiltroOperaciones filtro) {
         List<CuentaEntity> cuentasCliente = cuentaRepository.buscarPorCLiente(cliente.getIdcliente());
         List<OperacionEntity> operaciones = new ArrayList<>();
         if(filtro == null){
