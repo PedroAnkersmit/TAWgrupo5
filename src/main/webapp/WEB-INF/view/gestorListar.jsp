@@ -32,6 +32,7 @@
             <th>ID</th>
             <th>Nombre</th>
             <th>Tipo</th>
+            <th></th>
         </tr>
 
         <%
@@ -39,8 +40,9 @@
         %>
                 <tr>
                     <td><%=clienteEntity.getIdcliente()%></td>
-                    <td><a href="/gestor/cliente?id=<%=clienteEntity.getIdcliente()%>"><%=clienteEntity.getNombre()%></a></td>
+                    <td><%=clienteEntity.getNombre()%></td>
                     <td><%=clienteEntity.getTipoclienteByIdtipocliente().getNombre()%></td>
+                    <td><a href="/gestor/cliente?id=<%=clienteEntity.getIdcliente()%>">Más información</a></td>
                 </tr>
         <%
             }
@@ -59,6 +61,7 @@
         <tr>
             <th>ID</th>
             <th>Nombre</th>
+            <th></th>
         </tr>
 
         <%
@@ -66,7 +69,8 @@
         %>
         <tr>
             <td><%=empresaEntity.getIdempresa()%></td>
-            <td><a href="/gestor/empresa?id=<%=empresaEntity.getIdempresa()%>"><%=empresaEntity.getNombre()%></a></td>
+            <td><%=empresaEntity.getNombre()%></td>
+            <td><a href="/gestor/empresa?id=<%=empresaEntity.getIdempresa()%>">Más información</a></td>
         </tr>
         <%
             }
