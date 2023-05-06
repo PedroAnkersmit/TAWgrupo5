@@ -19,6 +19,7 @@
     <title>Cliente</title>
 </head>
 <body>
+    <button><a href="/gestor/">Volver</a></button>
     <h1>Infomación del cliente: <%=clienteEntity.getNombre()%></h1>
 
     <h2>Datos</h2>
