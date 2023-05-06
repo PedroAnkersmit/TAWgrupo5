@@ -20,6 +20,9 @@ public class TransferenciaEntity {
     @Basic
     @Column(name = "fechaejecucion", nullable = true)
     private Date fechaejecucion;
+    @Basic
+    @Column(name = "idcuentadestino", nullable = false)
+    private Integer idcuentadestino;
     @ManyToOne
     @JoinColumn(name = "idoperacion", referencedColumnName = "idoperacion", nullable = false)
     private OperacionEntity operacionByIdoperacion;
@@ -56,6 +59,14 @@ public class TransferenciaEntity {
         this.fechaejecucion = fechaejecucion;
     }
 
+    public Integer getIdcuentadestino() {
+        return idcuentadestino;
+    }
+
+    public void setIdcuentadestino(Integer idcuentadestino) {
+        this.idcuentadestino = idcuentadestino;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -70,6 +81,8 @@ public class TransferenciaEntity {
             return false;
         if (fechaejecucion != null ? !fechaejecucion.equals(that.fechaejecucion) : that.fechaejecucion != null)
             return false;
+        if (idcuentadestino != null ? !idcuentadestino.equals(that.idcuentadestino) : that.idcuentadestino != null)
+            return false;
 
         return true;
     }
@@ -80,6 +93,7 @@ public class TransferenciaEntity {
         result = 31 * result + (cantidad != null ? cantidad.hashCode() : 0);
         result = 31 * result + (fechainstruccion != null ? fechainstruccion.hashCode() : 0);
         result = 31 * result + (fechaejecucion != null ? fechaejecucion.hashCode() : 0);
+        result = 31 * result + (idcuentadestino != null ? idcuentadestino.hashCode() : 0);
         return result;
     }
 

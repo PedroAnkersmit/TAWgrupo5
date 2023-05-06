@@ -1,7 +1,6 @@
 package com.taw.grupo5.entity;
 
 import javax.persistence.*;
-import java.sql.Date;
 import java.sql.Timestamp;
 
 @Entity
@@ -19,7 +18,7 @@ public class MensajeEntity {
     private Byte enviadoporasistente;
     @Basic
     @Column(name = "fechaenvio", nullable = true)
-    private Date fechaenvio;
+    private Timestamp fechaenvio;
     @ManyToOne
     @JoinColumn(name = "idconversacion", referencedColumnName = "idconversacion", nullable = false)
     private ConversacionEntity conversacionByIdconversacion;
@@ -48,15 +47,11 @@ public class MensajeEntity {
         this.enviadoporasistente = enviadoporasistente;
     }
 
-    public Date getFechaenvio() {
+    public Timestamp getFechaenvio() {
         return fechaenvio;
     }
 
     public void setFechaenvio(Timestamp fechaenvio) {
-        this.fechaenvio = fechaenvio;
-    }
-
-    public void setFechaenvio(Date fechaenvio) {
         this.fechaenvio = fechaenvio;
     }
 
