@@ -19,7 +19,8 @@
     <title>Listado de clientes y empresas</title>
 </head>
 <body>
-    <h1>Listado de clientes</h1>
+    <h1>Listado de clientes y empresas</h1>
+    <h2>Clientes</h2>
     <p>Añadir filtro por nombre y por tipo</p>
     <form action="/gestor/clienteFiltrar" method="post">
         Buscar por: <input type="text" name="filtroCliente">
@@ -46,12 +47,12 @@
         %>
     </table>
 
-    <h2>Gestión de clientes</h2>
+    <h3>Gestión de clientes</h3>
     <button><a href="/gestor/listadoDarVistoBuenoAlta">Dar visto bueno al alta</a></button>
     <button><a href="/gestor/listadoInactivos">Bloquear inactivos</a></button>
     <button>Sospechosos</button>
 
-    <h1>Listado de empresas</h1>
+    <h2>Empresas</h2>
     <p>Añadir filtro por nombre</p>
     <!-- Empresas -->
     <table border="1">
