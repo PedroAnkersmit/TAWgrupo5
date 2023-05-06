@@ -1,10 +1,8 @@
-package com.taw.grupo5.entity;/*
-Created by Pedro Ankersmit Carrión
-*/
+package com.taw.grupo5.entity;
 
 import javax.persistence.*;
 import java.sql.Date;
-import java.util.List;
+import java.util.Collection;
 
 @Entity
 @Table(name = "cliente", schema = "grupo5", catalog = "")
@@ -35,9 +33,9 @@ public class ClienteEntity {
     @JoinColumn(name = "idempresa", referencedColumnName = "idempresa")
     private EmpresaEntity empresaByIdempresa;
     @OneToMany(mappedBy = "clienteByIdcliente")
-    private List<ConversacionEntity> conversacionsByIdcliente;
+    private Collection<ConversacionEntity> conversacionsByIdcliente;
     @OneToMany(mappedBy = "clienteByIdcliente")
-    private List<CuentaEntity> cuentasByIdcliente;
+    private Collection<CuentaEntity> cuentasByIdcliente;
 
     public Integer getIdcliente() {
         return idcliente;
@@ -92,15 +90,15 @@ public class ClienteEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        ClienteEntity cliente = (ClienteEntity) o;
+        ClienteEntity that = (ClienteEntity) o;
 
-        if (idcliente != null ? !idcliente.equals(cliente.idcliente) : cliente.idcliente != null) return false;
-        if (idconversacion != null ? !idconversacion.equals(cliente.idconversacion) : cliente.idconversacion != null)
+        if (idcliente != null ? !idcliente.equals(that.idcliente) : that.idcliente != null) return false;
+        if (idconversacion != null ? !idconversacion.equals(that.idconversacion) : that.idconversacion != null)
             return false;
-        if (nombre != null ? !nombre.equals(cliente.nombre) : cliente.nombre != null) return false;
-        if (email != null ? !email.equals(cliente.email) : cliente.email != null) return false;
-        if (telefono != null ? !telefono.equals(cliente.telefono) : cliente.telefono != null) return false;
-        if (fechainicio != null ? !fechainicio.equals(cliente.fechainicio) : cliente.fechainicio != null) return false;
+        if (nombre != null ? !nombre.equals(that.nombre) : that.nombre != null) return false;
+        if (email != null ? !email.equals(that.email) : that.email != null) return false;
+        if (telefono != null ? !telefono.equals(that.telefono) : that.telefono != null) return false;
+        if (fechainicio != null ? !fechainicio.equals(that.fechainicio) : that.fechainicio != null) return false;
 
         return true;
     }
@@ -132,19 +130,19 @@ public class ClienteEntity {
         this.empresaByIdempresa = empresaByIdempresa;
     }
 
-    public List<ConversacionEntity> getConversacionsByIdcliente() {
+    public Collection<ConversacionEntity> getConversacionsByIdcliente() {
         return conversacionsByIdcliente;
     }
 
-    public void setConversacionsByIdcliente(List<ConversacionEntity> conversacionsByIdcliente) {
+    public void setConversacionsByIdcliente(Collection<ConversacionEntity> conversacionsByIdcliente) {
         this.conversacionsByIdcliente = conversacionsByIdcliente;
     }
 
-    public List<CuentaEntity> getCuentasByIdcliente() {
+    public Collection<CuentaEntity> getCuentasByIdcliente() {
         return cuentasByIdcliente;
     }
 
-    public void setCuentasByIdcliente(List<CuentaEntity> cuentasByIdcliente) {
+    public void setCuentasByIdcliente(Collection<CuentaEntity> cuentasByIdcliente) {
         this.cuentasByIdcliente = cuentasByIdcliente;
     }
 }

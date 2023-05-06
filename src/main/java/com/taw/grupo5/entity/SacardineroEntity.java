@@ -1,6 +1,4 @@
-package com.taw.grupo5.entity;/*
-Created by Pedro Ankersmit Carrión
-*/
+package com.taw.grupo5.entity;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -16,7 +14,7 @@ public class SacardineroEntity {
     @Column(name = "cantidad", nullable = true, precision = 2)
     private BigDecimal cantidad;
     @ManyToOne
-    @JoinColumn(name = "idoperacion", referencedColumnName = "idoperacion")
+    @JoinColumn(name = "idoperacion", referencedColumnName = "idoperacion", nullable = false)
     private OperacionEntity operacionByIdoperacion;
 
     public Integer getIdSacarDinero() {

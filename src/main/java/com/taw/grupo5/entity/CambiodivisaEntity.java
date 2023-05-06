@@ -1,6 +1,4 @@
-package com.taw.grupo5.entity;/*
-Created by Pedro Ankersmit Carrión
-*/
+package com.taw.grupo5.entity;
 
 import javax.persistence.*;
 
@@ -27,7 +25,7 @@ public class CambiodivisaEntity {
     @Column(name = "comision", nullable = true, length = 50)
     private String comision;
     @ManyToOne
-    @JoinColumn(name = "idoperacion", referencedColumnName = "idoperacion")
+    @JoinColumn(name = "idoperacion", referencedColumnName = "idoperacion", nullable = false)
     private OperacionEntity operacionByIdoperacion;
 
     public Integer getIdCambioDivisa() {
