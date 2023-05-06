@@ -40,14 +40,50 @@ public class GestorController {
         return "gestorListar";
     }
 
-    @GetMapping("cliente")
     public String mostrarDatosCliente(@RequestParam("id") Integer idCliente, Model model) {
         ClienteEntity clienteEntity = this.clienteRepository.findById(idCliente).orElse(null);
         model.addAttribute("cliente", clienteEntity);
 
-        List<OperacionEntity> operacionRepositoryList = this.operacionRepository.buscarPorCliente(idCliente);
-        model.addAttribute("listaOperaciones", operacionRepositoryList);
+        return doMostrarFiltrado(model, clienteEntity, null);
+    }
+    @GetMapping("cliente")
+    public String mostrarDatosClienteFiltro(@RequestParam("id") Integer idCliente, Model model, @ModelAttribute("filtro") FiltroOperaciones filtro) {
+        ClienteEntity clienteEntity = this.clienteRepository.findById(idCliente).orElse(null);
+        model.addAttribute("cliente", clienteEntity);
 
+        return doMostrarFiltrado(model, clienteEntity, filtro);
+    }
+
+    String doMostrarFiltrado(Model model, ClienteEntity cliente, FiltroOperaciones filtro){
+        List<CuentaEntity> cuentasCliente = cuentaRepository.buscarPorCLiente(cliente.getIdcliente());
+        List<OperacionEntity> operaciones = new ArrayList<>();
+        if(filtro == null){
+            filtro = new FiltroOperaciones(true, true, true);
+        }
+
+        if(filtro.isCambioDivisa()&& filtro.isTransferencia() && filtro.isSacarDinero()){
+            operaciones = operacionesRepository.buscarTodas(cliente.getIdcliente());
+        } else if(filtro.isCambioDivisa() && filtro.isTransferencia()){
+            operaciones = operacionesRepository.buscarCambioDivisaTransferencia(cliente.getIdcliente());
+        } else if(filtro.isCambioDivisa() && filtro.isSacarDinero()){
+            operaciones = operacionesRepository.buscarCambioDivisaSacarDinero(cliente.getIdcliente());
+        } else if (filtro.isTransferencia() && filtro.isSacarDinero()) {
+            operaciones = operacionesRepository.buscarSacarDineroTransferencia(cliente.getIdcliente());
+        } else{
+            if(filtro.isCambioDivisa() && !filtro.isTransferencia() && !filtro.isSacarDinero()) {
+                operaciones = operacionesRepository.buscarCambioDivisa(cliente.getIdcliente());
+            } else if (filtro.isTransferencia() && !filtro.isCambioDivisa() && !filtro.isSacarDinero() ) {
+                operaciones = operacionesRepository.buscarTransferencia(cliente.getIdcliente());
+
+            } else if(filtro.isSacarDinero() && !filtro.isTransferencia() && !filtro.isCambioDivisa()) {
+                operaciones = operacionesRepository.buscarSacarDinero(cliente.getIdcliente());
+            }
+        }
+
+        model.addAttribute("cliente", cliente);
+        model.addAttribute("cuentasCliente", cuentasCliente);
+        model.addAttribute("listaOperaciones", operaciones);
+        model.addAttribute("filtro", filtro);
         return "gestorCliente";
     }
 

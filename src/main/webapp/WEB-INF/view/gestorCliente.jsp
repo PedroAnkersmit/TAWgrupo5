@@ -11,6 +11,7 @@
 
 <%
     ClienteEntity clienteEntity = (ClienteEntity) request.getAttribute("cliente");
+    List<CuentaEntity> cuentasList = (List<CuentaEntity>) request.getAttribute("cuentasCliente");
     List<OperacionEntity> operacionRepositoryList = (List<OperacionEntity>) request.getAttribute("listaOperaciones");
 %>
 <html>
@@ -57,7 +58,40 @@
         </tr>
     </table>
 
+    <h2>Mis cuentas</h2>
+    <table border="1">
+        <tr>
+            <th>NÚMERO DE CUENTA</th>
+            <th>ESTADO</th>
+            <th>SALDO</th>
+            <th>FECHA DE APERTURA</th>
+            <th>FECHA DE CIERRE</th>
+        </tr>
+        <%
+            for (CuentaEntity c : cuentasList) {
+        %>
+            <tr>
+                <td><%=c.getNumerocuenta()%></td>
+                <td><%=c.getTipoestadoByIdestado().getNombre()%></td>
+                <td><%=c.getSaldo()%></td>
+                <td><%=c.getFechaapertura()%></td>
+                <td><%=c.getFechacierre()%></td>
+            </tr>
+        <%
+            }
+        %>
+    </table>
+
     <h2>Operaciones bancarias</h2>
+    <form:form action="/gestor/cliente" method="post" modelAttribute="filtro">
+        <input name="idCliente" value="<%=clienteEntity.getIdcliente()%>" hidden>
+        Tipo de Operación:</br>
+        Transferencia <form:checkbox path="transferencia"/>
+        Cambio de Divisa <form:checkbox path="cambioDivisa"/>
+        Extracción <form:checkbox path="sacarDinero"/> </br>
+
+        <form:button>Filtrar</form:button>
+    </form:form>
     <table border="1">
         <tr>
             <td>ID</td>
