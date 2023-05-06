@@ -1,7 +1,6 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.taw.grupo5.entity.ClienteEntity" %>
-<%@ page import="com.taw.grupo5.entity.ConversacionEntity" %>
-<%@ page import="com.taw.grupo5.entity.CuentaEntity" %><%--
+<%@ page import="com.taw.grupo5.entity.ConversacionEntity" %><%--
   Created by IntelliJ IDEA.
   User: ignam
   Date: 04/05/2023
@@ -16,10 +15,10 @@
 
 <html>
 <head>
-    <title>Gestión de clientes - Dar de alta</title>
+    <title>Gestión de clientes - Dar visto bueno</title>
 </head>
 <body>
-    <h1>Listado de clientes pendientes del visto bueno del alta</h1>
+    <h1>Clientes que han solicitado el alta</h1>
 
     <table border="1">
         <tr>
@@ -47,13 +46,17 @@
             <td><%=clienteEntity.getEmpresaByIdempresa() == null ? "Sin empresa" : clienteEntity.getEmpresaByIdempresa().getNombre()%></td>
             <td>
                 <%
-                    List<ConversacionEntity> listaConvers = clienteEntity.getConversacionsByIdcliente();
-                    int i = 0;
+                    List<ConversacionEntity> listadoConversaciones = clienteEntity.getConversacionsByIdcliente();
 
-                    for(ConversacionEntity conver : listaConvers) {
-                        i++;
+                    if(!listadoConversaciones.isEmpty()) {
+                        for(ConversacionEntity conversacion : listadoConversaciones) {
                 %>
-                Conversación nº<%=i%> - Asunto: <%=conver.getAsunto()%><br/>
+                Conversación <%=conversacion.getIdconversacion()%> - Asunto: <%=conversacion.getAsunto()%><br/>
+                <%
+                        }
+                    } else {
+                %>
+                    Sin conversaciones
                 <%
                     }
                 %>
