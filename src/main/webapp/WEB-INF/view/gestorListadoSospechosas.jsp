@@ -35,37 +35,39 @@
 
         <%
             for(ClienteEntity clienteEntity : listadoClientesSospechosos) {
+                if(clienteEntity.getCuentasByIdcliente().get(0).getTipoestadoByIdestado().getIdtipoestado() != 4) {
         %>
-        <tr>
-            <td><%=clienteEntity.getIdcliente()%></td>
-            <td><%=clienteEntity.getNombre()%></td>
-            <td><%=clienteEntity.getEmail()%></td>
-            <td><%=clienteEntity.getTelefono()%></td>
-            <td><%=clienteEntity.getFechainicio()%></td>
-            <td><%=clienteEntity.getTipoclienteByIdtipocliente().getNombre()%></td>
-            <td><%=clienteEntity.getEmpresaByIdempresa() == null ? "Sin empresa" : clienteEntity.getEmpresaByIdempresa().getNombre()%></td>
-            <td>
-                <%
-                    List<ConversacionEntity> listadoConversaciones = clienteEntity.getConversacionsByIdcliente();
+            <tr>
+                <td><%=clienteEntity.getIdcliente()%></td>
+                <td><%=clienteEntity.getNombre()%></td>
+                <td><%=clienteEntity.getEmail()%></td>
+                <td><%=clienteEntity.getTelefono()%></td>
+                <td><%=clienteEntity.getFechainicio()%></td>
+                <td><%=clienteEntity.getTipoclienteByIdtipocliente().getNombre()%></td>
+                <td><%=clienteEntity.getEmpresaByIdempresa() == null ? "Sin empresa" : clienteEntity.getEmpresaByIdempresa().getNombre()%></td>
+                <td>
+                    <%
+                        List<ConversacionEntity> listadoConversaciones = clienteEntity.getConversacionsByIdcliente();
 
-                    if(!listadoConversaciones.isEmpty()) {
-                        for(ConversacionEntity conversacion : listadoConversaciones) {
-                %>
-                Conversación <%=conversacion.getIdconversacion()%> - Asunto: <%=conversacion.getAsunto()%><br/>
-                <%
-                    }
-                } else {
-                %>
-                Sin conversaciones
-                <%
-                    }
-                %>
-            </td>
-            <td>
-                <a href="/gestor/bloquearCuenta?id=<%=clienteEntity.getCuentasByIdcliente().get(0).getIdcuenta()%>">Bloquear cuenta</a>
-            </td>
-        </tr>
+                        if(!listadoConversaciones.isEmpty()) {
+                            for(ConversacionEntity conversacion : listadoConversaciones) {
+                    %>
+                    Conversación <%=conversacion.getIdconversacion()%> - Asunto: <%=conversacion.getAsunto()%><br/>
+                    <%
+                        }
+                    } else {
+                    %>
+                    Sin conversaciones
+                    <%
+                        }
+                    %>
+                </td>
+                <td>
+                    <a href="/gestor/bloquearCuenta?id=<%=clienteEntity.getCuentasByIdcliente().get(0).getIdcuenta()%>">Bloquear cuenta</a>
+                </td>
+            </tr>
         <%
+                }
             }
         %>
     </table>
