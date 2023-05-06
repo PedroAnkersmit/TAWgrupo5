@@ -15,7 +15,7 @@
 
     <form:form action="/cajero/datos/guardar" modelAttribute="cliente" method="post">
         <form:hidden path="idcliente"/>
-        <form:hidden path="tipoclienteByIdtipocliente"/>
+        <form:hidden path="tipoclienteByIdtipocliente.idtipocliente"/>
         Nombre: <form:input path="nombre"/><br/>
         Email: <form:input path="email"/><br/>
         Teléfono: <form:input path="telefono"/><br/>

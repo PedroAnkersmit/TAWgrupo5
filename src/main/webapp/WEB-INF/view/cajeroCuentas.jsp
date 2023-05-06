@@ -16,6 +16,9 @@
 </head>
 <body>
 
+    <h1>BIENVENIDO/A <%=cliente.getNombre()%></h1>
+    <h2>Estas son tus cuentas</h2>
+
   <table border="1">
 
       <tr>

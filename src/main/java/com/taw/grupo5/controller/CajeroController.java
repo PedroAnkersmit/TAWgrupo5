@@ -77,7 +77,7 @@ public class CajeroController {
     @PostMapping("/cajero/datos/guardar")
     public String goGuardar(@ModelAttribute("cliente") ClienteEntity cliente){
         clienteRepository.save(cliente);
-        return "redirect:/cajero/datos?idCLiente=" + cliente.getIdcliente();
+        return "redirect:/cajero/datos?idCliente=" + cliente.getIdcliente();
     }
 
     @GetMapping("/cajero/datos/operaciones")
@@ -113,19 +113,19 @@ public class CajeroController {
         } else if (filtro.getTipoOperacion().equals("sacarDinero")){
 
             for(OperacionEntity o : cuenta.getOperacionsByIdcuenta()){
-                if(o.getSacardineroByIdoperacion() != null) operaciones.add(o);
+                if(!o.getSacardinerosByIdoperacion().isEmpty()) operaciones.add(o);
             }
 
         } else if (filtro.getTipoOperacion().equals("transferencia")){
 
             for(OperacionEntity o : cuenta.getOperacionsByIdcuenta()){
-                if(o.getTransferenciaByIdoperacion() != null) operaciones.add(o);
+                if(!o.getTransferenciasByIdoperacion().isEmpty()) operaciones.add(o);
             }
 
         } else if (filtro.getTipoOperacion().equals("cambioDivisa")){
 
             for(OperacionEntity o : cuenta.getOperacionsByIdcuenta()){
-                if(o.getCambiodivisaByIdoperacion() != null) operaciones.add(o);
+                if(!o.getCambiodivisasByIdoperacion().isEmpty()) operaciones.add(o);
             }
 
         }
@@ -151,7 +151,6 @@ public class CajeroController {
 
         CuentaEntity cuenta = cuentaRepository.findById(idCuenta).orElse(null);
 
-        cuenta.setSaldo(cuenta.getSaldo().subtract(cantidad));
 
         OperacionEntity newOp = new OperacionEntity();
         SacardineroEntity newSD = new SacardineroEntity();
@@ -164,11 +163,21 @@ public class CajeroController {
 
         newSD.setCantidad(cantidad);
         newSD.setOperacionByIdoperacion(newOp);
-        newSD.setIdoperacion(operacionRepository.findAll().size()-1);
+
+        cuenta.setSaldo(cuenta.getSaldo().subtract(cantidad));
+
+        List<SacardineroEntity> sacardineroEntityList = new ArrayList<>();
+        sacardineroEntityList.add(newSD);
 
         sacarDineroRepository.save(newSD);
 
-        newOp.setSacardineroByIdoperacion(newSD);
+        List<SacardineroEntity> sd = new ArrayList<>();
+
+        sd.add(newSD);
+
+        newOp.setSacardinerosByIdoperacion(sd);
+        newOp.setTransferenciasByIdoperacion(new ArrayList<>());
+        newOp.setCambiodivisasByIdoperacion(new ArrayList<>());
 
         operacionRepository.save(newOp);
 
@@ -209,7 +218,10 @@ public class CajeroController {
 
         transferenciaRepository.save(newT);
 
-        newOp.setTransferenciaByIdoperacion(newT);
+        List<TransferenciaEntity> newTs = new ArrayList<>();
+        newOp.setTransferenciasByIdoperacion(newTs);
+        newOp.setCambiodivisasByIdoperacion(new ArrayList<>());
+        newOp.setSacardinerosByIdoperacion(new ArrayList<>());
 
         operacionRepository.save(newOp);
 
@@ -249,10 +261,16 @@ public class CajeroController {
         newCD.setCantidadcompra(Double.toString(cantidad.multiply(dolarValue).doubleValue()));
         newCD.setCantidadventa(Double.toString(cantidad.doubleValue()));
         newCD.setComision(Double.toString(comision.doubleValue()));
+        newCD.setOperacionByIdoperacion(newOp);
 
         cambioDivisaRepository.save(newCD);
 
-        newOp.setCambiodivisaByIdoperacion(newCD);
+        List<CambiodivisaEntity> newCDs = new ArrayList<>();
+        newCDs.add(newCD);
+
+        newOp.setCambiodivisasByIdoperacion(newCDs);
+        newOp.setSacardinerosByIdoperacion(new ArrayList<>());
+        newOp.setTransferenciasByIdoperacion(new ArrayList<>());
 
         operacionRepository.save(newOp);
 

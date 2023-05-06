@@ -9,8 +9,8 @@ import java.sql.Date;
 public class TransferenciaEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "idoperacion", nullable = false)
-    private Integer idoperacion;
+    @Column(name = "idTransferencia", nullable = false)
+    private Integer idTransferencia;
     @Basic
     @Column(name = "cantidad", nullable = true, precision = 2)
     private BigDecimal cantidad;
@@ -20,16 +20,16 @@ public class TransferenciaEntity {
     @Basic
     @Column(name = "fechaejecucion", nullable = true)
     private Date fechaejecucion;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "idoperacion", referencedColumnName = "idoperacion", nullable = false)
     private OperacionEntity operacionByIdoperacion;
 
-    public Integer getIdoperacion() {
-        return idoperacion;
+    public Integer getIdTransferencia() {
+        return idTransferencia;
     }
 
-    public void setIdoperacion(Integer idoperacion) {
-        this.idoperacion = idoperacion;
+    public void setIdTransferencia(Integer idTransferencia) {
+        this.idTransferencia = idTransferencia;
     }
 
     public BigDecimal getCantidad() {
@@ -63,7 +63,8 @@ public class TransferenciaEntity {
 
         TransferenciaEntity that = (TransferenciaEntity) o;
 
-        if (idoperacion != null ? !idoperacion.equals(that.idoperacion) : that.idoperacion != null) return false;
+        if (idTransferencia != null ? !idTransferencia.equals(that.idTransferencia) : that.idTransferencia != null)
+            return false;
         if (cantidad != null ? !cantidad.equals(that.cantidad) : that.cantidad != null) return false;
         if (fechainstruccion != null ? !fechainstruccion.equals(that.fechainstruccion) : that.fechainstruccion != null)
             return false;
@@ -75,7 +76,7 @@ public class TransferenciaEntity {
 
     @Override
     public int hashCode() {
-        int result = idoperacion != null ? idoperacion.hashCode() : 0;
+        int result = idTransferencia != null ? idTransferencia.hashCode() : 0;
         result = 31 * result + (cantidad != null ? cantidad.hashCode() : 0);
         result = 31 * result + (fechainstruccion != null ? fechainstruccion.hashCode() : 0);
         result = 31 * result + (fechaejecucion != null ? fechaejecucion.hashCode() : 0);
