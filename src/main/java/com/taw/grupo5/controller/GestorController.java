@@ -167,10 +167,7 @@ public class GestorController {
 
     @GetMapping("listadoSospechosas")
     public String mostrarListadoSospechosas(Model model) {
-        List<ClienteEntity> listadoClientesPosiblesSospechosos = this.clienteRepository.findAll();
-
         List<ClienteEntity> listadoClientesSospechosos = new ArrayList<>();
-
         List<OperacionEntity> operacionEntitiesList = this.operacionRepository.findAll();
         List<TransferenciaEntity> transferenciaEntities = new ArrayList<>();
 
@@ -186,7 +183,6 @@ public class GestorController {
                 listadoClientesSospechosos.add(cuentaorigen.getClienteByIdcliente());
             }
         }
-
 
         model.addAttribute("listadoClientesSospechosos", listadoClientesSospechosos);
 
