@@ -1,7 +1,9 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page import="com.taw.grupo5.entity.ConversacionEntity" %>
 <%@ page import="com.taw.grupo5.entity.MensajeEntity" %>
-<%@ page import="java.util.List" %><%--
+<%@ page import="java.util.List" %>
+<%@ page import="java.sql.Timestamp" %>
+<%@ page import="java.text.SimpleDateFormat" %><%--
   Created by IntelliJ IDEA.
   User: diamo
   Date: 06/05/2023
@@ -12,6 +14,7 @@
 <%  ConversacionEntity conversacion = (ConversacionEntity) request.getAttribute("conversacion");
   List<MensajeEntity> conversacionFiltrada = (List<MensajeEntity>) request.getAttribute("conversacionFiltrada");
     //int esAsistente = (int) request.getAttribute("esAsistente");
+  SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy - HH:mm");
 %>
 
 <html>
@@ -32,51 +35,21 @@
     <tr>
       <th>Usted</th>
       <th><%=conversacion.getClienteByIdcliente().getNombre()%></th>
-
-
+      <th>Fecha y hora</th>
     </tr>
-
-    <!--                               IMPORTANTE, LEER
-    A continuación se muestran todos los mensajes del chat. En nuestra base de datos no tenemos
-    un atributo Fecha en la tabla Mensaje, por lo cual MensajeEntity no tiene atributo fecha.
-    Esto es un problema para el requisito US-27.
-
-    Tras comentarlo con el grupo y por recomendación del profesor de evitar hacer cambios en la
-    base de datos, hemos decidido hacer append al mensaje de la fecha.
-
-    En el form del final se obtiene el texto del mensaje y se le envía el objeto al controlador,
-    el cual añadirá la fecha (se comenta en la propia clase).
-
-    En la tabla de la conversación, al mostrar cada mensaje se "recorta" el String contenido para
-    obtener el substring del mensaje enviado por el cliente y después el substring de la fecha.
-
-    Como la fecha debería ser un atributo aparte, he hecho también las líneas de cómo sería el
-    código si tuviéramos ese atributo tanto en la tabla de la conversación como en el formulario,
-    aunque están comentadas. Los < %=%> están separados por un espacio adrede para que no los reconozca.
-    -->
 
 
     <%for(MensajeEntity mensaje : conversacionFiltrada){%>
     <tr>
       <%if(mensaje.getEnviadoporasistente()>0){%>
-      <td><%=mensaje.getContenido().substring(0,mensaje.getContenido().length()-17)%></td>
+      <td><%=mensaje.getContenido()%></td>
       <td></td>
-      <td><%=mensaje.getContenido().substring(mensaje.getContenido().length()-17)%></td>
-      <!-- Con atributo sería:
-      <td>< %=mensaje.getContenido()%></td>
-      <td></td>
-      <td> < %=mensaje.getFecha()%> </td>
-      -->
+      <td><%=formato.format(mensaje.getFechaenvio())%></td>
 
       <%}else{ // enviado por cliente%>
       <td></td>
-      <td><%=mensaje.getContenido().substring(0,mensaje.getContenido().length()-17)%></td>
-      <td><%=mensaje.getContenido().substring(mensaje.getContenido().length()-17)%></td>
-      <!-- Con atributo sería:
-      <td></td>
-      <td>< %=mensaje.getContenido()%></td>
-      <td> < %=mensaje.getFecha()%> </td>
-      -->
+      <td><%=mensaje.getContenido()%></td>
+      <td><%=formato.format(mensaje.getFechaenvio())%></td>
       <%}%>
     </tr>
     <%}%>
@@ -88,15 +61,9 @@
     <form:textarea path="contenido"></form:textarea>
     <form:hidden path="enviadoporasistente" value="1"/>
     <form:hidden path="conversacionByIdconversacion.idconversacion" value="<%=conversacion.getIdconversacion()%>"/>
-  <!--
-  Guardar la fecha en la base de datos: (separado por espacios adrede para evitar que lo detecte.
-      Se usa SimpleDateFormat para que el campo ya se guarde como un String formateado en la base de datos
-      y no se tenga que formatear en la tabla de la conversación (lineas 77 y 87). También se podría
-      hacer así pero resulta más complicado)
-  < form :hidden path="fecha" value="< %= new SimpleDateFormat("dd/MM/yy, HH:mm").format(new Date())%>"/>
-  -->
+    <form:hidden path="fechaenvio" value="<%=new Timestamp(System.currentTimeMillis())%>"/>
 
-  <form:button>Enviar</form:button>
+    <form:button>Enviar</form:button>
   </form:form>
     <%}%>
 </body>

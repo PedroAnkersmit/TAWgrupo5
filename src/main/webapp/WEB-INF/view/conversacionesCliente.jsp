@@ -22,12 +22,13 @@
   <h2>Tus conversaciones</h2>
   <!--<a href="/asistente/cerrarSesion"><button>Cerrar sesion</button></a>-->
   <a href="/clienteHome"><button>Volver a tu portal</button></a><br>
-  <a href="/asistente/nuevaConversacion"><button>Crear nueva conversación</button></a>
+  <a href="/asistente/nuevaConversacion?id=<%=cliente.getIdcliente()%>"><button>Crear nueva conversación</button></a>
 
   <table border="1">
     <tr>
       <th>Asunto</th>
-      <th>Conversación</th>
+      <th>Asistente</th>
+      <th>Conversacion</th>
     </tr>
 
 
@@ -37,6 +38,7 @@
       <tr>
         <% if(conversacion.getAbierto()>0){%>
         <td><%=conversacion.getAsunto()%></td>
+        <td><%=conversacion.getEmpleadoByIdempleado().getNombre()%></td>
         <td><a href="/asistente/conversar?id=<%=conversacion.getIdconversacion()%>">Abrir</a></td>
         <td><a href="/asistente/cerrarConversacion?id=<%=conversacion.getIdconversacion()%>">Cerrar conversacion</a></td>
         <%}%>

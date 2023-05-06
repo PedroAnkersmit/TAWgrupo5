@@ -4,6 +4,7 @@
 <%@ page import="com.taw.grupo5.entity.EmpleadoEntity" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.taw.grupo5.entity.ClienteEntity" %>
+<%@ page import="java.sql.Timestamp" %>
 <%--
   Created by IntelliJ IDEA.
   User: diamo
@@ -15,7 +16,8 @@
 <%  int esAsistente = (int) request.getAttribute("esAsistente");
     List<ClienteEntity> listaClientes = (List< ClienteEntity>) request.getAttribute("listaClientes");
     List<EmpleadoEntity> listaAsistentes = (List< EmpleadoEntity>) request.getAttribute("listaAsistentes");
-    List<?> lista = (List< ClienteEntity>) request.getAttribute("listaClientes");
+    EmpleadoEntity empleado = (EmpleadoEntity) request.getAttribute("empleado");
+    ClienteEntity cliente = (ClienteEntity) request.getAttribute("cliente");
 %>
 <html>
 <head>
@@ -40,9 +42,9 @@
 
 
     <%if(esAsistente>0){%>
-    <form:hidden path="conversacionByIdconversacion.empleadoByIdempleado" value="2"/> <!-- PROVISIONAL HASTA TENER HTTPSESSION-->
+    <form:hidden path="conversacionByIdconversacion.empleadoByIdempleado" value="<%=empleado.getIdempleado()%>"/> <!-- PROVISIONAL HASTA TENER HTTPSESSION-->
     <%}else{%>
-    <form:hidden path="conversacionByIdconversacion.clienteByIdcliente" value="4"/> <!-- PROVISIONAL HASTA TENER HTTPSESSION-->
+    <form:hidden path="conversacionByIdconversacion.clienteByIdcliente" value="<%=cliente.getIdcliente()%>"/> <!-- PROVISIONAL HASTA TENER HTTPSESSION-->
     <%}%>
     <table border="1">
         <tr>
@@ -56,39 +58,13 @@
             <%}%>
 
         </tr>
-
-        <!--                               IMPORTANTE, LEER
-        A continuación se muestran todos los mensajes del chat. En nuestra base de datos no tenemos
-        un atributo Fecha en la tabla Mensaje, por lo cual MensajeEntity no tiene atributo fecha.
-        Esto es un problema para el requisito US-27.
-
-        Tras comentarlo con el grupo y por recomendación del profesor de evitar hacer cambios en la
-        base de datos, hemos decidido hacer append al mensaje de la fecha.
-
-        En el form del final se obtiene el texto del mensaje y se le envía el objeto al controlador,
-        el cual añadirá la fecha (se comenta en la propia clase).
-
-        En la tabla de la conversación, al mostrar cada mensaje se "recorta" el String contenido para
-        obtener el substring del mensaje enviado por el cliente y después el substring de la fecha.
-
-        Como la fecha debería ser un atributo aparte, he hecho también las líneas de cómo sería el
-        código si tuviéramos ese atributo tanto en la tabla de la conversación como en el formulario,
-        aunque están comentadas. Los < %=%> están separados por un espacio adrede para que no los reconozca.
-        -->
-
     </table>
 
         <form:hidden path="idmensaje"/>
         <form:textarea path="contenido"></form:textarea>
         <form:hidden path="enviadoporasistente" value="<%=esAsistente%>"/>
         <form:hidden path="conversacionByIdconversacion"/>
-    <!--
-    Guardar la fecha en la base de datos: (separado por espacios adrede para evitar que lo detecte.
-        Se usa SimpleDateFormat para que el campo ya se guarde como un String formateado en la base de datos
-        y no se tenga que formatear en la tabla de la conversación (lineas 77 y 87). También se podría
-        hacer así pero resulta más complicado)
-    < form :hidden path="fecha" value="< %= new SimpleDateFormat("dd/MM/yy, HH:mm").format(new Date())%>"/>
-    -->
+        <form:hidden path="fechaenvio" value="<%=new Timestamp(System.currentTimeMillis())%>"/>
 
     Enviar mensaje a:
     <%if(esAsistente>0){%>

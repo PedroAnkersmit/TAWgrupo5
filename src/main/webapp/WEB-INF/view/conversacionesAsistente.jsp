@@ -21,13 +21,13 @@
     <title>Conversaciones</title>
 </head>
 <body>
-    <h1>Conversaciones</h1>
+    <h1>Bienvenido/a, <%=empleado.getNombre()%></h1>
 
     <!--<a href="/asistente/cerrarSesion"><button>Cerrar sesion</button></a>-->
     <%if(!empleado.getTipoempleadoByIdtipoempleado().getPuesto().equalsIgnoreCase("asistente")){ // NO es gestor%>
     <p>No tienes conversaciones porque no eres asistente.</p>
     <%}else{%>
-    <a href="/asistente/nuevoChat"><button>Crear nueva conversación</button></a>
+    <a href="/asistente/nuevoChat?id=<%=empleado.getIdempleado()%>"><button>Crear nueva conversación</button></a>
     <p>Filtros:</p>
 
     <form:form modelAttribute="filtro" method="post" action="/asistente/filtrar">

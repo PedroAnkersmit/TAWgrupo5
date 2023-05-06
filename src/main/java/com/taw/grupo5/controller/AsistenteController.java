@@ -36,13 +36,6 @@ public class AsistenteController {
     /*
            AMBAS PARTES
 
-
-    <%if(){%>
-    <%}else{%>
-    <%}%>
-
-
-
      */
 
     @GetMapping("/")
@@ -104,9 +97,7 @@ public class AsistenteController {
         String vuelta;
 
         conversacionRepository.save(mensaje.getConversacionByIdconversacion());
-        //mensaje.setConversacionByIdconversacion(conversacion);
-        formatearFechaYEnviarMensaje(mensaje);
-
+        mensajeRepository.save(mensaje);
         if(mensaje.getEnviadoporasistente()>0){             //si es asistente
             vuelta = "redirect:/asistente/conversacion?id=";
         }else{                                              //si es cliente
@@ -123,8 +114,7 @@ public class AsistenteController {
         int id_conver = mensaje.getConversacionByIdconversacion().getIdconversacion();
         String vuelta;
 
-        formatearFechaYEnviarMensaje(mensaje);
-
+        mensajeRepository.save(mensaje);
         if(mensaje.getEnviadoporasistente()>0){             //si es asistente
             vuelta = "redirect:/asistente/conversacion?id=";
         }else{                                              //si es cliente
@@ -134,54 +124,14 @@ public class AsistenteController {
     }
 
 
-    private void formatearFechaYEnviarMensaje(MensajeEntity mensaje){
-        /*                                  IMPORTANTE - LEER
-        Como se comenta en la vista del chat, aquí se añade de manualmente la fecha.
-
-        Lo que he hecho es crear un objeto Date y formatearlo usando SimpleDateFormat para que sea legible.
-        Una vez obtenido el string de la fecha y hora, hago append a mensaje.contenido INCLUYENDO entre contenido
-        y fecha 4 espacios extras. Esto es porque SimpleDateFormat guarda la fecha con una extensión de 15 caracteres,
-        a los que les sumo los 2 corchetes.
-        Los corchetes son puramente estéticos, se pueden quitar modificando en la vista del chat las líneas que
-        muestran mensaje.getContenido pasando de -17 a -15.
-
-        Finalmente guardo este cambio con setContenido y guardo en la base de datos.
-
-        Si hubiera un atributo no habría que hacer este proceso ya que ya estaría correcto desde el formulario.
-        Como ya se ha dicho en el formulario, habrían dos opciones:
-        a) Guardar en base de datos como Date y formatear en la tabla de la conversación
-        b) Guardar en base de datos como String ya formateada en el formulario
-
-        He mostrado la opción b por simpleza y comodidad, así a ciegas creo que funcionaría el código en el caso
-        real.
-         */
-
-        //PRUEBA DE QUE SIGUE FUNCIONANDO CHAT
-        mensaje.setFechaenvio(null);
-
-        Timestamp fecha = new Timestamp(System.currentTimeMillis());
-        mensaje.setFechaenvio(fecha);
-
-
-        /* POR SI EL FORMATO ESTÁ MAL
-        try {
-            SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            String str_fecha = formato.format(fecha);
-            fecha = new Timestamp(System.currentTimeMillis());
-        }catch(Exception e){
-            fecha = null;
-        }
-        */
-        mensajeRepository.save(mensaje);
-    }
-
-
 
 
 
     /*
            LADO DEL CLIENTE
      */
+
+
     @GetMapping("/misconversaciones")
     public String doListarCliente(Model model, @RequestParam("id") int id_cliente) {
     //public String doListarCliente(Model model, HttpSession session) {
@@ -199,12 +149,17 @@ public class AsistenteController {
     }
 
     @GetMapping("/nuevaConversacion")
-    public String doNuevaConversacionCliente(Model model){
+    public String doNuevaConversacionCliente(Model model, @RequestParam("id") int id_cliente){
         doConversacion(model);
+
 
         model.addAttribute("esAsistente", 0);
         model.addAttribute("listaAsistentes", empleadoRepository.listarAsistentes());
         model.addAttribute("listaClientes", null);
+
+
+        model.addAttribute("empleado", null);
+        model.addAttribute("cliente", clienteRepository.findById(id_cliente).orElse(null));
         return "nuevoChat";
     }
 
@@ -223,10 +178,13 @@ public class AsistenteController {
 
 
 
-
     /*
             LADO DEL ASISTENTE
      */
+
+
+
+
     @GetMapping("/conversaciones") //CAMBIAR TRAS HACER HTTPSESSION
     public String doListarAsistente(Model model, @RequestParam("id") int id_asistente, HttpSession session){
         model.addAttribute("lista", conversacionRepository.findAll());
@@ -319,12 +277,16 @@ public class AsistenteController {
     }
 
     @GetMapping("/nuevoChat")
-    public String doNuevaConversacionAsistente(Model model){
+    public String doNuevaConversacionAsistente(Model model, @RequestParam("id") int id_asistente){
         doConversacion(model);
 
         model.addAttribute("esAsistente", 1);
         model.addAttribute("listaAsistentes", null);
         model.addAttribute("listaClientes", clienteRepository.findAll());
+
+
+        model.addAttribute("empleado", empleadoRepository.findById(id_asistente).orElse(null));
+        model.addAttribute("cliente", null);
         return "nuevoChat";
     }
 }
