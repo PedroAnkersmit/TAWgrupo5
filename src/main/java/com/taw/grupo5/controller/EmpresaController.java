@@ -56,17 +56,6 @@ public class EmpresaController {
         return "empresaRegistro";
     }
 
-    public String generateBankNumber() {
-        Random random = new Random();
-        StringBuilder bankNumberBuilder = new StringBuilder();
-
-        for (int i = 0; i < 10; i++) {
-            bankNumberBuilder.append(random.nextInt(10));
-        }
-
-        return bankNumberBuilder.toString();
-    }
-
     @PostMapping("/registro/guardar")
     public String empresaRegistroGuardar(@ModelAttribute("empresaregistro") EmpresaRegistro empresaRegistro, Model model)
     {
@@ -87,7 +76,7 @@ public class EmpresaController {
         this.clienteRepository.save(cliente);
 
         cuenta.setClienteByIdcliente(cliente);
-        cuenta.setNumerocuenta(generateBankNumber());
+        cuenta.setNumerocuenta(null);
 
         estadoCuentaNueva.setIdtipoestado(1);
 
@@ -129,7 +118,7 @@ public class EmpresaController {
         this.clienteRepository.save(cliente);
 
         cuenta.setClienteByIdcliente(cliente);
-        cuenta.setNumerocuenta(generateBankNumber());
+        cuenta.setNumerocuenta(null);
 
         estadoCuentaNueva.setIdtipoestado(1);
 
@@ -297,6 +286,7 @@ public class EmpresaController {
     @PostMapping("/transferencia/enviar")
     public String tramitarTransferenciaEmpresa(@ModelAttribute("transferencia") TransferenciaEntity transferencia, Model model)
     {
+        CuentaEntity cuentaDestino = this.cuentaRepository.findBy(transferencia);
         LocalDate today = LocalDate.now();
 
         BigDecimal balanceOriginal = transferencia.getOperacionByIdoperacion().getCuentaByIdcuenta().getSaldo();

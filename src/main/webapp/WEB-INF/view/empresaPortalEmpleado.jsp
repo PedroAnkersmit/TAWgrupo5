@@ -19,6 +19,7 @@
     List<ClienteEntity> listaClientesDeLaEmpresa = (List<ClienteEntity>) request.getAttribute("listaClientes");
     List<OperacionEntity> listaOperaciones = (List<OperacionEntity>) request.getAttribute("listaOperaciones");
 %>
+
 <style>
     body {
         margin: 0;
@@ -142,14 +143,14 @@
         <td><%= c.getIdcliente() %></td>
         <td>
             <%
+                int i;
+
                 List<ConversacionEntity> listaConvers = c.getConversacionsByIdcliente();
-                int i = 0;
 
                 for(ConversacionEntity conver : listaConvers)
                 {
-                    i++;
             %>
-            Conversación nº<%=i%> - Asunto: <%=conver.getAsunto()%><br/>
+            Conversación nº<%=conver.getIdconversacion()%> - Asunto: <%=conver.getAsunto()%><br/>
             <%
                 }
             %>
@@ -196,7 +197,6 @@
 <h2>Listado de operaciones de compañeros de empresa</h2>
 <form:form action="/empresa/portal/filtrarOperaciones" method="post" modelAttribute="filtroOperaciones">
     Buscar por: <br/><br/>
-    a<br/>
     <form:hidden path="idClienteDelPortal"/>
     <form:input type="date" path="fechaMinima"/>
     <form:input type="date" path="fechaMaxima"/>

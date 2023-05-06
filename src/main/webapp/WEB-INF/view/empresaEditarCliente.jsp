@@ -19,6 +19,8 @@
   Nombre <form:input path="nombre"/><br/>
   Email <form:input path="email"/><br/>
   Telefono <form:input path="telefono"/><br/>
+  <form:hidden path="fechainicio"/>
+  <form:hidden path="idconversacion"/>
   <form:hidden path="tipoclienteByIdtipocliente.idtipocliente"/>
   <form:hidden path="empresaByIdempresa.idempresa"/>
   <form:button>Guardar cambios</form:button>

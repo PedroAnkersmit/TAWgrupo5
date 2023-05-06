@@ -17,7 +17,7 @@
 <form:form action="/empresa/transferencia/enviar" method="post" modelAttribute="transferencia">
         <form:hidden path="idTransferencia"/>
         Cantidad <form:input path="cantidad"/><br/>
-        Cuenta destino <input/><br/>
+        Cuenta destino <form:input path="cuentaDestino"/><br/>
         Fecha de ejecución: <form:input type="date" path="fechaejecucion"/><br/>
         <form:hidden path="operacionByIdoperacion"/>
         <form:button>Guardar cambios</form:button>
