@@ -1,6 +1,8 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page import="com.taw.grupo5.entity.ConversacionEntity" %>
 <%@ page import="com.taw.grupo5.entity.MensajeEntity" %>
+<%@ page import="java.text.SimpleDateFormat" %>
+<%@ page import="java.util.Date" %>
 <%--
   Created by IntelliJ IDEA.
   User: Hilaria
@@ -104,8 +106,8 @@
             Se usa SimpleDateFormat para que el campo ya se guarde como un String formateado en la base de datos
             y no se tenga que formatear en la tabla de la conversación (lineas 77 y 87). También se podría
             hacer así pero resulta más complicado)
-        < form :hidden path="fecha" value="< %= new SimpleDateFormat("dd/MM/yy, HH:mm").format(new Date())%>"/>
         -->
+        <form:hidden path="fecha" value=""/>
 
         <form:button>Enviar</form:button>
     </form:form>

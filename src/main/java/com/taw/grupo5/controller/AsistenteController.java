@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 @Controller
@@ -157,11 +157,21 @@ public class AsistenteController {
 
         String mensaje_bruto = mensaje.getContenido();
 
+        /* CASTEANDO DESDE STRING
+
         Date fecha = new Date();
-        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yy, HH:mm");
+        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String str_fecha = formato.format(fecha);
 
-        mensaje.setContenido(mensaje_bruto + " [" + str_fecha + "]");
+        try {
+            fecha = (Date) formato.parse(str_fecha);
+        }catch(Exception e){
+            fecha = null;
+        }
+*/
+        Date fecha = new Date(System.currentTimeMillis());
+        mensaje.setFechaenvio(fecha);
+        //mensaje.setContenido(mensaje_bruto + " [" + str_fecha + "]");
 
         mensajeRepository.save(mensaje);
     }

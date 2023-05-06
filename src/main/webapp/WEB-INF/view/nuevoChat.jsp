@@ -96,7 +96,7 @@
                                    items="${listaClientes}" itemLabel="nombre" itemValue="idcliente"></form:select><br/>
     <%}else{%>
     <form:select path="conversacionByIdconversacion.empleadoByIdempleado"
-                                   items="${listaAsistentes}" itemLabel="idempleado" itemValue="idempleado"></form:select><br/>
+                                   items="${listaAsistentes}" itemLabel="idempleado" itemValue="nombre"></form:select><br/>
     <%}%>
     <form:button>Enviar</form:button>
  </form:form>
