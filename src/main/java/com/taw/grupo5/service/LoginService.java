@@ -50,6 +50,17 @@ public class LoginService {
         CuentaEntity cuenta = new CuentaEntity();
         List<CuentaEntity> cuentas = new ArrayList<>();
 
+        cliente.setIdcliente(clienteDTO.getIdCliente());
+        cliente.setNombre(clienteDTO.getNombre());
+        cliente.setTelefono(clienteDTO.getTelefono());
+        cliente.setFechainicio(clienteDTO.getFechainicio());
+        cliente.setIdconversacion(clienteDTO.getIdConversacion());
+        cliente.setTipoclienteByIdtipocliente(tipoClienteRepository.findById(clienteDTO.getTipoCliente().getIdTipocliente()).orElse(null));
+        cliente.setEmpresaByIdempresa(null);
+        cliente.setCuentasByIdcliente(cuentas);
+        cliente.setConversacionsByIdcliente(new ArrayList<>());
+        clienteRepository.save(cliente);
+
         cuenta.setIdcuenta(cuentaDTO.getIdcuenta());
         cuenta.setFechaapertura(cuentaDTO.getFechaapertura());
         cuenta.setNumerocuenta(cuentaDTO.getNumerocuenta());
@@ -61,16 +72,7 @@ public class LoginService {
         cuentaRepository.save(cuenta);
         cuentas.add(cuenta);
 
-        cliente.setIdcliente(clienteDTO.getIdCliente());
-        cliente.setNombre(clienteDTO.getNombre());
-        cliente.setTelefono(clienteDTO.getTelefono());
-        cliente.setFechainicio(clienteDTO.getFechainicio());
-        cliente.setIdconversacion(clienteDTO.getIdConversacion());
-        cliente.setTipoclienteByIdtipocliente(tipoClienteRepository.findById(clienteDTO.getTipoCliente().getIdTipocliente()).orElse(null));
-        cliente.setEmpresaByIdempresa(null);
-        cliente.setCuentasByIdcliente(cuentas);
-        cliente.setConversacionsByIdcliente(new ArrayList<>());
-        clienteRepository.save(cliente);
+
 
 
 
