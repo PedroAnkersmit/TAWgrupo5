@@ -166,6 +166,10 @@ public class AsistenteController {
         mensajeRepository.save(mensaje);
     }
 
+
+
+
+
     /*
            LADO DEL CLIENTE
      */
@@ -237,25 +241,59 @@ public class AsistenteController {
     public String doFiltrar(@ModelAttribute("filtro")FiltroAsistente filtro,
                             @ModelAttribute("empleado")EmpleadoEntity empleado, Model model, HttpSession session){
         List<ConversacionEntity> lista = conversacionRepository.findAll();
+        String opcion="";
 
-        if(filtro==null){
+        String nombreOCorreo = filtro.getNombreOCorreo();
+        String asunto = filtro.getAsunto();
+        Byte abierto = filtro.getAbierta();
+
+        //NINGUNO
+        if(filtro==null ||
+                (nombreOCorreo.isEmpty() && abierto==null && asunto.isEmpty() )){
+            opcion = "000-ninguno";
             filtro = new FiltroAsistente();
         }
-        else if(filtro.getNombreOCorreo().isEmpty()){
-            /*if(filtro.getAbierta()==null){
-
-            }else if(){
-
-            }else{
-
-            }*/
-        }else if(filtro.getAbierta()==null){
-
+        //"001-solo asunto"
+        else if(nombreOCorreo.isEmpty() && abierto==null && !asunto.isEmpty()) {
+            opcion = "001-solo asunto";
+            lista = conversacionRepository.filtrarAsunto(asunto);
+        }
+        //"010-solo abierto"
+        else if(nombreOCorreo.isEmpty() && abierto!=null && asunto.isEmpty()) {
+            opcion = "010-solo abierto";
+            lista = conversacionRepository.filtrarAbierto(abierto);
+        }
+        //"011- abierto y asunto"
+        else if(nombreOCorreo.isEmpty() && abierto!=null && !asunto.isEmpty()) {
+            opcion = "011-abierto y asunto";
+            lista = conversacionRepository.filtrarAbiertoAsunto(abierto, asunto);
+        }
+        //"100- solo nombre"
+        else if(!nombreOCorreo.isEmpty() && abierto==null && asunto.isEmpty()) {
+            opcion = "100-solo nombre";
+            lista = conversacionRepository.filtrarNombreOCorreo(nombreOCorreo);
+        }
+        //"101- nombre y asunto"
+        else if(!nombreOCorreo.isEmpty() && abierto==null && !asunto.isEmpty()) {
+            opcion = "101-nombre y asunto";
+            lista = conversacionRepository.filtrarNombreOCorreoAsunto(nombreOCorreo, asunto);
+        }
+        //"110- nombre y abierto"
+        else if(!nombreOCorreo.isEmpty() && abierto!=null && asunto.isEmpty()){
+            opcion = "110-nombre y abierto";
+            lista = conversacionRepository.filtrarNombreOCorreoAbierto(nombreOCorreo, abierto);
+        }
+        //"111- todos: nombre, abierto y asunto"
+        else {
+            opcion = "todos";
+            lista = conversacionRepository.filtrarTodo(nombreOCorreo, abierto, asunto);
         }
 
+
         model.addAttribute("lista", lista);
-        //model.addAttribute("empleado", empleado);
-        return "redirect:/asistente/conversaciones?id=2"; //provisional hasta que funcione httpsession
+        model.addAttribute("empleado", empleado);
+        model.addAttribute("filtro", filtro);
+        return "conversacionesAsistente"; //provisional hasta que funcione httpsession
     }
 
     /*

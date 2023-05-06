@@ -10,8 +10,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%  EmpleadoEntity empleado = (EmpleadoEntity) request.getAttribute("empleado");
-    //EmpleadoEntity empleado = (EmpleadoEntity) pageContext.getSession().getAttribute("usuario");
+<%  //EmpleadoEntity empleado = (EmpleadoEntity) request.getAttribute("empleado");
+    EmpleadoEntity empleado = (EmpleadoEntity) pageContext.getSession().getAttribute("usuario");
     List<ConversacionEntity> lista = (List<ConversacionEntity>) request.getAttribute("lista");
     //List<Byte> opcionesAbierto = (List<Byte>) request.getAttribute("opcionesAbierto");
 %>
@@ -31,6 +31,7 @@
     <p>Filtros:</p>
 
     <form:form modelAttribute="filtro" method="post" action="/asistente/filtrar">
+        Asunto: <form:input path="asunto"></form:input>
         Nombre o correo: <form:input path="nombreOCorreo"></form:input>
         Estado de la conversación: <form:select path="abierta">
                 <form:option value="">Cualquiera</form:option>
