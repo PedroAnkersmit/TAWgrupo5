@@ -159,7 +159,9 @@ public class GestorController {
 
         estadoCuenta.setIdtipoestado(4);
 
-        cuenta.setTipoestadoByIdestado(estadoCuenta);
+        if(cuenta.getNumerocuenta() == null) {
+            cuenta.setTipoestadoByIdestado(estadoCuenta);
+        }
         this.cuentaRepository.save(cuenta);
 
         return "redirect:/gestor/";
@@ -187,5 +189,19 @@ public class GestorController {
         model.addAttribute("listadoClientesSospechosos", listadoClientesSospechosos);
 
         return "gestorListadoSospechosas";
+    }
+
+    @GetMapping("bloquearCuenta")
+    public String bloquearCuenta(@RequestParam("id") Integer idCuenta) {
+        CuentaEntity cuenta = this.cuentaRepository.findById(idCuenta).orElse(null);
+        TipoestadoEntity estadoCuenta = new TipoestadoEntity();
+
+        estadoCuenta.setIdtipoestado(4);
+
+        cuenta.setTipoestadoByIdestado(estadoCuenta);
+
+        this.cuentaRepository.save(cuenta);
+
+        return "redirect:/gestor/";
     }
 }

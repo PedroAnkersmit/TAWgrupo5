@@ -16,7 +16,7 @@
 
 <html>
 <head>
-    <title>Listado de clientes y empresas</title>
+    <title>Gestor - Home</title>
 </head>
 <body>
     <h1>Listado de clientes y empresas</h1>
@@ -48,9 +48,9 @@
     </table>
 
     <h3>Gestión de clientes</h3>
-    <button><a href="/gestor/listadoDarVistoBuenoAlta">Dar visto bueno al alta</a></button>
-    <button><a href="/gestor/listadoInactivos">Bloquear inactivos</a></button>
-    <button>Sospechosos</button>
+    <button><a href="/gestor/listadoDarVistoBuenoAlta">Solicitudes de alta</a></button>
+    <button><a href="/gestor/listadoInactivos">Bloqueo por inactividad</a></button>
+    <button><a href="/gestor/listadoSospechosas">Actividades sospechosas</a></button>
 
     <h2>Empresas</h2>
     <p>Añadir filtro por nombre</p>

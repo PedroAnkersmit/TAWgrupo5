@@ -18,7 +18,7 @@
     <title>Gestión de clientes - Sospechosos</title>
 </head>
 <body>
-    <h1>Listado de clientes que han hecho transferencias a cuentas sospechosas</h1>
+    <h1>Clientes que han hecho transferencias a cuentas sospechosas</h1>
 
     <table border="1">
         <tr>
@@ -37,7 +37,6 @@
             for(ClienteEntity clienteEntity : listadoClientesSospechosos) {
         %>
         <tr>
-            <td><%=clienteEntity.getCuentasByIdcliente().get(0).getTipoestadoByIdestado().getIdtipoestado()%></td>
             <td><%=clienteEntity.getIdcliente()%></td>
             <td><%=clienteEntity.getNombre()%></td>
             <td><%=clienteEntity.getEmail()%></td>
@@ -47,18 +46,24 @@
             <td><%=clienteEntity.getEmpresaByIdempresa() == null ? "Sin empresa" : clienteEntity.getEmpresaByIdempresa().getNombre()%></td>
             <td>
                 <%
-                    List<ConversacionEntity> listaConvers = clienteEntity.getConversacionsByIdcliente();
-                    int i = 0;
+                    List<ConversacionEntity> listadoConversaciones = clienteEntity.getConversacionsByIdcliente();
 
-                    for(ConversacionEntity conver : listaConvers) {
-                        i++;
+                    if(!listadoConversaciones.isEmpty()) {
+                        for(ConversacionEntity conversacion : listadoConversaciones) {
                 %>
-                Conversación nº<%=i%> - Asunto: <%=conver.getAsunto()%><br/>
+                Conversación <%=conversacion.getIdconversacion()%> - Asunto: <%=conversacion.getAsunto()%><br/>
+                <%
+                    }
+                } else {
+                %>
+                Sin conversaciones
                 <%
                     }
                 %>
             </td>
-
+            <td>
+                <a href="/gestor/bloquearCuenta?id=<%=clienteEntity.getCuentasByIdcliente().get(0).getIdcuenta()%>">Bloquear cuenta</a>
+            </td>
         </tr>
         <%
             }
