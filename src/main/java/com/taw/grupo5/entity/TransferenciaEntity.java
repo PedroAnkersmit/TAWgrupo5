@@ -1,6 +1,4 @@
-package com.taw.grupo5.entity;/*
-Created by Pedro Ankersmit Carrión
-*/
+package com.taw.grupo5.entity;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -23,7 +21,7 @@ public class TransferenciaEntity {
     @Column(name = "fechaejecucion", nullable = true)
     private Date fechaejecucion;
     @ManyToOne
-    @JoinColumn(name = "idoperacion", referencedColumnName = "idoperacion")
+    @JoinColumn(name = "idoperacion", referencedColumnName = "idoperacion", nullable = false)
     private OperacionEntity operacionByIdoperacion;
 
     public Integer getIdTransferencia() {

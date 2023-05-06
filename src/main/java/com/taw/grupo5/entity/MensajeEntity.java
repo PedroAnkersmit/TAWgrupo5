@@ -1,8 +1,7 @@
-package com.taw.grupo5.entity;/*
-Created by Pedro Ankersmit Carrión
-*/
+package com.taw.grupo5.entity;
 
 import javax.persistence.*;
+import java.sql.Date;
 
 @Entity
 @Table(name = "mensaje", schema = "grupo5", catalog = "")
@@ -17,6 +16,9 @@ public class MensajeEntity {
     @Basic
     @Column(name = "enviadoporasistente", nullable = true)
     private Byte enviadoporasistente;
+    @Basic
+    @Column(name = "fechaenvio", nullable = true)
+    private Date fechaenvio;
     @ManyToOne
     @JoinColumn(name = "idconversacion", referencedColumnName = "idconversacion", nullable = false)
     private ConversacionEntity conversacionByIdconversacion;
@@ -45,6 +47,14 @@ public class MensajeEntity {
         this.enviadoporasistente = enviadoporasistente;
     }
 
+    public Date getFechaenvio() {
+        return fechaenvio;
+    }
+
+    public void setFechaenvio(Date fechaenvio) {
+        this.fechaenvio = fechaenvio;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -56,6 +66,7 @@ public class MensajeEntity {
         if (contenido != null ? !contenido.equals(that.contenido) : that.contenido != null) return false;
         if (enviadoporasistente != null ? !enviadoporasistente.equals(that.enviadoporasistente) : that.enviadoporasistente != null)
             return false;
+        if (fechaenvio != null ? !fechaenvio.equals(that.fechaenvio) : that.fechaenvio != null) return false;
 
         return true;
     }
@@ -65,6 +76,7 @@ public class MensajeEntity {
         int result = idmensaje != null ? idmensaje.hashCode() : 0;
         result = 31 * result + (contenido != null ? contenido.hashCode() : 0);
         result = 31 * result + (enviadoporasistente != null ? enviadoporasistente.hashCode() : 0);
+        result = 31 * result + (fechaenvio != null ? fechaenvio.hashCode() : 0);
         return result;
     }
 
