@@ -20,14 +20,12 @@
     List<OperacionEntity> listaOperaciones = (List<OperacionEntity>) request.getAttribute("listaOperaciones");
 %>
 <style>
-    /* set body margin and font */
     body {
         margin: 0;
         font-family: Arial, sans-serif;
         text-align: center;
     }
 
-    /* set heading styles */
     h1, h2 {
         text-align: center;
         color: #333;
@@ -35,7 +33,6 @@
         margin-bottom: 20px;
     }
 
-    /* style the buttons */
     button {
         padding: 10px 20px;
         border-radius: 5px;
@@ -50,7 +47,6 @@
         background-color: #0062cc;
     }
 
-    /* style the table */
     table {
         border-collapse: collapse;
         margin: 20px auto;
@@ -66,7 +62,6 @@
         background-color: #f5f5f5;
     }
 
-    /* style the form */
     form {
         display: flex;
         justify-content: center;
@@ -200,7 +195,8 @@
 %>
 <h2>Listado de operaciones de compañeros de empresa</h2>
 <form:form action="/empresa/portal/filtrarOperaciones" method="post" modelAttribute="filtroOperaciones">
-    Buscar por: <br/>
+    Buscar por: <br/><br/>
+    a<br/>
     <form:hidden path="idClienteDelPortal"/>
     <form:input type="date" path="fechaMinima"/>
     <form:input type="date" path="fechaMaxima"/>
