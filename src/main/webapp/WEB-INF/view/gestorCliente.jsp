@@ -19,19 +19,19 @@
     <title>Cliente</title>
 </head>
 <body>
-    <h1>Datos del cliente: <%=clienteEntity.getNombre()%></h1>
+    <h1>Infomación del cliente: <%=clienteEntity.getNombre()%></h1>
 
-    <h2>Información</h2>
+    <h2>Datos</h2>
     <table border="1">
         <tr>
             <th>ID</th>
-            <th>Nombre</th>
-            <th>Email</th>
-            <th>Teléfono</th>
-            <th>Fecha de inicio</th>
-            <th>Tipo</th>
-            <th>Empresa</th>
-            <th>Conversación</th>
+            <th>NOMBRE</th>
+            <th>EMAIL</th>
+            <th>TELÉFONO</th>
+            <th>FECHA DE INICIO</th>
+            <th>TIPO</th>
+            <th>EMPRESA</th>
+            <th>CONVERSACIÓN</th>
         </tr>
 
         <tr>
@@ -58,10 +58,10 @@
         </tr>
     </table>
 
-    <h2>Mis cuentas</h2>
+    <h2>Cuentas</h2>
     <table border="1">
         <tr>
-            <th>NÚMERO DE CUENTA</th>
+            <th>Nº DE CUENTA</th>
             <th>ESTADO</th>
             <th>SALDO</th>
             <th>FECHA DE APERTURA</th>
@@ -83,13 +83,12 @@
     </table>
 
     <h2>Operaciones bancarias</h2>
-    <form:form action="/gestor/clienteFiltrar?id=${cliente.idcliente}" method="post" modelAttribute="filtro">
+    <form:form action="/gestor/clienteFiltrar?id=${cliente.idcliente}" method="post" modelAttribute="filtroOperaciones">
         <input name="idcliente" value="<%=clienteEntity.getIdcliente()%>" hidden>
         Tipo de Operación:</br>
-        Transferencia <form:checkbox path="transferencia"/>
-        Cambio de Divisa <form:checkbox path="cambioDivisa"/>
-        Extracción <form:checkbox path="sacarDinero"/> </br>
-
+        <form:checkbox path="transferencia"/>Transferencia
+        <form:checkbox path="cambioDivisa"/>Cambio de Divisa
+        <form:checkbox path="sacarDinero"/>Extracción
         <form:button>Filtrar</form:button>
     </form:form>
     <table border="1">

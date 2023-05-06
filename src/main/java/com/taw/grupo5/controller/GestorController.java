@@ -49,28 +49,29 @@ public class GestorController {
         ClienteEntity clienteEntity = this.clienteRepository.findById(idCliente).orElse(null);
         model.addAttribute("cliente", clienteEntity);
 
-        return doMostrarFiltrado(model, clienteEntity, null);
+        return doMostrarFiltradoOperaciones(model, clienteEntity, null);
     }
     @PostMapping("clienteFiltrar")
-    public String mostrarDatosClienteFiltro(@RequestParam("id") Integer idCliente, Model model, @ModelAttribute("filtro") FiltroOperaciones filtro) {
+    public String mostrarDatosClienteFiltro(@RequestParam("id") Integer idCliente, Model model, @ModelAttribute("filtroOperaciones") FiltroOperaciones filtro) {
         ClienteEntity clienteEntity = this.clienteRepository.findById(idCliente).orElse(null);
         model.addAttribute("cliente", clienteEntity);
 
-        return doMostrarFiltrado(model, clienteEntity, filtro);
+        return doMostrarFiltradoOperaciones(model, clienteEntity, filtro);
     }
 
-    String doMostrarFiltrado(Model model, ClienteEntity cliente, FiltroOperaciones filtro) {
+    String doMostrarFiltradoOperaciones(Model model, ClienteEntity cliente, FiltroOperaciones filtro) {
         List<CuentaEntity> cuentasCliente = cuentaRepository.buscarPorCLiente(cliente.getIdcliente());
         List<OperacionEntity> operaciones = new ArrayList<>();
-        if(filtro == null){
-            filtro = new FiltroOperaciones(true, true, true);
+
+        if(filtro == null) {
+            filtro = new FiltroOperaciones(false, false, false);
         }
 
-        if(filtro.isCambioDivisa()&& filtro.isTransferencia() && filtro.isSacarDinero()){
+        if(!filtro.isCambioDivisa() && !filtro.isTransferencia() && !filtro.isSacarDinero()){
             operaciones = operacionesRepository.buscarTodas(cliente.getIdcliente());
-        } else if(filtro.isCambioDivisa() && filtro.isTransferencia()){
+        } else if(filtro.isCambioDivisa() && filtro.isTransferencia()) {
             operaciones = operacionesRepository.buscarCambioDivisaTransferencia(cliente.getIdcliente());
-        } else if(filtro.isCambioDivisa() && filtro.isSacarDinero()){
+        } else if(filtro.isCambioDivisa() && filtro.isSacarDinero()) {
             operaciones = operacionesRepository.buscarCambioDivisaSacarDinero(cliente.getIdcliente());
         } else if (filtro.isTransferencia() && filtro.isSacarDinero()) {
             operaciones = operacionesRepository.buscarSacarDineroTransferencia(cliente.getIdcliente());
@@ -79,7 +80,6 @@ public class GestorController {
                 operaciones = operacionesRepository.buscarCambioDivisa(cliente.getIdcliente());
             } else if (filtro.isTransferencia() && !filtro.isCambioDivisa() && !filtro.isSacarDinero() ) {
                 operaciones = operacionesRepository.buscarTransferencia(cliente.getIdcliente());
-
             } else if(filtro.isSacarDinero() && !filtro.isTransferencia() && !filtro.isCambioDivisa()) {
                 operaciones = operacionesRepository.buscarSacarDinero(cliente.getIdcliente());
             }
@@ -88,7 +88,7 @@ public class GestorController {
         model.addAttribute("cliente", cliente);
         model.addAttribute("cuentasCliente", cuentasCliente);
         model.addAttribute("listaOperaciones", operaciones);
-        model.addAttribute("filtro", filtro);
+        model.addAttribute("filtroOperaciones", filtro);
         return "gestorCliente";
     }
 
