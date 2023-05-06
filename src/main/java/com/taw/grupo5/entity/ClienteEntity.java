@@ -2,7 +2,7 @@ package com.taw.grupo5.entity;
 
 import javax.persistence.*;
 import java.sql.Date;
-import java.util.List;
+import java.util.Collection;
 
 @Entity
 @Table(name = "cliente", schema = "grupo5", catalog = "")
@@ -33,9 +33,9 @@ public class ClienteEntity {
     @JoinColumn(name = "idempresa", referencedColumnName = "idempresa")
     private EmpresaEntity empresaByIdempresa;
     @OneToMany(mappedBy = "clienteByIdcliente")
-    private List<ConversacionEntity> conversacionsByIdcliente;
+    private Collection<ConversacionEntity> conversacionsByIdcliente;
     @OneToMany(mappedBy = "clienteByIdcliente")
-    private List<CuentaEntity> cuentasByIdcliente;
+    private Collection<CuentaEntity> cuentasByIdcliente;
 
     public Integer getIdcliente() {
         return idcliente;
@@ -130,19 +130,19 @@ public class ClienteEntity {
         this.empresaByIdempresa = empresaByIdempresa;
     }
 
-    public List<ConversacionEntity> getConversacionsByIdcliente() {
+    public Collection<ConversacionEntity> getConversacionsByIdcliente() {
         return conversacionsByIdcliente;
     }
 
-    public void setConversacionsByIdcliente(List<ConversacionEntity> conversacionsByIdcliente) {
+    public void setConversacionsByIdcliente(Collection<ConversacionEntity> conversacionsByIdcliente) {
         this.conversacionsByIdcliente = conversacionsByIdcliente;
     }
 
-    public List<CuentaEntity> getCuentasByIdcliente() {
+    public Collection<CuentaEntity> getCuentasByIdcliente() {
         return cuentasByIdcliente;
     }
 
-    public void setCuentasByIdcliente(List<CuentaEntity> cuentasByIdcliente) {
+    public void setCuentasByIdcliente(Collection<CuentaEntity> cuentasByIdcliente) {
         this.cuentasByIdcliente = cuentasByIdcliente;
     }
 }
