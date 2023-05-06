@@ -290,7 +290,7 @@ public class EmpresaController {
         LocalDate today = LocalDate.now();
 
         BigDecimal balanceOrigen = transferencia.getOperacionByIdoperacion().getCuentaByIdcuenta().getSaldo();
-        BigDecimal balanceDestino = transferencia.getOperacionByIdoperacion().getCuentaByIdcuenta().getSaldo();
+        BigDecimal balanceDestino = cuentaDestino.getSaldo();
 
         if(balanceOrigen == null)
             balanceOrigen = BigDecimal.valueOf(0);
