@@ -1,3 +1,4 @@
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page import="com.taw.grupo5.entity.EmpleadoEntity" %>
 <%@ page import="com.taw.grupo5.entity.ConversacionEntity" %>
 <%@ page import="java.util.List" %>
@@ -11,7 +12,10 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%  EmpleadoEntity empleado = (EmpleadoEntity) request.getAttribute("empleado");
     //EmpleadoEntity empleado = (EmpleadoEntity) pageContext.getSession().getAttribute("usuario");
-    List<ConversacionEntity> lista = (List<ConversacionEntity>) request.getAttribute("lista"); %>
+    List<ConversacionEntity> lista = (List<ConversacionEntity>) request.getAttribute("lista");
+    //List<Byte> opcionesAbierto = (List<Byte>) request.getAttribute("opcionesAbierto");
+%>
+
 <html>
 <head>
     <title>Conversaciones</title>
@@ -25,6 +29,18 @@
     <%}else{%>
     <a href="/asistente/nuevoChat"><button>Crear nueva conversación</button></a>
     <p>Filtros:</p>
+
+    <form:form modelAttribute="filtro" method="post" action="/asistente/filtrar">
+        Nombre o correo: <form:input path="nombreOCorreo"></form:input>
+        Estado de la conversación: <form:select path="abierta">
+                <form:option value="">Cualquiera</form:option>
+                <form:option value="1">Abierta</form:option>
+                <form:option value="0">Cerrada</form:option>
+         </form:select>
+        <form:button>Filtrar</form:button>
+    </form:form>
+
+
 
     <table border="1">
         <tr>

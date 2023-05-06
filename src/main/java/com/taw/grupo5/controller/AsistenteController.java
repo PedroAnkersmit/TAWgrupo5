@@ -8,6 +8,7 @@ import com.taw.grupo5.entity.ClienteEntity;
 import com.taw.grupo5.entity.ConversacionEntity;
 import com.taw.grupo5.entity.EmpleadoEntity;
 import com.taw.grupo5.entity.MensajeEntity;
+import com.taw.grupo5.ui.FiltroAsistente;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 @RequestMapping("/asistente")
@@ -203,6 +205,12 @@ public class AsistenteController {
         return "redirect:/asistente/misconversaciones?id="+idcliente;
     }
 
+
+
+
+
+
+
     /*
             LADO DEL ASISTENTE
      */
@@ -210,9 +218,47 @@ public class AsistenteController {
     public String doListarAsistente(Model model, @RequestParam("id") int id_asistente, HttpSession session){
         model.addAttribute("lista", conversacionRepository.findAll());
         model.addAttribute("empleado", empleadoRepository.findById(id_asistente).orElse(null));
+        //model.addAttribute("opcionesAbierto", conversacionRepository.opcionesAbierto());
+        model.addAttribute("filtro", new FiltroAsistente());
+        session.setAttribute("usuario", empleadoRepository.findById(id_asistente).orElse(null));
         return "conversacionesAsistente";
     }
-/*
+    @GetMapping("/moderar")
+    public String doModerar(Model model, @RequestParam("id") int id){
+        //ConversacionEntity conversacion = (ConversacionEntity) model.getAttribute("conversacion");
+        ConversacionEntity conversacion = conversacionRepository.findById(id).orElse(null);
+        doChatear(model, id);
+
+        model.addAttribute("conversacionFiltrada", mensajeRepository.moderarMensajesCliente(conversacion));
+        return "chatModeracion";
+    }
+
+    @PostMapping("/filtrar")
+    public String doFiltrar(@ModelAttribute("filtro")FiltroAsistente filtro,
+                            @ModelAttribute("empleado")EmpleadoEntity empleado, Model model, HttpSession session){
+        List<ConversacionEntity> lista = conversacionRepository.findAll();
+
+        if(filtro==null){
+            filtro = new FiltroAsistente();
+        }
+        else if(filtro.getNombreOCorreo().isEmpty()){
+            /*if(filtro.getAbierta()==null){
+
+            }else if(){
+
+            }else{
+
+            }*/
+        }else if(filtro.getAbierta()==null){
+
+        }
+
+        model.addAttribute("lista", lista);
+        //model.addAttribute("empleado", empleado);
+        return "redirect:/asistente/conversaciones?id=2"; //provisional hasta que funcione httpsession
+    }
+
+    /*
     @GetMapping("/volver")
     public String doVolverAsistente(@RequestParam("id") int id_asistente){
         return "redirect:/asistente?id="+id_asistente;

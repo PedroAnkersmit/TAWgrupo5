@@ -22,7 +22,8 @@
     <h1>Asunto: <%=conversacion.getAsunto()%><%if(!(conversacion.getAbierto()>0)){%>  [Cerrado]<%}%></h1>
 
     <%if(esAsistente>0){     //Botones del asistente%>
-    <button action="moderar">Mensajes del cliente</button><br> <!-- Requisito US-27 -->
+    <a href="/asistente/moderar?id=<%=conversacion.getIdconversacion()%>">
+        <button>Mensajes del cliente</button></a> <!-- Requisito US-27 -->
     <a href="/asistente/conversaciones?id=<%=conversacion.getEmpleadoByIdempleado().getIdempleado()%>">
 
     <%}else{                //Botones del cliente%>
@@ -40,7 +41,7 @@
             <th><%=conversacion.getClienteByIdcliente().getNombre()%></th>
 
         <%}else{                //Headings del cliente%>
-            <th>Su asistente</th>
+            <th>Su asistente: <%=conversacion.getEmpleadoByIdempleado().getIdempleado()%></th>
             <th>Usted</th>
         <%}%>
 
