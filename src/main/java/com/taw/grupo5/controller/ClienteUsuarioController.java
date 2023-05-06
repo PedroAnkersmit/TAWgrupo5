@@ -46,7 +46,6 @@ public class ClienteUsuarioController {
         List<CambioDivisaDTO> cambioDivisaDTOS = clienteUsuarioService.doFiltrarCambios(filtro,usuario);
         List<SacardineroDTO> sacardineroDTOS = clienteUsuarioService.doFiltrarExtracciones(filtro,usuario);
 
-
         model.addAttribute("user", usuario);
         model.addAttribute("accounts", cuentasUsuario);
         model.addAttribute("transfer", transferenciaDTOS);
@@ -105,6 +104,7 @@ public class ClienteUsuarioController {
         transferencia.setFechaEjecucion(new Date(System.currentTimeMillis()));
         transferencia.setCantidad(c);
         transferencia.setOperacion(op.getIdOperacion());
+        transferencia.setCuentaDestino(cuentaReceptora.getIdcuenta());
 
         cuentaReceptora.setSaldo(cuentaReceptora.getSaldo().add(c));
 

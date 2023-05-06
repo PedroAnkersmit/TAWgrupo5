@@ -16,9 +16,9 @@
 <%
     ClienteDTO usuario = (ClienteDTO) request.getAttribute("user");
     List<CuentaDTO> cuentas = (List<CuentaDTO>) request.getAttribute("accounts");
-    List<TransferenciaDTO> transferencias = (List<TransferenciaDTO>) request.getAttribute("transfers");
-    List<CambioDivisaDTO> cambios = (List<CambioDivisaDTO>) request.getAttribute("changes");
-    List<SacardineroDTO> extracciones = (List<SacardineroDTO>) request.getAttribute("extracts");
+    List<TransferenciaDTO> transferencias = (List<TransferenciaDTO>) request.getAttribute("transfer");
+    List<CambioDivisaDTO> cambios = (List<CambioDivisaDTO>) request.getAttribute("change");
+    List<SacardineroDTO> extracciones = (List<SacardineroDTO>) request.getAttribute("extract");
 %>
 <html>
 <head>
@@ -78,7 +78,7 @@
         <td><%=c.getFechacierre()%>
         </td>
         <td><a href="/clienteHome/transfer?id=<%=c.getIdcuenta()%>">Hacer transferecia</a></td>
-        <td><a href="/clienteHome/cambio?id=<%=c.getIdcuenta()%>">Cambiar divisa</a> </td>
+        <td><a href="/clienteHome/cambio?id=<%=c.getIdcuenta()%>">Cambiar divisa</a></td>
         <% if (c.getTipoEstado().getIdTipoestado() == 1) {
         %>
         <td><a href="/solicitarActivacion?id=<%=c.getIdcuenta()%>">Solicitar Activacion</a></td>
@@ -87,7 +87,7 @@
         %>
         <td><a href="/solicitarDesbloqueo?id=<%=c.getIdcuenta()%>">Solicitar Desbloqueo</a></td>
         <%
-        }%>
+            }%>
     </tr>
     <%
         }
@@ -111,7 +111,8 @@
         <th>DETALLES</th>
     </tr>
     <%
-      if(transferencias != null){   for(TransferenciaDTO t : transferencias){
+        if (!transferencias.isEmpty()) {
+            for (TransferenciaDTO t : transferencias) {
     %>
     <tr>
         <td><%=t.getOperacion()%>
@@ -122,44 +123,62 @@
             <p>Transferencia:</p>
             Fecha de Ejecucion: <%=t.getFechaEjecucion()%></br>
             Movimiento: <%=t.getCantidad()%></br>
-            <%
+            Cuenta de Destino: <%
+            for (CuentaDTO c : cuentas) {
+                if (c.getIdcuenta() == t.getCuentaDestino()) {
+        %> <%=c.getNumerocuenta()%> <%
+                        }
+                    }
+            %></td>
+    </tr><%
                 }
-                }%>
+            %>
+
+    <%
+        }
+    %>
+    <%
+        if (!cambios.isEmpty()) {
+            for (CambioDivisaDTO c : cambios) {
+    %>
+    <tr>
+        <td><%=c.getOperacion().getIdOperacion()%>
+        </td>
+        <td>
+        </td>
+        <td>
+        <p>Cambio de Divisa</p>
+        Moneda
+        Comprada: <%=c.getCantidadcompra()%> <%=c.getMonedacompra()%> </br>
+        Moneda
+        Vendida: <%=c.getCantidadventa()%> <%=c.getMonedaventa()%> </br>
+        Comision: <%=c.getComision()%>
         </td>
     </tr>
-    <tr> <%
-        if(extracciones != null){
-            for(SacardineroDTO s : extracciones){
-            %>
+                <%
+                }
+            }
+        %>
+
+
+    <%
+        if (!extracciones.isEmpty()) {
+            for (SacardineroDTO s : extracciones) {
+    %>
+    <tr>
         <td><%=s.getOperacion()%>
         </td>
         <td><%=s.getOperacion().getFecha()%>
-        </td>
+        </td><td>
             <p>Extracción:</p>
             Cantidad: <%=s.getCantidad()%>
-            <%
-                }}
-            %>
     </td>
     </tr>
-    <tr><%
-            if(cambios != null){    for(CambioDivisaDTO c: cambios){
-            %>
-        <td><%=c.getOperacion()%>
-        </td>
-        <td><%=c.getOperacion().getFecha()%>
-        </td>
-            <p>Cambio de Divisa</p>
-            Moneda
-            Comprada: <%=c.getCantidadcompra()%> <%=c.getMonedacompra()%> </br>
-            Moneda
-            Vendida: <%=c.getCantidadventa()%> <%=c.getMonedaventa()%> </br>
-            Comision: <%=c.getComision()%>
             <%
-                }}
+                    }
+                }
             %>
-        </td>
-    </tr>
+
 </table>
 
 

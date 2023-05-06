@@ -183,6 +183,7 @@ public class ClienteUsuarioService {
         transferencia.setFechainstruccion(transfer.getFechaInstruccion());
         transferencia.setFechaejecucion(new Date(System.currentTimeMillis()));
         transferencia.setCantidad(transfer.getCantidad());
+        transferencia.setIdcuentadestino(transfer.getCuentaDestino());
         transferencia.setOperacionByIdoperacion(operacionesRepository.getById(transfer.getOperacion()));
         transferenciasRepository.save(transferencia);
         transfer.setIdTransferencia(transferencia.getIdTransferencia());
