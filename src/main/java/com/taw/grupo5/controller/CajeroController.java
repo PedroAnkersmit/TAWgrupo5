@@ -194,6 +194,7 @@ public class CajeroController {
         newT.setFechaejecucion(newOp.getFecha());
         newT.setFechainstruccion(newOp.getFecha());
         newT.setOperacionByIdoperacion(newOp);
+        newT.setIdcuentadestino(idDestino);
 
         transferenciaRepository.save(newT);
 
