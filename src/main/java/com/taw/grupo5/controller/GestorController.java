@@ -44,22 +44,34 @@ public class GestorController {
         return "gestorListar";
     }
 
+    @PostMapping("/")
+    public String mostrarClientesFiltradosPorNombre (@RequestParam("filtroNombreCliente") String nombre, Model model){
+        List<ClienteEntity> lista = this.clienteRepository.buscarPorNombre(nombre);
+        model.addAttribute("listaClientes", lista);
+
+        List<EmpresaEntity> empresaEntityList = this.empresaRepository.findAll();
+        model.addAttribute("listaEmpresas", empresaEntityList);
+
+        return "gestorListar";
+    }
+
     @GetMapping("cliente")
     public String mostrarDatosCliente(@RequestParam("id") Integer idCliente, Model model) {
         ClienteEntity clienteEntity = this.clienteRepository.findById(idCliente).orElse(null);
         model.addAttribute("cliente", clienteEntity);
 
-        return doMostrarFiltradoOperaciones(model, clienteEntity, null);
+        return mostrarFiltradoOperacionesCliente(model, clienteEntity, null);
     }
-    @PostMapping("clienteFiltrar")
-    public String mostrarDatosClienteFiltro(@RequestParam("id") Integer idCliente, Model model, @ModelAttribute("filtroOperaciones") FiltroOperaciones filtro) {
+
+    @PostMapping("filtroOperacionesCliente")
+    public String mostrarDatosClienteFiltro(@RequestParam("id") Integer idCliente, Model model, @ModelAttribute("filtroOperacionesCliente") FiltroOperaciones filtro) {
         ClienteEntity clienteEntity = this.clienteRepository.findById(idCliente).orElse(null);
         model.addAttribute("cliente", clienteEntity);
 
-        return doMostrarFiltradoOperaciones(model, clienteEntity, filtro);
+        return mostrarFiltradoOperacionesCliente(model, clienteEntity, filtro);
     }
 
-    String doMostrarFiltradoOperaciones(Model model, ClienteEntity cliente, FiltroOperaciones filtro) {
+    String mostrarFiltradoOperacionesCliente(Model model, ClienteEntity cliente, FiltroOperaciones filtro) {
         List<CuentaEntity> cuentasCliente = cuentaRepository.buscarPorCLiente(cliente.getIdcliente());
         List<OperacionEntity> operaciones = new ArrayList<>();
 
@@ -88,7 +100,7 @@ public class GestorController {
         model.addAttribute("cliente", cliente);
         model.addAttribute("cuentasCliente", cuentasCliente);
         model.addAttribute("listaOperaciones", operaciones);
-        model.addAttribute("filtroOperaciones", filtro);
+        model.addAttribute("filtroOperacionesCliente", filtro);
         return "gestorCliente";
     }
 

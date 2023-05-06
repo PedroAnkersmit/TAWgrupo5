@@ -22,10 +22,11 @@
     <h1>Listado de clientes y empresas</h1>
     <h2>Clientes</h2>
     <p>Añadir filtro por nombre y por tipo</p>
-    <form action="/gestor/clienteFiltrar" method="post">
-        Buscar por: <input type="text" name="filtroCliente">
+    <form action="/gestor/" method="post">
+        Buscar cliente: <input type="text" name="filtroNombreCliente">
         <button>Filtrar</button>
     </form>
+
     <!-- Clientes -->
     <table border="1">
         <tr>
