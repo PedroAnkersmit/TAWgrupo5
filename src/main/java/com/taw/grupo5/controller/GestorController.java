@@ -21,10 +21,13 @@ public class GestorController {
     EmpresaRepository empresaRepository;
 
     @Autowired
-    OperacionRepository operacionesRepository;
+    OperacionRepository operacionRepository;
 
     @Autowired
     CuentaRepository cuentaRepository;
+
+    @Autowired
+    OperacionesRepository operacionesRepository;
 
     @GetMapping("/")
     public String mostrarClientesYEmpresas(Model model) {
@@ -37,52 +40,12 @@ public class GestorController {
         return "gestorListar";
     }
 
-    @PostMapping("/filtrar")
-    String doFiltrar(Model model,@RequestParam("idCliente") Integer idCliente, @ModelAttribute("filtro") FiltroOperaciones filtro){
-        ClienteEntity usuario = clienteRepository.findById(idCliente).orElse(null);
-        return doMostrarFiltrado(model,usuario,filtro);
-    }
-
-    String doMostrarFiltrado(Model model, ClienteEntity usuario, FiltroOperaciones filtro){
-        List<CuentaEntity> cuentasUsuario = cuentaRepository.buscarPorCLiente(usuario.getIdcliente());
-        List<OperacionEntity> operaciones = new ArrayList<>();
-        if(filtro == null){
-            filtro = new FiltroOperaciones(true, true, true);
-        }
-
-        if(filtro.isCambioDivisa()&& filtro.isTransferencia() && filtro.isSacarDinero()){
-            operaciones = operacionesRepository.buscarTodas(usuario.getIdcliente());
-        } else if(filtro.isCambioDivisa() && filtro.isTransferencia()){
-            operaciones = operacionesRepository.buscarCambioDivisaTransferencia(usuario.getIdcliente());
-        } else if(filtro.isCambioDivisa() && filtro.isSacarDinero()){
-            operaciones = operacionesRepository.buscarCambioDivisaSacarDinero(usuario.getIdcliente());
-        } else if (filtro.isTransferencia() && filtro.isSacarDinero()) {
-            operaciones = operacionesRepository.buscarSacarDineroTransferencia(usuario.getIdcliente());
-        } else{
-            if(filtro.isCambioDivisa() && !filtro.isTransferencia() && !filtro.isSacarDinero()) {
-                operaciones = operacionesRepository.buscarCambioDivisa(usuario.getIdcliente());
-            } else if (filtro.isTransferencia() && !filtro.isCambioDivisa() && !filtro.isSacarDinero() ) {
-                operaciones = operacionesRepository.buscarTransferencia(usuario.getIdcliente());
-
-            } else if(filtro.isSacarDinero() && !filtro.isTransferencia() && !filtro.isCambioDivisa()) {
-                operaciones = operacionesRepository.buscarSacarDinero(usuario.getIdcliente());
-            }
-        }
-
-
-        model.addAttribute("user", usuario);
-        model.addAttribute("accounts", cuentasUsuario);
-        model.addAttribute("operations", operaciones);
-        model.addAttribute("filtro", filtro);
-        return "clienteHome";
-    }
-
     @GetMapping("cliente")
     public String mostrarDatosCliente(@RequestParam("id") Integer idCliente, Model model) {
         ClienteEntity clienteEntity = this.clienteRepository.findById(idCliente).orElse(null);
         model.addAttribute("cliente", clienteEntity);
 
-        List<OperacionEntity> operacionRepositoryList = this.operacionesRepository.buscarPorCliente(idCliente);
+        List<OperacionEntity> operacionRepositoryList = this.operacionRepository.buscarPorCliente(idCliente);
         model.addAttribute("listaOperaciones", operacionRepositoryList);
 
         return "gestorCliente";
@@ -101,7 +64,7 @@ public class GestorController {
             listaIdClientes.add(cliente.getIdcliente());
         }
 
-        List<OperacionEntity> operacionRepositoryList = this.operacionesRepository.buscarPorEmpresa(listaIdClientes);
+        List<OperacionEntity> operacionRepositoryList = this.operacionRepository.buscarPorEmpresa(listaIdClientes);
         model.addAttribute("listaOperaciones", operacionRepositoryList);
 
         return "gestorEmpresa";

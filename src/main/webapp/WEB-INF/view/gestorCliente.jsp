@@ -58,15 +58,6 @@
     </table>
 
     <h2>Operaciones bancarias</h2>
-    <h3>Mis operaciones:</h3>
-    <form:form action="/gestor/filtrarOperaciones" method="post" modelAttribute="filtro">
-        Tipo de Operación:</br>
-        Transferencia <form:checkbox path="transferencia"/>
-        Cambio de Divisa <form:checkbox path="cambioDivisa"/>
-        Extracción <form:checkbox path="sacarDinero"/> </br>
-
-        <form:button>Filtrar</form:button>
-    </form:form>
     <table border="1">
         <tr>
             <td>ID</td>
