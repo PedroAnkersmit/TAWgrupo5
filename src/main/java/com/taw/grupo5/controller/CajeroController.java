@@ -164,6 +164,7 @@ public class CajeroController {
 
         newSD.setCantidad(cantidad);
         newSD.setOperacionByIdoperacion(newOp);
+        newSD.setIdoperacion(operacionRepository.findAll().size()-1);
 
         sacarDineroRepository.save(newSD);
 
