@@ -164,8 +164,7 @@ public class GestorController {
 
     @GetMapping("listadoSospechosas")
     public String mostrarListadoSospechosas(Model model) {
-        List<CuentaEntity> listadoCuentasSospechosas = this.cuentaRepository.listadoCuentasSospechosas();
-        model.addAttribute("listadoCuentasSospechosas", listadoCuentasSospechosas);
+
 
         return "gestorListadoSospechosas";
     }
