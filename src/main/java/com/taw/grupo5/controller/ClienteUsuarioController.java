@@ -134,6 +134,7 @@ public class ClienteUsuarioController {
         transferencia.setFechainstruccion(new Date(System.currentTimeMillis()));
         transferencia.setFechaejecucion(new Date(System.currentTimeMillis()));
         transferencia.setCantidad(c);
+        transferencia.setIdcuentadestino(cuentaReceptora.getIdcuenta());
 
         cuentaReceptora.setSaldo(cuentaReceptora.getSaldo().add(c));
 
