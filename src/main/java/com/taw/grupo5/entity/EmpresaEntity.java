@@ -3,6 +3,7 @@ package com.taw.grupo5.entity;
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.List;
+import java.util.List;
 
 @Entity
 @Table(name = "empresa", schema = "grupo5", catalog = "")
@@ -68,6 +69,10 @@ public class EmpresaEntity {
 
     public List<ClienteEntity> getClientesByIdempresa() {
         return clientesByIdempresa;
+    }
+
+    public void setClientesByIdempresa(List<ClienteEntity> clientesByIdempresa) {
+        this.clientesByIdempresa = clientesByIdempresa;
     }
 
     public void setClientesByIdempresa(List<ClienteEntity> clientesByIdempresa) {

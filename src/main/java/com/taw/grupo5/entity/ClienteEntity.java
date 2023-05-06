@@ -3,6 +3,7 @@ package com.taw.grupo5.entity;
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.List;
+import java.util.List;
 
 @Entity
 @Table(name = "cliente", schema = "grupo5", catalog = "")
