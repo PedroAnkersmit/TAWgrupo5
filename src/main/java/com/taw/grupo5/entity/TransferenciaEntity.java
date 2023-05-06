@@ -101,6 +101,7 @@ public class TransferenciaEntity {
         dto.setFechaEjecucion(fechaejecucion);
         dto.setFechaInstruccion(fechainstruccion);
         dto.setOperacion(operacionByIdoperacion.getIdoperacion());
+        //dto.setCuentaDestino();
         return dto;
     }
 }
