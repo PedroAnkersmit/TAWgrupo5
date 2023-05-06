@@ -1,6 +1,4 @@
-package com.taw.grupo5.entity;/*
-Created by Pedro Ankersmit Carrión
-*/
+package com.taw.grupo5.entity;
 
 import javax.persistence.*;
 import java.util.List;
@@ -12,6 +10,9 @@ public class EmpleadoEntity {
     @Id
     @Column(name = "idempleado", nullable = false)
     private Integer idempleado;
+    @Basic
+    @Column(name = "nombre", nullable = true, length = 50)
+    private String nombre;
     @OneToMany(mappedBy = "empleadoByIdempleado")
     private List<ConversacionEntity> conversacionsByIdempleado;
     @ManyToOne
@@ -26,6 +27,14 @@ public class EmpleadoEntity {
         this.idempleado = idempleado;
     }
 
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -34,13 +43,16 @@ public class EmpleadoEntity {
         EmpleadoEntity that = (EmpleadoEntity) o;
 
         if (idempleado != null ? !idempleado.equals(that.idempleado) : that.idempleado != null) return false;
+        if (nombre != null ? !nombre.equals(that.nombre) : that.nombre != null) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        return idempleado != null ? idempleado.hashCode() : 0;
+        int result = idempleado != null ? idempleado.hashCode() : 0;
+        result = 31 * result + (nombre != null ? nombre.hashCode() : 0);
+        return result;
     }
 
     public List<ConversacionEntity> getConversacionsByIdempleado() {

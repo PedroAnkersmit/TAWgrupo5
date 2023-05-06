@@ -1,6 +1,4 @@
-package com.taw.grupo5.entity;/*
-Created by Pedro Ankersmit Carrión
-*/
+package com.taw.grupo5.entity;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -58,12 +56,11 @@ public class OperacionEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        OperacionEntity operacion = (OperacionEntity) o;
+        OperacionEntity that = (OperacionEntity) o;
 
-        if (idoperacion != null ? !idoperacion.equals(operacion.idoperacion) : operacion.idoperacion != null)
-            return false;
-        if (fecha != null ? !fecha.equals(operacion.fecha) : operacion.fecha != null) return false;
-        if (idcliente != null ? !idcliente.equals(operacion.idcliente) : operacion.idcliente != null) return false;
+        if (idoperacion != null ? !idoperacion.equals(that.idoperacion) : that.idoperacion != null) return false;
+        if (fecha != null ? !fecha.equals(that.fecha) : that.fecha != null) return false;
+        if (idcliente != null ? !idcliente.equals(that.idcliente) : that.idcliente != null) return false;
 
         return true;
     }
