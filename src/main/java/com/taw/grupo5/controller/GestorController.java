@@ -30,6 +30,9 @@ public class GestorController {
     @Autowired
     OperacionesRepository operacionesRepository;
 
+    @Autowired
+    TransferenciasRepository transferenciasRepository;
+
     @GetMapping("/")
     public String mostrarClientesYEmpresas(Model model) {
         List<ClienteEntity> clienteEntityList = this.clienteRepository.findAll();
@@ -164,7 +167,28 @@ public class GestorController {
 
     @GetMapping("listadoSospechosas")
     public String mostrarListadoSospechosas(Model model) {
+        List<ClienteEntity> listadoClientesPosiblesSospechosos = this.clienteRepository.findAll();
 
+        List<ClienteEntity> listadoClientesSospechosos = new ArrayList<>();
+
+        List<OperacionEntity> operacionEntitiesList = this.operacionRepository.findAll();
+        List<TransferenciaEntity> transferenciaEntities = new ArrayList<>();
+
+        for(OperacionEntity operacionEntity : operacionEntitiesList) {
+            transferenciaEntities.addAll(operacionEntity.getTransferenciasByIdoperacion());
+        }
+
+        for(TransferenciaEntity transferenciaEntity : transferenciaEntities) {
+            CuentaEntity cuentadestino = this.cuentaRepository.findById(transferenciaEntity.getIdcuentadestino()).orElse(null);
+            CuentaEntity cuentaorigen = transferenciaEntity.getOperacionByIdoperacion().getCuentaByIdcuenta();
+
+            if(cuentadestino.getTipoestadoByIdestado().getIdtipoestado() == 5) {
+                listadoClientesSospechosos.add(cuentaorigen.getClienteByIdcliente());
+            }
+        }
+
+
+        model.addAttribute("listadoClientesSospechosos", listadoClientesSospechosos);
 
         return "gestorListadoSospechosas";
     }
