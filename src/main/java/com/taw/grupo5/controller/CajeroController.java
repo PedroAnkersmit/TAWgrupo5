@@ -104,31 +104,10 @@ public class CajeroController {
             filtro = new FiltroOperacion();
         }
 
-        if(filtro.getTipoOperacion().equals("")){
-
-            for(OperacionEntity o : cuenta.getOperacionsByIdcuenta()){
-                if(o.getFecha().before(filtro.getFechaMaxima()) && o.getFecha().after(filtro.getFechaMinima())) operaciones.add(o);
-            }
-
-        } else if (filtro.getTipoOperacion().equals("sacarDinero")){
-
-            for(OperacionEntity o : cuenta.getOperacionsByIdcuenta()){
-                if(!o.getSacardinerosByIdoperacion().isEmpty()) operaciones.add(o);
-            }
-
-        } else if (filtro.getTipoOperacion().equals("transferencia")){
-
-            for(OperacionEntity o : cuenta.getOperacionsByIdcuenta()){
-                if(!o.getTransferenciasByIdoperacion().isEmpty()) operaciones.add(o);
-            }
-
-        } else if (filtro.getTipoOperacion().equals("cambioDivisa")){
-
-            for(OperacionEntity o : cuenta.getOperacionsByIdcuenta()){
-                if(!o.getCambiodivisasByIdoperacion().isEmpty()) operaciones.add(o);
-            }
-
-        }
+        if (filtro.getTipoOperacion().equals("sacarDinero")) operaciones = operacionRepository.buscarSacarDineroPorCuenta(cuenta.getIdcuenta());
+        else if (filtro.getTipoOperacion().equals("transferencia")) operaciones = operacionRepository.buscarTransferenciaPorCuenta(cuenta.getIdcuenta());
+        else if (filtro.getTipoOperacion().equals("cambioDivisa")) operaciones = operacionRepository.buscarCambioDivisaPorCuenta(cuenta.getIdcuenta());
+        else operaciones = cuenta.getOperacionsByIdcuenta();
 
         filtro.setIdCuenta(cuenta.getIdcuenta());
 
