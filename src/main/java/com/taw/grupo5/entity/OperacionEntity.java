@@ -19,6 +19,7 @@ public class OperacionEntity {
     private Integer idcliente;
     @OneToMany(mappedBy = "operacionByIdoperacion")
     private List<CambiodivisaEntity> cambiodivisasByIdoperacion;
+
     @ManyToOne
     @JoinColumn(name = "idcuenta", referencedColumnName = "idcuenta", nullable = false)
     private CuentaEntity cuentaByIdcuenta;
@@ -26,6 +27,7 @@ public class OperacionEntity {
     private List<SacardineroEntity> sacardinerosByIdoperacion;
     @OneToMany(mappedBy = "operacionByIdoperacion")
     private List<TransferenciaEntity> transferenciasByIdoperacion;
+
 
     public Integer getIdoperacion() {
         return idoperacion;
@@ -78,6 +80,7 @@ public class OperacionEntity {
     }
 
     public void setCambiodivisasByIdoperacion(List<CambiodivisaEntity> cambiodivisasByIdoperacion) {
+
         this.cambiodivisasByIdoperacion = cambiodivisasByIdoperacion;
     }
 
@@ -102,6 +105,7 @@ public class OperacionEntity {
     }
 
     public void setTransferenciasByIdoperacion(List<TransferenciaEntity> transferenciasByIdoperacion) {
+
         this.transferenciasByIdoperacion = transferenciasByIdoperacion;
     }
 }

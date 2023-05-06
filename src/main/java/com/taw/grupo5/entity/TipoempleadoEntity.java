@@ -1,7 +1,7 @@
 package com.taw.grupo5.entity;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Collection;
 
 @Entity
 @Table(name = "tipoempleado", schema = "grupo5", catalog = "")
@@ -14,7 +14,7 @@ public class TipoempleadoEntity {
     @Column(name = "puesto", nullable = false, length = 50)
     private String puesto;
     @OneToMany(mappedBy = "tipoempleadoByIdtipoempleado")
-    private List<EmpleadoEntity> empleadosByIdtipoempleado;
+    private Collection<EmpleadoEntity> empleadosByIdtipoempleado;
 
     public Integer getIdtipoempleado() {
         return idtipoempleado;
@@ -53,11 +53,11 @@ public class TipoempleadoEntity {
         return result;
     }
 
-    public List<EmpleadoEntity> getEmpleadosByIdtipoempleado() {
+    public Collection<EmpleadoEntity> getEmpleadosByIdtipoempleado() {
         return empleadosByIdtipoempleado;
     }
 
-    public void setEmpleadosByIdtipoempleado(List<EmpleadoEntity> empleadosByIdtipoempleado) {
+    public void setEmpleadosByIdtipoempleado(Collection<EmpleadoEntity> empleadosByIdtipoempleado) {
         this.empleadosByIdtipoempleado = empleadosByIdtipoempleado;
     }
 }

@@ -3,7 +3,7 @@ package com.taw.grupo5.entity;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Date;
-import java.util.List;
+import java.util.Collection;
 
 @Entity
 @Table(name = "cuenta", schema = "grupo5", catalog = "")
@@ -13,7 +13,7 @@ public class CuentaEntity {
     @Column(name = "idcuenta", nullable = false)
     private Integer idcuenta;
     @Basic
-    @Column(name = "numerocuenta", nullable = false, length = 50)
+    @Column(name = "numerocuenta", nullable = true, length = 50)
     private String numerocuenta;
     @Basic
     @Column(name = "saldo", nullable = true, precision = 2)
@@ -31,7 +31,7 @@ public class CuentaEntity {
     @JoinColumn(name = "idestado", referencedColumnName = "idtipoestado", nullable = false)
     private TipoestadoEntity tipoestadoByIdestado;
     @OneToMany(mappedBy = "cuentaByIdcuenta")
-    private List<OperacionEntity> operacionsByIdcuenta;
+    private Collection<OperacionEntity> operacionsByIdcuenta;
 
     public Integer getIdcuenta() {
         return idcuenta;
@@ -117,11 +117,11 @@ public class CuentaEntity {
         this.tipoestadoByIdestado = tipoestadoByIdestado;
     }
 
-    public List<OperacionEntity> getOperacionsByIdcuenta() {
+    public Collection<OperacionEntity> getOperacionsByIdcuenta() {
         return operacionsByIdcuenta;
     }
 
-    public void setOperacionsByIdcuenta(List<OperacionEntity> operacionsByIdcuenta) {
+    public void setOperacionsByIdcuenta(Collection<OperacionEntity> operacionsByIdcuenta) {
         this.operacionsByIdcuenta = operacionsByIdcuenta;
     }
 }
