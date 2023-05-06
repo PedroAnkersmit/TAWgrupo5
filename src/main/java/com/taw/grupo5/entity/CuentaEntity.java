@@ -13,7 +13,7 @@ public class CuentaEntity {
     @Column(name = "idcuenta", nullable = false)
     private Integer idcuenta;
     @Basic
-    @Column(name = "numerocuenta", nullable = false, length = 50)
+    @Column(name = "numerocuenta", nullable = true, length = 50)
     private String numerocuenta;
     @Basic
     @Column(name = "saldo", nullable = true, precision = 2)
