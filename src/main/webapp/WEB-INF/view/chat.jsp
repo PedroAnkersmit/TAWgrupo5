@@ -72,9 +72,9 @@
         <%for(MensajeEntity mensaje : conversacion.getMensajesByIdconversacion()){%>
         <tr>
             <%if(mensaje.getEnviadoporasistente()>0){%>
-                <td><%=mensaje.getContenido().substring(0,mensaje.getContenido().length()-17)%></td>
+                <td><%=mensaje.getContenido()%></td>
                 <td></td>
-                <td><%=mensaje.getContenido().substring(mensaje.getContenido().length()-17)%></td>
+                <td><%=mensaje.getFechaenvio().toInstant().toString()%></td>
                 <!-- Con atributo sería:
                 <td>< %=mensaje.getContenido()%></td>
                 <td></td>
@@ -83,8 +83,8 @@
 
             <%}else{ // enviado por cliente%>
                 <td></td>
-                <td><%=mensaje.getContenido().substring(0,mensaje.getContenido().length()-17)%></td>
-                <td><%=mensaje.getContenido().substring(mensaje.getContenido().length()-17)%></td>
+                <td><%=mensaje.getContenido()%></td>
+                <td><%=mensaje.getFechaenvio().toInstant().toString()%></td>
                 <!-- Con atributo sería:
                 <td></td>
                 <td>< %=mensaje.getContenido()%></td>

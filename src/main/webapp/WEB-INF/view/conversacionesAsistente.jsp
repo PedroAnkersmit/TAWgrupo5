@@ -47,6 +47,7 @@
         <tr>
             <th>Asunto</th>
             <th>Nombre del cliente</th>
+            <th>Correo</th>
             <th>Conversación</th>
         </tr>
         <% for (ConversacionEntity conversacion : lista){
@@ -54,6 +55,7 @@
             <tr>
                 <td><%=conversacion.getAsunto()%></td>
                 <td><%=conversacion.getClienteByIdcliente().getNombre()%></td>
+                <td><%=conversacion.getClienteByIdcliente().getEmail()%></td>
                 <% if(conversacion.getAbierto()>0){%>   <td>Abierta</td>
                 <% }else{%>                             <td style="color:red">Cerrada</td>  <%}%>
                 <td><a href="/asistente/conversacion?id=<%=conversacion.getIdconversacion()%>">Abrir</a></td>

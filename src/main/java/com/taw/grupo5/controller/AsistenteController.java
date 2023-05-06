@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
+import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.sql.Date;
 import java.util.List;
@@ -155,24 +156,22 @@ public class AsistenteController {
         real.
          */
 
-        String mensaje_bruto = mensaje.getContenido();
+        //PRUEBA DE QUE SIGUE FUNCIONANDO CHAT
+        mensaje.setFechaenvio(null);
 
-        /* CASTEANDO DESDE STRING
+        Timestamp fecha = new Timestamp(System.currentTimeMillis());
+        mensaje.setFechaenvio(fecha);
 
-        Date fecha = new Date();
-        SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String str_fecha = formato.format(fecha);
 
+        /* POR SI EL FORMATO ESTÁ MAL
         try {
-            fecha = (Date) formato.parse(str_fecha);
+            SimpleDateFormat formato = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            String str_fecha = formato.format(fecha);
+            fecha = new Timestamp(System.currentTimeMillis());
         }catch(Exception e){
             fecha = null;
         }
-*/
-        Date fecha = new Date(System.currentTimeMillis());
-        mensaje.setFechaenvio(fecha);
-        //mensaje.setContenido(mensaje_bruto + " [" + str_fecha + "]");
-
+        */
         mensajeRepository.save(mensaje);
     }
 
