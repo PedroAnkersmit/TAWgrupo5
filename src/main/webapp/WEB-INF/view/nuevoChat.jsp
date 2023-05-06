@@ -14,7 +14,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%  int esAsistente = (int) request.getAttribute("esAsistente");
     List<ClienteEntity> listaClientes = (List< ClienteEntity>) request.getAttribute("listaClientes");
-    List< EmpleadoEntity> listaAsistentes = (List< EmpleadoEntity>) request.getAttribute("listaAsistentes");
+    List<EmpleadoEntity> listaAsistentes = (List< EmpleadoEntity>) request.getAttribute("listaAsistentes");
+    List<?> lista = (List< ClienteEntity>) request.getAttribute("listaClientes");
 %>
 <html>
 <head>
@@ -41,7 +42,7 @@
     <%if(esAsistente>0){%>
     <form:hidden path="conversacionByIdconversacion.empleadoByIdempleado" value="2"/> <!-- PROVISIONAL HASTA TENER HTTPSESSION-->
     <%}else{%>
-    <form:hidden path="conversacionByIdconversacion.clienteByIdcliente" value="1"/> <!-- PROVISIONAL HASTA TENER HTTPSESSION-->
+    <form:hidden path="conversacionByIdconversacion.clienteByIdcliente" value="4"/> <!-- PROVISIONAL HASTA TENER HTTPSESSION-->
     <%}%>
     <table border="1">
         <tr>
@@ -95,7 +96,7 @@
                                    items="${listaClientes}" itemLabel="nombre" itemValue="idcliente"></form:select><br/>
     <%}else{%>
     <form:select path="conversacionByIdconversacion.empleadoByIdempleado"
-                                   items="${listaAsistentes}" itemLabel="nombre" itemValue="idcliente"></form:select><br/>
+                                   items="${listaAsistentes}" itemLabel="idempleado" itemValue="idempleado"></form:select><br/>
     <%}%>
     <form:button>Enviar</form:button>
  </form:form>

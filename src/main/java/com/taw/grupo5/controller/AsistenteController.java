@@ -53,9 +53,9 @@ public class AsistenteController {
 
         ClienteEntity cliente = clienteRepository.autenticar(correo);
         if(cliente!=null){
-            vuelta = "redirect:/asistente/misconversaciones";
-            //model.addAttribute("empleado", empleado);
-            session.setAttribute("usuario", cliente);
+            vuelta = "redirect:/asistente/misconversaciones"+cliente.getIdcliente();
+            //model.addAttribute("cliente", cliente);
+            //session.setAttribute("usuario", cliente);
         }
         return vuelta;
     }
@@ -66,8 +66,8 @@ public class AsistenteController {
         EmpleadoEntity empleado = empleadoRepository.getById(2);
         if(empleado!=null){
             vuelta = "redirect:/asistente/conversaciones?id=2";
-            session.setAttribute("usuario", empleado);
-            //model.addAttribute("empleado", empleado);
+            //session.setAttribute("usuario", empleado);
+            model.addAttribute("empleado", empleado);
         }
         return vuelta;
     }
@@ -193,21 +193,31 @@ public class AsistenteController {
         return "nuevoChat";
     }
 
+    @GetMapping("/cerrarConversacion")
+    public String doCerrarConversacion(@RequestParam("id") int idconversacion){
+        ConversacionEntity conversacion = conversacionRepository.findById(idconversacion).orElse(null);
+        int idcliente = conversacion.getClienteByIdcliente().getIdcliente();
+
+        conversacion.setAbierto((byte) 0);
+        conversacionRepository.save(conversacion);
+        return "redirect:/asistente/misconversaciones?id="+idcliente;
+    }
+
     /*
             LADO DEL ASISTENTE
      */
     @GetMapping("/conversaciones") //CAMBIAR TRAS HACER HTTPSESSION
-    public String doListarAsistente(Model model, @RequestParam("id") int id_asistente){
+    public String doListarAsistente(Model model, @RequestParam("id") int id_asistente, HttpSession session){
         model.addAttribute("lista", conversacionRepository.findAll());
         model.addAttribute("empleado", empleadoRepository.findById(id_asistente).orElse(null));
         return "conversacionesAsistente";
     }
-
+/*
     @GetMapping("/volver")
     public String doVolverAsistente(@RequestParam("id") int id_asistente){
         return "redirect:/asistente?id="+id_asistente;
     }
-
+*/
     @GetMapping("/conversacion")
     public String doChatearComoAsistente(Model model, @RequestParam("id") int id_conversacion){
         doChatear(model, id_conversacion);

@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface EmpleadoRepository extends JpaRepository<EmpleadoEntity, Integer> {
 
-    @Query("Select a from EmpleadoEntity a where a.idempleado=2")
-    public List<EmpleadoEntity> listarAsistentes();
+    @Query("Select a from EmpleadoEntity a where a.tipoempleadoByIdtipoempleado.idtipoempleado=2")
+    List<EmpleadoEntity> listarAsistentes();
 }
 

@@ -23,7 +23,7 @@
 
     <%if(esAsistente>0){     //Botones del asistente%>
     <button action="moderar">Mensajes del cliente</button><br> <!-- Requisito US-27 -->
-    <a href="/asistente/volver?id=<%=conversacion.getEmpleadoByIdempleado().getIdempleado()%>">
+    <a href="/asistente/conversaciones?id=<%=conversacion.getEmpleadoByIdempleado().getIdempleado()%>">
 
     <%}else{                //Botones del cliente%>
     <a href="/asistente/misconversaciones?id=<%=conversacion.getClienteByIdcliente().getIdcliente()%>">
