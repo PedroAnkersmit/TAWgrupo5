@@ -2,6 +2,7 @@ package com.taw.grupo5.entity;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.sql.Timestamp;
 
 @Entity
 @Table(name = "mensaje", schema = "grupo5", catalog = "")
@@ -49,6 +50,10 @@ public class MensajeEntity {
 
     public Date getFechaenvio() {
         return fechaenvio;
+    }
+
+    public void setFechaenvio(Timestamp fechaenvio) {
+        this.fechaenvio = fechaenvio;
     }
 
     public void setFechaenvio(Date fechaenvio) {

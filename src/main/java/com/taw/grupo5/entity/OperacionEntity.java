@@ -3,6 +3,7 @@ package com.taw.grupo5.entity;
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.List;
+import java.util.List;
 
 @Entity
 @Table(name = "operacion", schema = "grupo5", catalog = "")
@@ -81,6 +82,10 @@ public class OperacionEntity {
         this.cambiodivisasByIdoperacion = cambiodivisasByIdoperacion;
     }
 
+    public void setCambiodivisasByIdoperacion(List<CambiodivisaEntity> cambiodivisasByIdoperacion) {
+        this.cambiodivisasByIdoperacion = cambiodivisasByIdoperacion;
+    }
+
     public CuentaEntity getCuentaByIdcuenta() {
         return cuentaByIdcuenta;
     }
@@ -97,8 +102,16 @@ public class OperacionEntity {
         this.sacardinerosByIdoperacion = sacardinerosByIdoperacion;
     }
 
+    public void setSacardinerosByIdoperacion(List<SacardineroEntity> sacardinerosByIdoperacion) {
+        this.sacardinerosByIdoperacion = sacardinerosByIdoperacion;
+    }
+
     public List<TransferenciaEntity> getTransferenciasByIdoperacion() {
         return transferenciasByIdoperacion;
+    }
+
+    public void setTransferenciasByIdoperacion(List<TransferenciaEntity> transferenciasByIdoperacion) {
+        this.transferenciasByIdoperacion = transferenciasByIdoperacion;
     }
 
     public void setTransferenciasByIdoperacion(List<TransferenciaEntity> transferenciasByIdoperacion) {

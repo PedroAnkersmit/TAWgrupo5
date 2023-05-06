@@ -2,6 +2,7 @@ package com.taw.grupo5.entity;
 
 import javax.persistence.*;
 import java.util.List;
+import java.util.List;
 
 @Entity
 @Table(name = "tipoempleado", schema = "grupo5", catalog = "")
@@ -55,6 +56,10 @@ public class TipoempleadoEntity {
 
     public List<EmpleadoEntity> getEmpleadosByIdtipoempleado() {
         return empleadosByIdtipoempleado;
+    }
+
+    public void setEmpleadosByIdtipoempleado(List<EmpleadoEntity> empleadosByIdtipoempleado) {
+        this.empleadosByIdtipoempleado = empleadosByIdtipoempleado;
     }
 
     public void setEmpleadosByIdtipoempleado(List<EmpleadoEntity> empleadosByIdtipoempleado) {

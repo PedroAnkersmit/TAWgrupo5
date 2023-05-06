@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.util.List;
+import java.util.List;
 
 @Entity
 @Table(name = "cuenta", schema = "grupo5", catalog = "")
@@ -118,6 +119,10 @@ public class CuentaEntity {
 
     public List<OperacionEntity> getOperacionsByIdcuenta() {
         return operacionsByIdcuenta;
+    }
+
+    public void setOperacionsByIdcuenta(List<OperacionEntity> operacionsByIdcuenta) {
+        this.operacionsByIdcuenta = operacionsByIdcuenta;
     }
 
     public void setOperacionsByIdcuenta(List<OperacionEntity> operacionsByIdcuenta) {
