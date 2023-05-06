@@ -8,21 +8,21 @@ import java.math.BigDecimal;
 public class SacardineroEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
-    @Column(name = "idoperacion", nullable = false)
-    private Integer idoperacion;
+    @Column(name = "idSacarDinero", nullable = false)
+    private Integer idSacarDinero;
     @Basic
     @Column(name = "cantidad", nullable = true, precision = 2)
     private BigDecimal cantidad;
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "idoperacion", referencedColumnName = "idoperacion", nullable = false)
     private OperacionEntity operacionByIdoperacion;
 
-    public Integer getIdoperacion() {
-        return idoperacion;
+    public Integer getIdSacarDinero() {
+        return idSacarDinero;
     }
 
-    public void setIdoperacion(Integer idoperacion) {
-        this.idoperacion = idoperacion;
+    public void setIdSacarDinero(Integer idSacarDinero) {
+        this.idSacarDinero = idSacarDinero;
     }
 
     public BigDecimal getCantidad() {
@@ -40,7 +40,8 @@ public class SacardineroEntity {
 
         SacardineroEntity that = (SacardineroEntity) o;
 
-        if (idoperacion != null ? !idoperacion.equals(that.idoperacion) : that.idoperacion != null) return false;
+        if (idSacarDinero != null ? !idSacarDinero.equals(that.idSacarDinero) : that.idSacarDinero != null)
+            return false;
         if (cantidad != null ? !cantidad.equals(that.cantidad) : that.cantidad != null) return false;
 
         return true;
@@ -48,7 +49,7 @@ public class SacardineroEntity {
 
     @Override
     public int hashCode() {
-        int result = idoperacion != null ? idoperacion.hashCode() : 0;
+        int result = idSacarDinero != null ? idSacarDinero.hashCode() : 0;
         result = 31 * result + (cantidad != null ? cantidad.hashCode() : 0);
         return result;
     }
