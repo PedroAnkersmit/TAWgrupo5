@@ -134,7 +134,7 @@ public class AsistenteController {
     public String doChatearComoCliente(Model model, @RequestParam("id") int id_conversacion){
         doChatear(model, id_conversacion);
         model.addAttribute("esAsistente", 0);
-        return "chat";
+        return "asistenteChat";
     }
 
     @GetMapping("/nuevaConversacion")
@@ -150,7 +150,7 @@ public class AsistenteController {
         model.addAttribute("empleado", null);
         ClienteEntity usuario = (ClienteEntity) session.getAttribute("user");
         model.addAttribute("cliente", usuario);
-        return "nuevoChat";
+        return "asistenteNuevoChatCliente";
     }
 
     @GetMapping("/cerrarConversacion")
@@ -252,7 +252,7 @@ public class AsistenteController {
     public String doChatearComoAsistente(Model model, @RequestParam("id") int id_conversacion){
         doChatear(model, id_conversacion);
         model.addAttribute("esAsistente", 1);
-        return "chat";
+        return "asistenteChat";
     }
 
     @GetMapping("/nuevoChat")
@@ -266,6 +266,6 @@ public class AsistenteController {
 
         model.addAttribute("empleado", session.getAttribute("usuario"));
         model.addAttribute("cliente", null);
-        return "nuevoChat";
+        return "asistenteNuevoChatAsistente";
     }
 }

@@ -48,7 +48,7 @@ public class LoginController {
     String doAutenticar( String mail,
                         Model model, HttpSession session) {
         String urlTo = "redirect:/clienteHome/";
-        ClienteEntity usuario = clienteRepository.buscarCuenta(mail);
+        ClienteEntity usuario = clienteRepository.autenticar(mail);
         if (usuario == null) {
             model.addAttribute("error", "Credenciales incorrectas");
             urlTo = "/";

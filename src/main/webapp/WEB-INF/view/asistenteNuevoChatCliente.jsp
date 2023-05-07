@@ -5,7 +5,7 @@
 <%@ page import="java.sql.Timestamp" %>
 <%--
   Created by IntelliJ IDEA.
-  User: diamo
+  User: Hilaria
   Date: 03/05/2023
   Time: 10:22
   To change this template use File | Settings | File Templates.
@@ -24,11 +24,7 @@
 <body>
 
 
-<%if(esAsistente>0){     //Botones del asistente%>
-<a href="/asistente/volver?id=< %=conversacion.getEmpleadoByIdempleado().getIdempleado()%>">
-        <%}else{                //Botones del cliente%>
-    <a href="/asistente/misconversaciones">
-        <%}%>
+<a href="/asistente/misconversaciones">
         <button>Volver a conversaciones</button></a><br><br>
 
 <form:form modelAttribute="mensaje" action="/asistente/crear" method="post">
@@ -36,22 +32,13 @@
         Asunto:
         <form:input path="conversacionByIdconversacion.asunto"></form:input>
 
-
-    <%if(esAsistente>0){%>
-    <form:hidden path="conversacionByIdconversacion.empleadoByIdempleado" value="<%=empleado.getIdempleado()%>"/> <!-- PROVISIONAL HASTA TENER HTTPSESSION-->
-    <%}else{%>
     <form:hidden path="conversacionByIdconversacion.clienteByIdcliente" value="<%=cliente.getIdcliente()%>"/> <!-- PROVISIONAL HASTA TENER HTTPSESSION-->
-    <%}%>
+
     <table border="1">
         <tr>
-            <%if(esAsistente>0){     //Headings del asistente%>
-            <th>Usted</th>
-            <th>Cliente</th>
-
-            <%}else{                //Headings del cliente%>
+            else{                //Headings del cliente%>
             <th>Asistente</th>
             <th>Usted</th>
-            <%}%>
 
         </tr>
     </table>
@@ -63,13 +50,9 @@
         <form:hidden path="fechaenvio" value="<%=new Timestamp(System.currentTimeMillis())%>"/>
 
     Enviar mensaje a:
-    <%if(esAsistente>0){%>
-    <form:select path="conversacionByIdconversacion.clienteByIdcliente"
-                                   items="${listaClientes}" itemLabel="nombre" itemValue="idcliente"></form:select><br/>
-    <%}else{%>
     <form:select path="conversacionByIdconversacion.empleadoByIdempleado"
                                    items="${listaAsistentes}" itemLabel="nombre" itemValue="idempleado"></form:select><br/>
-    <%}%>
+
     <form:button>Enviar</form:button>
  </form:form>
 </body>
