@@ -174,6 +174,6 @@
 
 <h6> Accediendo con el siguiente sessionid: <%= session.getId() %>
 </h6>
-
+<a href="/clienteHome/cerrarSesion"><button>Cerrar sesion</button></a>
 </body>
 </html>

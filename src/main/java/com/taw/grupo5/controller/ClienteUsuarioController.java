@@ -39,6 +39,13 @@ public class ClienteUsuarioController {
         ClienteEntity usuario = (ClienteEntity) httpSession.getAttribute("user");
         return doMostrarFiltrado(model,usuario,null);
     }
+
+    @GetMapping("/cerrarSesion")
+    public String doCerrarSesion(HttpSession session){
+        session.invalidate();
+        return "redirect:/";
+    }
+
     @PostMapping("/filtrar")
     String doFiltrar(Model model,@RequestParam("idCliente") Integer idCliente, @ModelAttribute("filtro") FiltroOperaciones filtro){
         ClienteEntity usuario = clienteRepository.findById(idCliente).orElse(null);
