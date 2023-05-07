@@ -84,11 +84,15 @@ public class ClienteUsuarioController {
     }
     @PostMapping("/guardar")
     String doGuardar(Model model, @ModelAttribute("user") ClienteEntity usuario, HttpSession httpSession){
-        clienteRepository.save(usuario);
-        httpSession.setAttribute("user", usuario);
+        String urlTo = "clienteEditar";
+        if(!(usuario.getNombre().isEmpty() || usuario.getEmail().isEmpty() || usuario.getTelefono().isEmpty())) {
+            urlTo = "/clienteHome";
+            clienteRepository.save(usuario);
+            httpSession.setAttribute("user", usuario);
 
-        doMostrarFiltrado(model, usuario, null);
-        return "/clienteHome";
+            doMostrarFiltrado(model, usuario, null);
+        }
+        return urlTo;
     }
 
    @GetMapping("/transfer")
