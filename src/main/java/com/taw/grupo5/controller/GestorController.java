@@ -163,9 +163,8 @@ public class GestorController {
 
         estadoCuenta.setIdtipoestado(2);
         cuenta.setTipoestadoByIdestado(estadoCuenta);
-        if(cuenta.getNumerocuenta().equals(null)) {
-            cuenta.setNumerocuenta(generateBankNumber());
-        }
+        cuenta.setNumerocuenta(generateBankNumber());
+
         this.cuentaRepository.save(cuenta);
 
         return "redirect:/gestor/";

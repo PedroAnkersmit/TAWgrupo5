@@ -298,7 +298,7 @@ public class EmpresaController {
         CuentaEntity cuenta = this.cuentaRepository.findById(idCuenta).orElse(null);
         TipoestadoEntity estadoCuenta = new TipoestadoEntity();
 
-        estadoCuenta.setIdtipoestado(1);
+        estadoCuenta.setIdtipoestado(3);
 
         cuenta.setTipoestadoByIdestado(estadoCuenta);
 

@@ -69,7 +69,7 @@
                     for(CuentaEntity cuenta : clienteEntity.getCuentasByIdcliente()) {
                         if(cuenta.getTipoestadoByIdestado().getIdtipoestado() == 3) {
                 %>
-                        <a href="/gestor/desbloquearCuenta?id=<%=cuenta.getIdcuenta()%>">Cuenta nº <%=cuenta.getIdcuenta()%></a>
+                        <a href="/gestor/desbloquearCuenta?id=<%=cuenta.getIdcuenta()%>">Cuenta nº<%=cuenta.getNumerocuenta()%></a>
                 <%
                         }
                     }
