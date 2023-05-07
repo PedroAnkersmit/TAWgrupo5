@@ -14,7 +14,7 @@
 
 <html>
 <head>
-    <style><%@include file="/css/styles.css"%></style>
+    <style><%@include file="/css/formularios.css"%></style>
     <title>Dar de alta</title>
 </head>
 <body>

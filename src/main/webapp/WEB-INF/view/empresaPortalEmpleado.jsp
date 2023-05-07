@@ -34,7 +34,7 @@
 <h2>Listado de compañeros de empresa</h2>
 
 <form:form action="/empresa/portal/filtrarClientes" method="post" modelAttribute="filtroClientes">
-    Buscar por: <br/>
+    <p>Buscar por:</p> <br/>
     <form:hidden path="idClienteDelPortal"/>
     <form:input type="date" path="fechaMinima"/>
     <form:input type="date" path="fechaMaxima"/>
@@ -141,7 +141,7 @@
 %>
 <h2>Listado de operaciones de compañeros de empresa</h2>
 <form:form action="/empresa/portal/filtrarOperaciones" method="post" modelAttribute="filtroOperaciones">
-    Buscar por: <br/><br/>
+    <p>Buscar por:</p> <br/>
     <form:hidden path="idClienteDelPortal"/>
     <form:input type="date" path="fechaMinima"/>
     <form:input type="date" path="fechaMaxima"/>
