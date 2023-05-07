@@ -1,5 +1,7 @@
 package com.taw.grupo5.ui;
-
+/**
+ * @author Hilaria Romero Bouyahia
+ */
 public class FiltroAsistente {
     private String asunto;
     private String nombreOCorreo;
