@@ -123,6 +123,14 @@
             <p>Transferencia:</p>
             Fecha de Ejecucion: <%=t.getFechainstruccion()%></br>
             Movimiento: <%=t.getCantidad()%></br>
+            Cuenta de Destino: <%
+                for(CuentaEntity c : cuentas){
+                    if(c.getIdcuenta() == t.getIdTransferencia()){
+                        %><%=c.getNumerocuenta()%> <%
+
+                    }
+                }
+            %>
             <%
                 }
             }
