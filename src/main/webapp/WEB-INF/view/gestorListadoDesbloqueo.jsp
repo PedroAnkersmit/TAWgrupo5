@@ -3,7 +3,7 @@
 <%@ page import="com.taw.grupo5.entity.ConversacionEntity" %>
 <%@ page import="com.taw.grupo5.entity.CuentaEntity" %><%--
   Created by IntelliJ IDEA.
-  User: ignam
+  User: Ignacio Martínez Gallardo
   Date: 07/05/2023
   Time: 3:42
   To change this template use File | Settings | File Templates.
