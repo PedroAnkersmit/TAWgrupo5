@@ -1,7 +1,9 @@
 package com.taw.grupo5.controller;
 
 import com.taw.grupo5.dao.*;
+import com.taw.grupo5.dto.*;
 import com.taw.grupo5.entity.*;
+import com.taw.grupo5.service.*;
 import com.taw.grupo5.ui.FiltroOperacion;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -22,24 +24,24 @@ import java.util.List;
 public class CajeroController {
 
     @Autowired
-    protected ClienteRepository clienteRepository;
+    protected ClienteService clienteService;
     @Autowired
-    protected CuentaRepository cuentaRepository;
+    protected CuentaService cuentaService;
     @Autowired
-    protected OperacionRepository operacionRepository;
+    protected OperacionService operacionService;
     @Autowired
-    protected SacarDineroRepository sacarDineroRepository;
+    protected SacarDineroService sacarDineroService;
     @Autowired
-    protected TransferenciaRepository transferenciaRepository;
+    protected TransferenciaService transferenciaService;
     @Autowired
-    protected CambiodivisaRepository cambioDivisaRepository;
+    protected CambioDivisaService cambioDivisaService;
     @Autowired
-    protected TipoEstadoRepository tipoEstadoRepository;
+    protected TipoEstadoService tioTipoEstadoService;
 
     @GetMapping("/cajero/datos")
     public String doMostrar(@RequestParam("idCliente") Integer idCliente, Model model){
 
-        ClienteEntity cliente = clienteRepository.findById(idCliente).orElse(null);
+        ClienteDTO cliente = clienteService.buscarPorID(idCliente);
 
         model.addAttribute("cliente", cliente);
 
@@ -56,7 +58,7 @@ public class CajeroController {
                      Model model, HttpSession session){
 
         String urlTo = "redirect:/cajero/datos?idCliente=" + idCliente;
-        ClienteEntity usuario = clienteRepository.findById(idCliente).orElse(null);
+        ClienteDTO usuario = clienteService.buscarPorID(idCliente);
         if (usuario == null) {
             model.addAttribute("error", "Credenciales incorrectas");
             urlTo = "/cajero/login";
@@ -69,22 +71,21 @@ public class CajeroController {
 
     @GetMapping("/cajero/datos/editar")
     public String doEditar(@RequestParam("idCliente") Integer idCliente, Model model){
-        ClienteEntity cliente = clienteRepository.findById(idCliente).orElse(null);
+        ClienteDTO cliente = clienteService.buscarPorID(idCliente);
         model.addAttribute("cliente", cliente);
         return "cajeroDatos";
     }
 
     @PostMapping("/cajero/datos/guardar")
-    public String goGuardar(@ModelAttribute("cliente") ClienteEntity cliente){
-        clienteRepository.save(cliente);
-        return "redirect:/cajero/datos?idCliente=" + cliente.getIdcliente();
+    public String goGuardar(@ModelAttribute("cliente") ClienteDTO cliente){
+        clienteService.guardar(cliente);
+        return "redirect:/cajero/datos?idCliente=" + cliente.getIdCliente();
     }
 
     @GetMapping("/cajero/datos/operaciones")
     public String doListarOperaciones(@RequestParam("idCuenta") Integer idCuenta, Model model){
 
-        CuentaEntity cuenta = cuentaRepository.findById(idCuenta).orElse(null);
-
+        CuentaDTO cuenta = cuentaService.buscarPorId(idCuenta);
         model.addAttribute("cuenta", cuenta);
         return filtro(null, cuenta, model);
     }
@@ -92,25 +93,25 @@ public class CajeroController {
     @PostMapping("/cajero/datos/operaciones")
     public String doFiltrarOperaciones(Model model, FiltroOperacion filtro){
 
-        CuentaEntity cuenta = cuentaRepository.findById(filtro.getIdCuenta()).orElse(null);
+        CuentaDTO cuenta = cuentaService.buscarPorId(filtro.getIdCuenta());
 
         return filtro(filtro, cuenta, model);
     }
 
-    private String filtro(FiltroOperacion filtro, CuentaEntity cuenta, Model model){
-        List<OperacionEntity> operaciones;
-        List<OperacionEntity> operacionesPorFecha = new ArrayList<>();
+    private String filtro(FiltroOperacion filtro, CuentaDTO cuenta, Model model){
+        List<OperacionDTO> operaciones;
+        List<OperacionDTO> operacionesPorFecha = new ArrayList<>();
 
         if(filtro == null) {
             filtro = new FiltroOperacion();
         }
 
-        if (filtro.getTipoOperacion().equals("sacarDinero")) operaciones = operacionRepository.buscarSacarDineroPorCuenta(cuenta.getIdcuenta());
-        else if (filtro.getTipoOperacion().equals("transferencia")) operaciones = operacionRepository.buscarTransferenciaPorCuenta(cuenta.getIdcuenta());
-        else if (filtro.getTipoOperacion().equals("cambioDivisa")) operaciones = operacionRepository.buscarCambioDivisaPorCuenta(cuenta.getIdcuenta());
-        else operaciones = cuenta.getOperacionsByIdcuenta();
+        if (filtro.getTipoOperacion().equals("sacarDinero")) operaciones = operacionService.buscarSacarDineroPorCuenta(cuenta.getIdcuenta());
+        else if (filtro.getTipoOperacion().equals("transferencia")) operaciones = operacionService.buscarTransferenciaPorCuenta(cuenta.getIdcuenta());
+        else if (filtro.getTipoOperacion().equals("cambioDivisa")) operaciones = operacionService.buscarCambioDivisaPorCuenta(cuenta.getIdcuenta());
+        else operaciones = cuenta.getOperacionesByIdOperacion();
 
-        for(OperacionEntity o : operaciones){
+        for(OperacionDTO o : operaciones){
             if(o.getFecha().before(filtro.getFechaMaxima()) && o.getFecha().after(filtro.getFechaMinima())) operacionesPorFecha.add(o);
         }
 
@@ -125,7 +126,7 @@ public class CajeroController {
 
     @GetMapping("/cajero/sacarDinero")
     public String doSacarDinero(@RequestParam("idCuenta") Integer idCuenta, Model model){
-        CuentaEntity cuenta = cuentaRepository.findById(idCuenta).orElse(null);
+        CuentaDTO cuenta = cuentaService.buscarPorId(idCuenta);
         model.addAttribute("cuenta", cuenta);
         return "cajeroSacarDinero";
     }
@@ -133,46 +134,45 @@ public class CajeroController {
     @PostMapping("/cajero/sacarDinero")
     public String doSacarCantidad(@RequestParam("cantidad") BigDecimal cantidad, @RequestParam("idCuenta") Integer idCuenta, Model model){
 
-        CuentaEntity cuenta = cuentaRepository.findById(idCuenta).orElse(null);
+        CuentaDTO cuenta = cuentaService.buscarPorId(idCuenta);
 
 
-        OperacionEntity newOp = new OperacionEntity();
-        SacardineroEntity newSD = new SacardineroEntity();
+        OperacionDTO newOp = new OperacionDTO();
+        SacardineroDTO newSD = new SacardineroDTO();
 
-        newOp.setIdcliente(cuenta.getClienteByIdcliente().getIdcliente());
-        newOp.setCuentaByIdcuenta(cuenta);
+        newOp.setCliente(cuenta.getCliente().getIdCliente());
+        newOp.setCuenta(cuenta.getIdcuenta());
         newOp.setFecha(Date.valueOf(LocalDate.now()));
 
-        operacionRepository.save(newOp);
+        operacionService.guardar(newOp);
+
+        newOp = operacionService.ultima();
 
         newSD.setCantidad(cantidad);
-        newSD.setOperacionByIdoperacion(newOp);
+        newSD.setOperacion(newOp.getIdOperacion());
 
         cuenta.setSaldo(cuenta.getSaldo().subtract(cantidad));
 
-        List<SacardineroEntity> sacardineroEntityList = new ArrayList<>();
-        sacardineroEntityList.add(newSD);
+        sacarDineroService.guardar(newSD);
 
-        sacarDineroRepository.save(newSD);
-
-        List<SacardineroEntity> sd = new ArrayList<>();
+        List<SacardineroDTO> sd = new ArrayList<>();
 
         sd.add(newSD);
 
-        newOp.setSacardinerosByIdoperacion(sd);
-        newOp.setTransferenciasByIdoperacion(new ArrayList<>());
-        newOp.setCambiodivisasByIdoperacion(new ArrayList<>());
+        newOp.setSacardineros(sd);
+        newOp.setTransferencias(new ArrayList<>());
+        newOp.setCambiodivisas(new ArrayList<>());
 
-        operacionRepository.save(newOp);
+        operacionService.guardar(newOp);
 
-        cuentaRepository.save(cuenta);
+        cuentaService.guardar(cuenta);
 
         return expulsarDinero(idCuenta, cantidad.doubleValue(), "euro(s)", model);
     }
 
     @GetMapping("/cajero/transferencia")
     public String doTransferencia(@RequestParam("idCuenta") Integer idCuenta, Model model){
-        CuentaEntity cuenta = cuentaRepository.findById(idCuenta).orElse(null);
+        CuentaDTO cuenta = cuentaService.buscarPorId(idCuenta);
         model.addAttribute("cuenta", cuenta);
         model.addAttribute("error", false);
         return "cajeroTransferencia";
@@ -181,8 +181,8 @@ public class CajeroController {
     @PostMapping("/cajero/transferencia")
     public String doEnviarDinero(@RequestParam("cantidad") BigDecimal cantidad, @RequestParam("idCuenta") Integer idCuenta, @RequestParam("idDestino") Integer idDestino, Model model){
 
-        CuentaEntity cuenta = cuentaRepository.findById(idCuenta).orElse(null);
-        CuentaEntity destino = cuentaRepository.findById(idDestino).orElse(null);
+        CuentaDTO cuenta = cuentaService.buscarPorId(idCuenta);
+        CuentaDTO destino = cuentaService.buscarPorId(idDestino);
 
         if(destino == null){
             model.addAttribute("cuenta", cuenta);
@@ -193,38 +193,40 @@ public class CajeroController {
         cuenta.setSaldo(cuenta.getSaldo().subtract(cantidad));
         destino.setSaldo(destino.getSaldo().add(cantidad));
 
-        OperacionEntity newOp = new OperacionEntity();
-        TransferenciaEntity newT = new TransferenciaEntity();
+        OperacionDTO newOp = new OperacionDTO();
+        TransferenciaDTO newT = new TransferenciaDTO();
 
-        newOp.setIdcliente(cuenta.getClienteByIdcliente().getIdcliente());
-        newOp.setCuentaByIdcuenta(cuenta);
+        newOp.setCliente(cuenta.getCliente().getIdCliente());
+        newOp.setCuenta(cuenta.getIdcuenta());
         newOp.setFecha(Date.valueOf(LocalDate.now()));
 
-        operacionRepository.save(newOp);
+        operacionService.guardar(newOp);
+
+        newOp = operacionService.ultima();
 
         newT.setCantidad(cantidad);
-        newT.setFechaejecucion(newOp.getFecha());
-        newT.setFechainstruccion(newOp.getFecha());
-        newT.setOperacionByIdoperacion(newOp);
-        newT.setIdcuentadestino(idDestino);
+        newT.setFechaEjecucion(newOp.getFecha());
+        newT.setFechaInstruccion(newOp.getFecha());
+        newT.setOperacion(newOp.getIdOperacion());
+        newT.setIdCuentaDestino(idDestino);
 
-        transferenciaRepository.save(newT);
+        transferenciaService.guardar(newT);
 
-        List<TransferenciaEntity> newTs = new ArrayList<>();
-        newOp.setTransferenciasByIdoperacion(newTs);
-        newOp.setCambiodivisasByIdoperacion(new ArrayList<>());
-        newOp.setSacardinerosByIdoperacion(new ArrayList<>());
+        List<TransferenciaDTO> newTs = new ArrayList<>();
+        newOp.setTransferencias(newTs);
+        newOp.setCambiodivisas(new ArrayList<>());
+        newOp.setSacardineros(new ArrayList<>());
 
-        operacionRepository.save(newOp);
+        operacionService.guardar(newOp);
 
-        cuentaRepository.save(cuenta);
+        cuentaService.guardar(cuenta);
 
-        return "redirect:/cajero/datos?idCliente=" + cuenta.getClienteByIdcliente().getIdcliente();
+        return "redirect:/cajero/datos?idCliente=" + cuenta.getCliente().getIdCliente();
     }
 
     @GetMapping("/cajero/cambioDivisa")
     public String doCambioDivisa(@RequestParam("idCuenta") Integer idCuenta, Model model){
-        CuentaEntity cuenta = cuentaRepository.findById(idCuenta).orElse(null);
+        CuentaDTO cuenta = cuentaService.buscarPorId(idCuenta);
         model.addAttribute("cuenta", cuenta);
         return "cajeroCambioDivisa";
     }
@@ -235,38 +237,40 @@ public class CajeroController {
         BigDecimal dolarValue = new BigDecimal(1.1053);
         BigDecimal comision = new BigDecimal(0.0053);
 
-        CuentaEntity cuenta = cuentaRepository.findById(idCuenta).orElse(null);
+        CuentaDTO cuenta = cuentaService.buscarPorId(idCuenta);
 
         cuenta.setSaldo(cuenta.getSaldo().subtract(cantidad));
 
-        OperacionEntity newOp = new OperacionEntity();
-        CambiodivisaEntity newCD = new CambiodivisaEntity();
+        OperacionDTO newOp = new OperacionDTO();
+        CambioDivisaDTO newCD = new CambioDivisaDTO();
 
-        newOp.setIdcliente(cuenta.getClienteByIdcliente().getIdcliente());
-        newOp.setCuentaByIdcuenta(cuenta);
+        newOp.setCliente(cuenta.getCliente().getIdCliente());
+        newOp.setCuenta(cuenta.getIdcuenta());
         newOp.setFecha(Date.valueOf(LocalDate.now()));
 
-        operacionRepository.save(newOp);
+        operacionService.guardar(newOp);
+
+        newOp = operacionService.ultima();
 
         newCD.setMonedacompra("Dólar");
         newCD.setMonedaventa("Euro");
         newCD.setCantidadcompra(Double.toString(cantidad.multiply(dolarValue).doubleValue()));
         newCD.setCantidadventa(Double.toString(cantidad.doubleValue()));
         newCD.setComision(Double.toString(comision.doubleValue()));
-        newCD.setOperacionByIdoperacion(newOp);
+        newCD.setOperacion(newOp.getIdOperacion());
 
-        cambioDivisaRepository.save(newCD);
+        cambioDivisaService.guardar(newCD);
 
-        List<CambiodivisaEntity> newCDs = new ArrayList<>();
+        List<CambioDivisaDTO> newCDs = new ArrayList<>();
         newCDs.add(newCD);
 
-        newOp.setCambiodivisasByIdoperacion(newCDs);
-        newOp.setSacardinerosByIdoperacion(new ArrayList<>());
-        newOp.setTransferenciasByIdoperacion(new ArrayList<>());
+        newOp.setCambiodivisas(newCDs);
+        newOp.setTransferencias(new ArrayList<>());
+        newOp.setSacardineros(new ArrayList<>());
 
-        operacionRepository.save(newOp);
+        operacionService.guardar(newOp);
 
-        cuentaRepository.save(cuenta);
+        cuentaService.guardar(cuenta);
 
         BigDecimal dolares = cantidad.multiply(dolarValue);
 
@@ -275,7 +279,7 @@ public class CajeroController {
 
     public String expulsarDinero(Integer idCuenta, double cantidad, String moneda, Model model){
 
-        CuentaEntity cuenta = cuentaRepository.findById(idCuenta).orElse(null);
+        CuentaDTO cuenta = cuentaService.buscarPorId(idCuenta);
 
         model.addAttribute("cuenta", cuenta);
         model.addAttribute("cantidad", cantidad);
@@ -287,13 +291,13 @@ public class CajeroController {
     @GetMapping("/cajero/solicitudDesbloqueo")
     public String solicitudDesbloqueo(@RequestParam("idCuenta") Integer idCuenta){
 
-        CuentaEntity cuenta = cuentaRepository.findById(idCuenta).orElse(null);
+        CuentaDTO cuenta = cuentaService.buscarPorId(idCuenta);
 
-        cuenta.setTipoestadoByIdestado(tipoEstadoRepository.findById(3).orElse(null));
+        cuenta.setTipoEstado(tioTipoEstadoService.buscarPorId(idCuenta));
 
-        cuentaRepository.save(cuenta);
+        cuentaService.guardar(cuenta);
 
-        return "redirect:/cajero/datos?idCliente=" + cuenta.getClienteByIdcliente().getIdcliente();
+        return "redirect:/cajero/datos?idCliente=" + cuenta.getCliente().getIdCliente();
 
     }
 }

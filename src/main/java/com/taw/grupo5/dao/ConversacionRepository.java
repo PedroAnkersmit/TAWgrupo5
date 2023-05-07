@@ -13,6 +13,9 @@ public interface ConversacionRepository extends JpaRepository<ConversacionEntity
     @Query("select c from ConversacionEntity c where c.clienteByIdcliente = :cliente")
     List<ConversacionEntity> buscarPorCliente(@Param("cliente") ClienteEntity cliente);
 
+    @Query("select c from ConversacionEntity c where c.clienteByIdcliente.idcliente = :idcliente")
+    List<ConversacionEntity> buscarPorIdCliente(@Param("idcliente") Integer idCliente);
+
     //"001-solo asunto"
     @Query("select c from ConversacionEntity c where c.asunto like CONCAT('%', :asunto, '%')")
     List<ConversacionEntity> filtrarAsunto(@Param("asunto") String asunto);

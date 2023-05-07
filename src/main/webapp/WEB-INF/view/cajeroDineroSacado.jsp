@@ -1,4 +1,5 @@
-<%@ page import="com.taw.grupo5.entity.CuentaEntity" %><%--
+<%@ page import="com.taw.grupo5.entity.CuentaEntity" %>
+<%@ page import="com.taw.grupo5.dto.CuentaDTO" %><%--
   Created by IntelliJ IDEA.
   User: pablo
   Date: 03/05/2023
@@ -9,7 +10,7 @@
 <%
     double cantidad = (double) request.getAttribute("cantidad");
     String moneda = (String) request.getAttribute("moneda");
-    CuentaEntity cuenta = (CuentaEntity) request.getAttribute("cuenta");
+    CuentaDTO cuenta = (CuentaDTO) request.getAttribute("cuenta");
 %>
 <html>
 <head>
@@ -21,7 +22,7 @@
 <h1>Aquí tiene su(s) <%=cantidad%> <%=moneda%></h1>
 <h2>Saldo restante de la cuenta: <%=cuenta.getSaldo()%></h2>
 <form action="/cajero/datos/">
-    <input hidden="true" name="idCliente" value="<%=cuenta.getClienteByIdcliente().getIdcliente()%>">
+    <input hidden="true" name="idCliente" value="<%=cuenta.getCliente().getIdCliente()%>">
     <button>Proceder</button>
 </form>
 

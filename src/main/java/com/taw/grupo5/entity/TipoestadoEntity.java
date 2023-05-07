@@ -1,5 +1,7 @@
 package com.taw.grupo5.entity;
 
+import com.taw.grupo5.dto.TipoestadoDTO;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -58,5 +60,16 @@ public class TipoestadoEntity {
 
     public void setCuentasByIdtipoestado(List<CuentaEntity> cuentasByIdtipoestado) {
         this.cuentasByIdtipoestado = cuentasByIdtipoestado;
+    }
+
+    public TipoestadoDTO toDTO(){
+
+        TipoestadoDTO dto = new TipoestadoDTO();
+
+        dto.setIdTipoestado(this.idtipoestado);
+        dto.setNombre(this.nombre);
+
+        return dto;
+
     }
 }

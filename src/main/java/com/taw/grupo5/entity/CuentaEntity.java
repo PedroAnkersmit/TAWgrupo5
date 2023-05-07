@@ -1,8 +1,13 @@
 package com.taw.grupo5.entity;
 
+import com.taw.grupo5.dto.ClienteDTO;
+import com.taw.grupo5.dto.CuentaDTO;
+import com.taw.grupo5.dto.OperacionDTO;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -123,5 +128,52 @@ public class CuentaEntity {
 
     public void setOperacionsByIdcuenta(List<OperacionEntity> operacionsByIdcuenta) {
         this.operacionsByIdcuenta = operacionsByIdcuenta;
+    }
+
+    public CuentaDTO toDTO(){
+
+        CuentaDTO dto = new CuentaDTO();
+
+        dto.setFechaapertura(this.fechaapertura);
+        dto.setFechacierre(this.fechacierre);
+        dto.setSaldo(this.saldo);
+        dto.setIdcuenta(this.idcuenta);
+        dto.setNumerocuenta(this.numerocuenta);
+        dto.setCliente(this.clienteByIdcliente.toDTO());
+        dto.setTipoEstado(this.tipoestadoByIdestado.toDTO());
+
+        List<OperacionDTO> operaciones = new ArrayList<>();
+
+        for(OperacionEntity o : operacionsByIdcuenta){
+            operaciones.add(o.toDTO());
+        }
+
+        dto.setOperacionesByIdOperacion(operaciones);
+
+        return dto;
+    }
+
+    public CuentaDTO toDTO(ClienteDTO c){
+
+        CuentaDTO dto = new CuentaDTO();
+
+        dto.setFechaapertura(this.fechaapertura);
+        dto.setFechacierre(this.fechacierre);
+        dto.setSaldo(this.saldo);
+        dto.setIdcuenta(this.idcuenta);
+        dto.setNumerocuenta(this.numerocuenta);
+        dto.setCliente(c);
+        dto.setTipoEstado(this.tipoestadoByIdestado.toDTO());
+
+        List<OperacionDTO> operaciones = new ArrayList<>();
+
+        for(OperacionEntity o : operacionsByIdcuenta){
+            operaciones.add(o.toDTO());
+        }
+
+        dto.setOperacionesByIdOperacion(operaciones);
+
+        return dto;
+
     }
 }

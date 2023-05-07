@@ -4,6 +4,7 @@ Created by Pedro Ankersmit Carrión
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.List;
 import java.util.Objects;
 
 public class ClienteDTO implements Serializable {
@@ -23,6 +24,8 @@ public class ClienteDTO implements Serializable {
     private TipoclienteDTO tipoCliente;
 
     private EmpresaDTO empresa;
+
+    private List<CuentaDTO> cuentas;
 
     public Integer getIdCliente() {
         return idCliente;
@@ -86,6 +89,14 @@ public class ClienteDTO implements Serializable {
 
     public void setEmpresa(EmpresaDTO empresa) {
         this.empresa = empresa;
+    }
+
+    public List<CuentaDTO> getCuentasByIdCliente(){
+        return cuentas;
+    }
+
+    public void setCuentasByIdCliente(List<CuentaDTO> cuentas){
+        this.cuentas = cuentas;
     }
 
     @Override

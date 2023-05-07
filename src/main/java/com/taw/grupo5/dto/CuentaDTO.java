@@ -6,6 +6,7 @@ Created by Pedro Ankersmit Carrión
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Date;
+import java.util.List;
 
 public class CuentaDTO implements Serializable {
 
@@ -22,6 +23,8 @@ public class CuentaDTO implements Serializable {
     private ClienteDTO cliente;
 
     private TipoestadoDTO tipoEstado;
+
+    private List<OperacionDTO> operaciones;
 
     public Integer getIdcuenta() {
         return idcuenta;
@@ -77,5 +80,13 @@ public class CuentaDTO implements Serializable {
 
     public void setTipoEstado(TipoestadoDTO tipoEstado) {
         this.tipoEstado = tipoEstado;
+    }
+
+    public List<OperacionDTO> getOperacionesByIdOperacion() {
+        return operaciones;
+    }
+
+    public void setOperacionesByIdOperacion(List<OperacionDTO> operaciones) {
+        this.operaciones = operaciones;
     }
 }

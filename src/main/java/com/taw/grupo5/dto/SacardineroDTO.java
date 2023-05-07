@@ -11,7 +11,7 @@ public class SacardineroDTO implements Serializable {
 
     private BigDecimal cantidad;
 
-    private OperacionDTO operacion;
+    private Integer idOperacion;
 
     public Integer getIdSacarDinero() {
         return idSacarDinero;
@@ -29,11 +29,11 @@ public class SacardineroDTO implements Serializable {
         this.cantidad = cantidad;
     }
 
-    public OperacionDTO getOperacion() {
-        return operacion;
+    public Integer getOperacion() {
+        return idOperacion;
     }
 
-    public void setOperacion(OperacionDTO operacion) {
-        this.operacion = operacion;
+    public void setOperacion(Integer operacion) {
+        this.idOperacion = operacion;
     }
 }

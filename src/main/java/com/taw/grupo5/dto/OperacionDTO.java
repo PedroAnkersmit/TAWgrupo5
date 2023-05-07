@@ -4,6 +4,8 @@ Created by Pedro Ankersmit Carrión
 
 
 
+import com.taw.grupo5.entity.SacardineroEntity;
+
 import java.sql.Date;
 import java.util.List;
 
@@ -14,7 +16,13 @@ public class OperacionDTO {
 
     private Integer cliente;
 
-    private CuentaDTO cuenta;
+    private Integer idCuenta;
+
+    private List<SacardineroDTO> sacardineros;
+
+    private List<TransferenciaDTO> transferencias;
+
+    private List<CambioDivisaDTO> cambiodivisas;
 
 
     public Integer getIdOperacion() {
@@ -41,13 +49,35 @@ public class OperacionDTO {
         this.cliente = cliente;
     }
 
-    public CuentaDTO getCuenta() {
-        return cuenta;
+    public Integer getCuenta() {
+        return idCuenta;
     }
 
-    public void setCuenta(CuentaDTO cuenta) {
-        this.cuenta = cuenta;
+    public void setCuenta(Integer cuenta) {
+        this.idCuenta = cuenta;
     }
 
+    public List<SacardineroDTO> getSacardineros() {
+        return sacardineros;
+    }
 
+    public void setSacardineros(List<SacardineroDTO> sacardineros) {
+        this.sacardineros = sacardineros;
+    }
+
+    public List<TransferenciaDTO> getTransferencias() {
+        return transferencias;
+    }
+
+    public void setTransferencias(List<TransferenciaDTO> transferencias) {
+        this.transferencias = transferencias;
+    }
+
+    public List<CambioDivisaDTO> getCambiodivisas() {
+        return cambiodivisas;
+    }
+
+    public void setCambiodivisas(List<CambioDivisaDTO> cambiodivisas) {
+        this.cambiodivisas = cambiodivisas;
+    }
 }

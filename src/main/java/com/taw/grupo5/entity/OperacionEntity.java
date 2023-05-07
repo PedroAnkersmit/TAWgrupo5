@@ -1,7 +1,13 @@
 package com.taw.grupo5.entity;
 
+import com.taw.grupo5.dto.CambioDivisaDTO;
+import com.taw.grupo5.dto.OperacionDTO;
+import com.taw.grupo5.dto.SacardineroDTO;
+import com.taw.grupo5.dto.TransferenciaDTO;
+
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -103,5 +109,44 @@ public class OperacionEntity {
 
     public void setTransferenciasByIdoperacion(List<TransferenciaEntity> transferenciasByIdoperacion) {
         this.transferenciasByIdoperacion = transferenciasByIdoperacion;
+    }
+
+
+
+    public OperacionDTO toDTO(){
+
+        OperacionDTO dto = new OperacionDTO();
+
+        dto.setCuenta(this.cuentaByIdcuenta.getIdcuenta());
+        dto.setCliente(this.idcliente);
+        dto.setFecha(this.fecha);
+        dto.setIdOperacion(this.idoperacion);
+
+        List<SacardineroDTO> sacardineros = new ArrayList<>();
+
+        for(SacardineroEntity o : sacardinerosByIdoperacion){
+            sacardineros.add(o.toDTO());
+        }
+
+        dto.setSacardineros(sacardineros);
+
+        List<TransferenciaDTO> transferencias = new ArrayList<>();
+
+        for(TransferenciaEntity o : transferenciasByIdoperacion){
+            transferencias.add(o.toDTO());
+        }
+
+        dto.setTransferencias(transferencias);
+
+        List<CambioDivisaDTO> cambiodivisas = new ArrayList<>();
+
+        for(CambiodivisaEntity o : cambiodivisasByIdoperacion){
+            cambiodivisas.add(o.toDTO());
+        }
+
+        dto.setCambiodivisas(cambiodivisas);
+
+        return dto;
+
     }
 }

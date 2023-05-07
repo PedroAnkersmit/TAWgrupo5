@@ -1,4 +1,5 @@
 <%@ page import="com.taw.grupo5.entity.CuentaEntity" %>
+<%@ page import="com.taw.grupo5.dto.CuentaDTO" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
@@ -9,7 +10,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    CuentaEntity cuenta = (CuentaEntity) request.getAttribute("cuenta");
+    CuentaDTO cuenta = (CuentaDTO) request.getAttribute("cuenta");
 %>
 <html>
 <head>

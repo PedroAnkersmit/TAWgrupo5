@@ -1,4 +1,5 @@
-<%@ page import="com.taw.grupo5.entity.CuentaEntity" %><%--
+<%@ page import="com.taw.grupo5.entity.CuentaEntity" %>
+<%@ page import="com.taw.grupo5.dto.CuentaDTO" %><%--
   Created by IntelliJ IDEA.
   User: pablo
   Date: 03/05/2023
@@ -7,7 +8,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-  CuentaEntity cuenta = (CuentaEntity) request.getAttribute("cuenta");
+  CuentaDTO cuenta = (CuentaDTO) request.getAttribute("cuenta");
   boolean error = (boolean) request.getAttribute("error");
 %>
 <html>

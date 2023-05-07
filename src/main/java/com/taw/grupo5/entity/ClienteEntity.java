@@ -1,7 +1,11 @@
 package com.taw.grupo5.entity;
 
+import com.taw.grupo5.dto.ClienteDTO;
+import com.taw.grupo5.dto.CuentaDTO;
+
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -144,5 +148,28 @@ public class ClienteEntity {
 
     public void setCuentasByIdcliente(List<CuentaEntity> cuentasByIdcliente) {
         this.cuentasByIdcliente = cuentasByIdcliente;
+    }
+
+    public ClienteDTO toDTO(){
+
+        ClienteDTO dto = new ClienteDTO();
+
+        dto.setEmail(this.email);
+        dto.setFechainicio(this.fechainicio);
+        dto.setIdCliente(this.idcliente);
+        dto.setTelefono(this.telefono);
+        dto.setNombre(this.nombre);
+        if(this.empresaByIdempresa != null) dto.setEmpresa(this.empresaByIdempresa.toDTO());
+        dto.setIdConversacion(this.idconversacion);
+        dto.setTipoCliente(this.tipoclienteByIdtipocliente.toDTO());
+
+        List<CuentaDTO> cuentas = new ArrayList<>();
+
+        for(CuentaEntity c : cuentasByIdcliente) cuentas.add(c.toDTO(dto));
+
+        dto.setCuentasByIdCliente(cuentas);
+
+        return dto;
+
     }
 }

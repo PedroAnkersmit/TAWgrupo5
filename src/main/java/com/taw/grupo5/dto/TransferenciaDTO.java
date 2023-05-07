@@ -17,6 +17,8 @@ public class TransferenciaDTO implements Serializable {
 
     private Integer operacion;
 
+    private Integer idCuentaDestino;
+
     public Integer getIdTransferencia() {
         return idTransferencia;
     }
@@ -55,5 +57,13 @@ public class TransferenciaDTO implements Serializable {
 
     public void setOperacion(Integer operacion) {
         this.operacion = operacion;
+    }
+
+    public Integer getIdCuentaDestino() {
+        return idCuentaDestino;
+    }
+
+    public void setIdCuentaDestino(Integer idCuentaDestino) {
+        this.idCuentaDestino = idCuentaDestino;
     }
 }

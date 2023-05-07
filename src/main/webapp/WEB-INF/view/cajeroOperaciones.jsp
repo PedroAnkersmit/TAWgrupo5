@@ -1,7 +1,9 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page import="com.taw.grupo5.entity.CuentaEntity" %>
 <%@ page import="com.taw.grupo5.entity.OperacionEntity" %>
-<%@ page import="java.util.List" %><%--
+<%@ page import="java.util.List" %>
+<%@ page import="com.taw.grupo5.dto.CuentaDTO" %>
+<%@ page import="com.taw.grupo5.dto.OperacionDTO" %><%--
   Created by IntelliJ IDEA.
   User: pablo
   Date: 02/05/2023
@@ -10,8 +12,8 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-  CuentaEntity cuenta = (CuentaEntity) request.getAttribute("cuenta");
-  List<OperacionEntity> listaOperaciones = (List<OperacionEntity>) request.getAttribute("listaOperaciones");
+  CuentaDTO cuenta = (CuentaDTO) request.getAttribute("cuenta");
+  List<OperacionDTO> listaOperaciones = (List<OperacionDTO>) request.getAttribute("listaOperaciones");
 %>
 <html>
 <head>
@@ -44,23 +46,23 @@
       <th>FECHA</th>
     </tr>
 
-    <% for(OperacionEntity o : listaOperaciones){ %>
+    <% for(OperacionDTO o : listaOperaciones){ %>
 
       <tr>
-        <% if(!o.getSacardinerosByIdoperacion().isEmpty()){ %>
+        <% if(!o.getSacardineros().isEmpty()){ %>
 
         <td>EXTRACCIÓN</td>
-        <td><%=o.getSacardinerosByIdoperacion().get(0).getCantidad()%>€</td>
+        <td><%=o.getSacardineros().get(0).getCantidad()%>€</td>
 
-        <%} else if(!o.getTransferenciasByIdoperacion().isEmpty()){ %>
+        <%} else if(!o.getTransferencias().isEmpty()){ %>
 
         <td>TRANSFERENCIA</td>
-        <td><%=o.getTransferenciasByIdoperacion().get(0).getCantidad()%>€ (a <%=o.getTransferenciasByIdoperacion().get(0).getIdcuentadestino()%>)</td>
+        <td><%=o.getTransferencias().get(0).getCantidad()%>€ (a <%=o.getTransferencias().get(0).getIdCuentaDestino()%>)</td>
 
-        <%} else if(!o.getCambiodivisasByIdoperacion().isEmpty()){ %>
+        <%} else if(!o.getCambiodivisas().isEmpty()){ %>
 
         <td>CAMBIO DE DIVISA</td>
-        <td><%=o.getCambiodivisasByIdoperacion().get(0).getCantidadventa()%>€</td>
+        <td><%=o.getCambiodivisas().get(0).getCantidadventa()%>€</td>
 
         <%}%>
 

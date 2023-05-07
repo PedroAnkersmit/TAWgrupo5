@@ -1,5 +1,7 @@
 package com.taw.grupo5.entity;
 
+import com.taw.grupo5.dto.CambioDivisaDTO;
+
 import javax.persistence.*;
 
 @Entity
@@ -113,5 +115,21 @@ public class CambiodivisaEntity {
 
     public void setOperacionByIdoperacion(OperacionEntity operacionByIdoperacion) {
         this.operacionByIdoperacion = operacionByIdoperacion;
+    }
+
+    public CambioDivisaDTO toDTO(){
+
+        CambioDivisaDTO dto = new CambioDivisaDTO();
+
+        dto.setCantidadcompra(cantidadcompra);
+        dto.setCantidadventa(cantidadventa);
+        dto.setOperacion(operacionByIdoperacion.getIdoperacion());
+        dto.setComision(comision);
+        dto.setMonedaventa(monedaventa);
+        dto.setMonedacompra(monedacompra);
+        dto.setIdCambioDivisa(idCambioDivisa);
+
+        return dto;
+
     }
 }

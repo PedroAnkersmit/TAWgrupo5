@@ -1,5 +1,7 @@
 package com.taw.grupo5.entity;
 
+import com.taw.grupo5.dto.EmpresaDTO;
+
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.List;
@@ -72,5 +74,17 @@ public class EmpresaEntity {
 
     public void setClientesByIdempresa(List<ClienteEntity> clientesByIdempresa) {
         this.clientesByIdempresa = clientesByIdempresa;
+    }
+
+    public EmpresaDTO toDTO(){
+
+        EmpresaDTO dto = new EmpresaDTO();
+
+        dto.setIdempresa(this.idempresa);
+        dto.setFechacierre(this.fechacierre);
+        dto.setNombre(this.nombre);
+
+        return dto;
+
     }
 }

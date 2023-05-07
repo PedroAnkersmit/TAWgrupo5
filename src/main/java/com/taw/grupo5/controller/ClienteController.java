@@ -3,6 +3,7 @@ package com.taw.grupo5.controller;
 import javax.servlet.http.HttpSession;
 
 import com.taw.grupo5.dao.ClienteRepository;
+import com.taw.grupo5.dto.ClienteDTO;
 import com.taw.grupo5.entity.ClienteEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -58,4 +59,6 @@ public class ClienteController {
         this.clienteRepository.deleteById(idcliente);
         return "redirect:/";
     }
+
+
 }

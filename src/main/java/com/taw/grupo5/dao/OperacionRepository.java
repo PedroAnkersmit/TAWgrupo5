@@ -32,8 +32,8 @@ public interface OperacionRepository extends JpaRepository<OperacionEntity, Inte
     @Query("select o from OperacionEntity o where o.idcliente = :idcliente and (o.sacardinerosByIdoperacion is not empty  or o.transferenciasByIdoperacion is not empty )")
     List<OperacionEntity> buscarSacarDineroTransferencia(@Param("idcliente") Integer idcliente);
 
-    @Query("select o from OperacionEntity o where o.idcliente = :idcliente")
-    List<OperacionEntity> buscarTodas(@Param("idcliente") Integer idcliente);
+    @Query("select o from OperacionEntity o where o.cuentaByIdcuenta.idcuenta = :idcuenta")
+    List<OperacionEntity> buscarTodas(@Param("idcuenta") Integer idcuenta);
 
     @Query("select o from OperacionEntity  o where o.cambiodivisasByIdoperacion is not empty and o.transferenciasByIdoperacion is empty and o.sacardinerosByIdoperacion is empty and o.cuentaByIdcuenta.idcuenta = :idcuenta")
     List<OperacionEntity> buscarCambioDivisaPorCuenta(@Param("idcuenta") Integer idCuenta);

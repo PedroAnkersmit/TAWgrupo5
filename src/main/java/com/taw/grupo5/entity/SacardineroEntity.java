@@ -1,5 +1,7 @@
 package com.taw.grupo5.entity;
 
+import com.taw.grupo5.dto.SacardineroDTO;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 
@@ -60,5 +62,17 @@ public class SacardineroEntity {
 
     public void setOperacionByIdoperacion(OperacionEntity operacionByIdoperacion) {
         this.operacionByIdoperacion = operacionByIdoperacion;
+    }
+
+    public SacardineroDTO toDTO(){
+
+        SacardineroDTO dto = new SacardineroDTO();
+
+        dto.setOperacion(operacionByIdoperacion.getIdoperacion());
+        dto.setCantidad(cantidad);
+        dto.setIdSacarDinero(idSacarDinero);
+
+        return dto;
+
     }
 }

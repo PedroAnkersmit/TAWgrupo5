@@ -15,4 +15,7 @@ public interface SacarDineroRepository extends JpaRepository<SacardineroEntity, 
     @Query("select s.operacionByIdoperacion from SacardineroEntity s where s.operacionByIdoperacion.idcliente = :id and s.cantidad >= :quantity")
     List<OperacionEntity> BuscarPorCliente(@Param("id") Integer idCliente, @Param("quantity")BigDecimal cantidad);
 
+    @Query("select s from SacardineroEntity s where s.operacionByIdoperacion.idoperacion = :id")
+    List<SacardineroEntity> buscarPorIdOperacion(@Param("id") Integer idOperacion);
+
 }
