@@ -18,6 +18,7 @@
     <title>Gestión de clientes - Sospechosos</title>
 </head>
 <body>
+    <button><a href="/gestor/">Volver</a></button>
     <h1>Clientes que han hecho transferencias a cuentas sospechosas</h1>
 
     <table border="1">

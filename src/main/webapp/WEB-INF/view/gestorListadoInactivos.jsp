@@ -18,6 +18,7 @@
     <title>Gestión de clientes - Inactivos</title>
 </head>
 <body>
+    <button><a href="/gestor/">Volver</a></button>
     <h1>Listado de clientes inactivos</h1>
     <h2>Formado por aquellos clientes que no han realizado ninguna operación en los últimos 30 días</h2>
 

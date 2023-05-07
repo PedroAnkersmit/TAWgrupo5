@@ -18,6 +18,7 @@
     <title>Gestión de clientes - Dar visto bueno</title>
 </head>
 <body>
+    <button><a href="/gestor/">Volver</a></button>
     <h1>Clientes que han solicitado el alta</h1>
 
     <table border="1">
