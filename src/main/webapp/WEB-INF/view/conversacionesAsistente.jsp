@@ -10,10 +10,8 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%  //EmpleadoEntity empleado = (EmpleadoEntity) request.getAttribute("empleado");
-    EmpleadoEntity empleado = (EmpleadoEntity) pageContext.getSession().getAttribute("usuario");
+<%  EmpleadoEntity empleado = (EmpleadoEntity) request.getAttribute("empleado");
     List<ConversacionEntity> lista = (List<ConversacionEntity>) request.getAttribute("lista");
-    //List<Byte> opcionesAbierto = (List<Byte>) request.getAttribute("opcionesAbierto");
 %>
 
 <html>
@@ -23,12 +21,11 @@
 <body>
     <h1>Bienvenido/a, <%=empleado.getNombre()%></h1>
 
-    <!--<a href="/asistente/cerrarSesion"><button>Cerrar sesion</button></a>-->
+    <a href="/asistente/cerrarSesion"><button>Cerrar sesion</button></a>
     <%if(!empleado.getTipoempleadoByIdtipoempleado().getPuesto().equalsIgnoreCase("asistente")){ // NO es gestor%>
     <p>No tienes conversaciones porque no eres asistente.</p>
     <%}else{%>
-    <a href="/asistente/nuevoChat?id=<%=empleado.getIdempleado()%>"><button>Crear nueva conversación</button></a>
-    <a href="/asistente/cerrarSesion"><button>Cerrar sesión</button></a>
+    <a href="/asistente/nuevoChat"><button>Crear nueva conversación</button></a>
     <p>Filtros:</p>
 
     <form:form modelAttribute="filtro" method="post" action="/asistente/filtrar">

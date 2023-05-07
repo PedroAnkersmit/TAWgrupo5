@@ -46,9 +46,8 @@ public class AsistenteController {
         String vuelta = "asistenteLogin";
         EmpleadoEntity empleado = empleadoRepository.logear(nombre);
         if(empleado!=null){
-            vuelta = "redirect:/asistente/conversaciones?id="+empleado.getIdempleado();
+            vuelta = "redirect:/asistente/conversaciones";
             session.setAttribute("usuario", empleado);
-            model.addAttribute("empleado", empleado);
         }
         return vuelta;
     }
@@ -170,15 +169,16 @@ public class AsistenteController {
      */
 
 
-    @GetMapping("/conversaciones") //CAMBIAR TRAS HACER HTTPSESSION
-    public String doListarAsistente(Model model, @RequestParam("id") int id_asistente, HttpSession session){
+    @GetMapping("/conversaciones")
+    public String doListarAsistente(Model model, HttpSession session){
+        EmpleadoEntity empleado = (EmpleadoEntity) session.getAttribute("usuario");
+        model.addAttribute("empleado", empleado);
+
         model.addAttribute("lista", conversacionRepository.findAll());
-        model.addAttribute("empleado", empleadoRepository.findById(id_asistente).orElse(null));
-        //model.addAttribute("opcionesAbierto", conversacionRepository.opcionesAbierto());
         model.addAttribute("filtro", new FiltroAsistente());
-        session.setAttribute("usuario", empleadoRepository.findById(id_asistente).orElse(null));
         return "conversacionesAsistente";
     }
+
     @GetMapping("/moderar")
     public String doModerar(Model model, @RequestParam("id") int id){
         //ConversacionEntity conversacion = (ConversacionEntity) model.getAttribute("conversacion");
@@ -191,7 +191,7 @@ public class AsistenteController {
 
     @PostMapping("/filtrar")
     public String doFiltrar(@ModelAttribute("filtro")FiltroAsistente filtro,
-                            @ModelAttribute("empleado")EmpleadoEntity empleado, Model model, HttpSession session){
+                            Model model, HttpSession session){
         List<ConversacionEntity> lista = conversacionRepository.findAll();
         String opcion="";
 
@@ -243,17 +243,11 @@ public class AsistenteController {
 
 
         model.addAttribute("lista", lista);
-        model.addAttribute("empleado", empleado);
+        model.addAttribute("empleado", session.getAttribute("usuario"));
         model.addAttribute("filtro", filtro);
-        return "conversacionesAsistente"; //provisional hasta que funcione httpsession
+        return "conversacionesAsistente";
     }
 
-    /*
-    @GetMapping("/volver")
-    public String doVolverAsistente(@RequestParam("id") int id_asistente){
-        return "redirect:/asistente?id="+id_asistente;
-    }
-*/
     @GetMapping("/conversacion")
     public String doChatearComoAsistente(Model model, @RequestParam("id") int id_conversacion){
         doChatear(model, id_conversacion);
@@ -262,7 +256,7 @@ public class AsistenteController {
     }
 
     @GetMapping("/nuevoChat")
-    public String doNuevaConversacionAsistente(Model model, @RequestParam("id") int id_asistente){
+    public String doNuevaConversacionAsistente(Model model, HttpSession session){
         doConversacion(model);
 
         model.addAttribute("esAsistente", 1);
@@ -270,7 +264,7 @@ public class AsistenteController {
         model.addAttribute("listaClientes", clienteRepository.findAll());
 
 
-        model.addAttribute("empleado", empleadoRepository.findById(id_asistente).orElse(null));
+        model.addAttribute("empleado", session.getAttribute("usuario"));
         model.addAttribute("cliente", null);
         return "nuevoChat";
     }
