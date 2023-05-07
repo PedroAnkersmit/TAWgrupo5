@@ -89,6 +89,22 @@ public class EmpresaController {
         return "redirect:/";
     }
 
+    @GetMapping("/accederdaralta")
+    public String accederDarAlta(Model model)
+    {
+        EmpresaEntity empresa = new EmpresaEntity();
+
+        model.addAttribute("empresaDaAlta", empresa);
+
+        return "empresaAccederDarAlta";
+    }
+
+    @PostMapping("/accederdaralta/ir")
+    public String irAccederDarAlta(@ModelAttribute("empresaDaAlta") EmpresaEntity empresaDaAlta, Model model)
+    {
+        return "redirect:/empresa/dardealta?id=" + empresaDaAlta.getIdempresa();
+    }
+
     @GetMapping("/dardealta")
     public String darDeAlta(@RequestParam("id") Integer idEmpresa, Model model)
     {
@@ -393,4 +409,11 @@ public class EmpresaController {
 
         return "redirect:/empresa/portal";
     }
+
+    @GetMapping("/cerrarsesion")
+    public String cerrarSesionClienteEmpresa(HttpSession session){
+        session.invalidate();
+        return "redirect:/";
+    }
+
 }
