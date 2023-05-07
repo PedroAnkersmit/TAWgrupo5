@@ -15,10 +15,11 @@
 %>
 <html>
 <head>
+    <style><%@include file="/css/styles.css"%></style>
     <title>Gestión de clientes - Sospechosos</title>
 </head>
 <body>
-    <button><a href="/gestor/">Volver</a></button>
+    <a href="/gestor/"><button>Volver</button></a>
     <h1>Registro de transferencias sospechosas</h1>
     <h2>Clientes que han realizado alguna transferencia a cuentas sospechosas</h2>
 

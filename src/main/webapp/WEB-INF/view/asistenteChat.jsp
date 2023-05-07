@@ -17,7 +17,9 @@
 %>
 
 <html>
+<link href="styles.css" rel="stylesheet" type="text/css">
 <head>
+    <style><%@include file="/css/styles.css"%></style>
     <title>Chat</title>
 </head>
 <body>

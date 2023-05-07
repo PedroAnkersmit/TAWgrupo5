@@ -10,7 +10,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <style><%@include file="/css/styles.css"%></style>
     <title>Title</title>
 </head>
 <body>

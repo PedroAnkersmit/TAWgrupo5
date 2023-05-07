@@ -16,10 +16,11 @@
 %>
 <html>
 <head>
+    <style><%@include file="/css/styles.css"%></style>
     <title>Cliente</title>
 </head>
 <body>
-    <button><a href="/gestor/">Volver</a></button>
+    <a href="/gestor/"><button>Volver</button></a>
     <h1>Infomación del cliente: <%=clienteEntity.getNombre()%></h1>
 
     <h2>Datos</h2>
@@ -90,11 +91,13 @@
     <h2>Operaciones bancarias</h2>
     <form:form action="/gestor/filtroOperacionesCliente?id=${cliente.idcliente}" method="post" modelAttribute="filtroOperacionesCliente">
         <input name="idcliente" value="<%=clienteEntity.getIdcliente()%>" hidden>
-        Tipo de Operación:</br>
-        <form:checkbox path="transferencia"/>Transferencia
-        <form:checkbox path="cambioDivisa"/>Cambio de Divisa
-        <form:checkbox path="sacarDinero"/>Extracción
-        <form:button>Filtrar</form:button>
+        <p>
+            Tipo de Operación:</br>
+            <form:checkbox path="transferencia"/>Transferencia
+            <form:checkbox path="cambioDivisa"/>Cambio de Divisa
+            <form:checkbox path="sacarDinero"/>Extracción
+            <form:button>Filtrar</form:button>
+        </p>
     </form:form>
     <table border="1">
         <tr>

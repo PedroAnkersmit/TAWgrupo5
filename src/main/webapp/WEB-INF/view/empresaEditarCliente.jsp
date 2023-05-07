@@ -9,21 +9,22 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <style><%@include file="/css/styles.css"%></style>
     <title>Editar cliente</title>
 </head>
 <body>
 
 <h1>Editar mi información</h1>
 <form:form action="/empresa/editarcliente/guardar" method="post" modelAttribute="clienteAEditar">
-  <form:hidden path="idcliente"/>
-  Nombre <form:input path="nombre"/><br/>
-  Email <form:input path="email"/><br/>
-  Telefono <form:input path="telefono"/><br/>
-  <form:hidden path="fechainicio"/>
-  <form:hidden path="idconversacion"/>
-  <form:hidden path="tipoclienteByIdtipocliente.idtipocliente"/>
-  <form:hidden path="empresaByIdempresa.idempresa"/>
-  <form:button>Guardar cambios</form:button>
+    <form:hidden path="idcliente"/>
+    Nombre <form:input path="nombre"/><br/>
+    Email <form:input path="email"/><br/>
+    Telefono <form:input path="telefono"/><br/>
+    <form:hidden path="fechainicio"/>
+    <form:hidden path="idconversacion"/>
+    <form:hidden path="tipoclienteByIdtipocliente.idtipocliente"/>
+    <form:hidden path="empresaByIdempresa.idempresa"/>
+    <form:button>Guardar cambios</form:button>
 </form:form>
 </body>
 </html>

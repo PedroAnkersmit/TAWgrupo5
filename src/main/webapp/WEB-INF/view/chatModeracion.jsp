@@ -18,6 +18,7 @@
 
 <html>
 <head>
+  <style><%@include file="/css/styles.css"%></style>
   <title>Chat</title>
 </head>
 <body>

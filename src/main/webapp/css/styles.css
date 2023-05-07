@@ -4,10 +4,11 @@ body {
     text-align: center;
 }
 
-h1, h2 {
+h1, h2, h3 {
     text-align: center;
     color: #333;
     font-weight: bold;
+    margin-top: 20px;
     margin-bottom: 20px;
 }
 

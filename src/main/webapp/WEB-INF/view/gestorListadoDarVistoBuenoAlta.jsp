@@ -15,10 +15,11 @@
 
 <html>
 <head>
+    <style><%@include file="/css/styles.css"%></style>
     <title>Gestión de clientes - Dar visto bueno</title>
 </head>
 <body>
-    <button><a href="/gestor/">Volver</a></button>
+    <a href="/gestor/"><button>Volver</button></a>
     <h1>Solicitudes de alta en el sistema</h1>
     <h2>Clientes a la espera de recibir el visto bueno</h2>
 

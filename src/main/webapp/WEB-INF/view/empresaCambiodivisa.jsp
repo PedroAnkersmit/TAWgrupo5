@@ -9,6 +9,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <style><%@include file="/css/styles.css"%></style>
     <title>Transferencia</title>
 </head>
 <body>

@@ -17,82 +17,9 @@
     List<ClienteEntity> listaClientesDeLaEmpresa = (List<ClienteEntity>) request.getAttribute("listaClientes");
     List<OperacionEntity> listaOperaciones = (List<OperacionEntity>) request.getAttribute("listaOperaciones");
 %>
-
-<style>
-    body {
-        margin: 0;
-        font-family: Arial, sans-serif;
-        text-align: center;
-    }
-
-    h1, h2 {
-        text-align: center;
-        color: #333;
-        font-weight: bold;
-        margin-bottom: 20px;
-    }
-
-    button {
-        padding: 10px 20px;
-        border-radius: 5px;
-        border: none;
-        background-color: #007bff;
-        color: #fff;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-    }
-
-    button:hover {
-        background-color: #0062cc;
-    }
-
-    table {
-        border-collapse: collapse;
-        margin: 20px auto;
-    }
-
-    th, td {
-        padding: 10px;
-        border: 1px solid #ddd;
-        text-align: center;
-    }
-
-    th {
-        background-color: #f5f5f5;
-    }
-
-    form {
-        display: flex;
-        justify-content: center;
-        margin-bottom: 20px;
-    }
-
-    label, input, select {
-        margin: 5px;
-    }
-
-    input, select {
-        padding: 5px;
-        border-radius: 5px;
-        border: 1px solid #ddd;
-    }
-
-    button[type="submit"] {
-        background-color: #28a745;
-        color: #fff;
-        border: none;
-        border-radius: 5px;
-        padding: 10px 20px;
-        cursor: pointer;
-        transition: background-color 0.3s ease;
-    }
-
-    button[type="submit"]:hover {
-        background-color: #218838;
-    }
-</style>
 <html>
 <head>
+    <style><%@include file="/css/styles.css"%></style>
     <title>Portal empleado</title>
 </head>
 <body>

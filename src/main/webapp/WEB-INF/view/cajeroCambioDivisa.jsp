@@ -11,6 +11,7 @@
 %>
 <html>
 <head>
+    <style><%@include file="/css/styles.css"%></style>
     <title>Title</title>
 </head>
 <body>

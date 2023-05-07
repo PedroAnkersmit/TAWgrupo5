@@ -14,6 +14,7 @@
 
 <html>
 <head>
+    <style><%@include file="/css/styles.css"%></style>
     <title>Conversaciones</title>
 </head>
 <body>

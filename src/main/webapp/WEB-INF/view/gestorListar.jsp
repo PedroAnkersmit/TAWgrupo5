@@ -17,15 +17,21 @@
 
 <html>
 <head>
+    <style><%@include file="/css/styles.css"%></style>
     <title>Gestor - Home</title>
 </head>
 <body>
     <h1>Listado de clientes y empresas</h1>
     <h2>Clientes</h2>
     <form action="/gestor/filtrarNombreCliente" method="post">
-        Buscar cliente: <input type="text" name="filtroNombreCliente">
+        <p>Buscar cliente:</p> <input type="text" name="filtroNombreCliente">
         <button>Filtrar</button>
     </form>
+
+    <a href="/gestor/listadoDarVistoBuenoAlta"><button>Solicitudes de alta</button></a>
+    <a href="/gestor/listadoInactivos"><button>Bloqueo por inactividad</button></a>
+    <a href="/gestor/listadoSospechosas"><button>Actividades sospechosas</button></a>
+    <a href="/gestor/listadoDesbloqueo"><button>Solicitudes de desbloqueo</button></a>
 
     <!-- Clientes -->
     <table border="1">
@@ -50,15 +56,9 @@
         %>
     </table>
 
-    <h3>Gestión de clientes</h3>
-    <button><a href="/gestor/listadoDarVistoBuenoAlta">Solicitudes de alta</a></button>
-    <button><a href="/gestor/listadoInactivos">Bloqueo por inactividad</a></button>
-    <button><a href="/gestor/listadoSospechosas">Actividades sospechosas</a></button>
-    <button><a href="/gestor/listadoDesbloqueo">Solicitudes de desbloqueo</a></button>
-
     <h2>Empresas</h2>
     <form action="/gestor/filtrarNombreEmpresa" method="post">
-        Buscar empresa: <input type="text" name="filtroNombreEmpresa">
+        <p>Buscar empresa</p>: <input type="text" name="filtroNombreEmpresa">
         <button>Filtrar</button>
     </form>
     <!-- Empresas -->
