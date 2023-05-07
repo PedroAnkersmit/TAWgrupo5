@@ -63,13 +63,17 @@
             <td><%=clienteEntity.getEmpresaByIdempresa() == null ? "Sin empresa" : clienteEntity.getEmpresaByIdempresa().getNombre()%></td>
             <td>
                 <%
-                    List<ConversacionEntity> listaConvers = clienteEntity.getConversacionsByIdcliente();
-                    int i = 0;
+                    List<ConversacionEntity> listadoConversaciones = clienteEntity.getConversacionsByIdcliente();
 
-                    for(ConversacionEntity conver : listaConvers) {
-                        i++;
+                    if(!listadoConversaciones.isEmpty()) {
+                        for(ConversacionEntity conversacion : listadoConversaciones) {
                 %>
-                Conversación nº<%=i%> - Asunto: <%=conver.getAsunto()%><br/>
+                Conversación <%=conversacion.getIdconversacion()%> - Asunto: <%=conversacion.getAsunto()%><br/>
+                <%
+                    }
+                } else {
+                %>
+                Sin conversaciones
                 <%
                     }
                 %>
