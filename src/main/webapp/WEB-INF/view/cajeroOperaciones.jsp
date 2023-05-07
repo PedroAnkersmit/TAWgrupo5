@@ -49,17 +49,17 @@
         <% if(!o.getSacardinerosByIdoperacion().isEmpty()){ %>
 
         <td>EXTRACCIÓN</td>
-        <td>-<%=o.getSacardinerosByIdoperacion().get(0).getCantidad()%>€</td>
+        <td><%=o.getSacardinerosByIdoperacion().get(0).getCantidad()%>€</td>
 
         <%} else if(!o.getTransferenciasByIdoperacion().isEmpty()){ %>
 
         <td>TRANSFERENCIA</td>
-        <td>-<%=o.getTransferenciasByIdoperacion().get(0).getCantidad()%>€ (a <%=o.getTransferenciasByIdoperacion().get(0).getIdcuentadestino()%>)</td>
+        <td><%=o.getTransferenciasByIdoperacion().get(0).getCantidad()%>€ (a <%=o.getTransferenciasByIdoperacion().get(0).getIdcuentadestino()%>)</td>
 
         <%} else if(!o.getCambiodivisasByIdoperacion().isEmpty()){ %>
 
         <td>CAMBIO DE DIVISA</td>
-        <td>-<%=o.getCambiodivisasByIdoperacion().get(0).getCantidadventa()%>€</td>
+        <td><%=o.getCambiodivisasByIdoperacion().get(0).getCantidadventa()%>€</td>
 
         <%}%>
 
