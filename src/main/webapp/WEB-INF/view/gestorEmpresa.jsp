@@ -20,7 +20,7 @@
     <title>Empresa</title>
 </head>
 <body>
-    <button><a href="/gestor/">Volver</a></button>
+    <a href="/gestor/"><button>Volver</button></a>
     <h1>Información de la empresa: <%=empresaEntity.getNombre()%></h1>
 
     <h2>Datos</h2>
@@ -48,7 +48,7 @@
             <th>FECHA DE INICIO</th>
             <th>TIPO</th>
             <th>EMPRESA</th>
-            <th>CONVERSACIÓN</th>
+            <th>CONVERSACIONES</th>
         </tr>
 
         <%

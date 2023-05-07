@@ -33,7 +33,7 @@
             <th>FECHA DE INICIO</th>
             <th>TIPO</th>
             <th>EMPRESA</th>
-            <th>CONVERSACIÓN</th>
+            <th>CONVERSACIONES</th>
         </tr>
 
         <tr>
