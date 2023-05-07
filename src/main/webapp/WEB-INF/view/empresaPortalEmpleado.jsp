@@ -195,6 +195,7 @@
     }
     }
 %>
+<a href="/empresa/cerrarsesion"><button style="margin-bottom: 20px; background-color: red">Cerrar sesión</button></a><br/>
 
 </body>
 </html>
