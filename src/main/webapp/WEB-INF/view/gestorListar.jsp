@@ -58,7 +58,7 @@
 
     <h2>Empresas</h2>
     <form action="/gestor/filtrarNombreEmpresa" method="post">
-        <p>Buscar empresa</p>: <input type="text" name="filtroNombreEmpresa">
+        <p>Buscar empresa:</p> <input type="text" name="filtroNombreEmpresa">
         <button>Filtrar</button>
     </form>
     <!-- Empresas -->

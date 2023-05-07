@@ -70,7 +70,6 @@ public class ClienteUsuarioController {
         }
         }
 
-
         model.addAttribute("user", usuario);
         model.addAttribute("accounts", cuentasUsuario);
         model.addAttribute("operations", operaciones);
@@ -84,8 +83,11 @@ public class ClienteUsuarioController {
         return "clienteEditar";
     }
     @PostMapping("/guardar")
-    String doGuardar(Model model, @ModelAttribute("user") ClienteEntity usuario){
+    String doGuardar(Model model, @ModelAttribute("user") ClienteEntity usuario, HttpSession httpSession){
         clienteRepository.save(usuario);
+        httpSession.setAttribute("user", usuario);
+
+        doMostrarFiltrado(model, usuario, null);
         return "/clienteHome";
     }
 
