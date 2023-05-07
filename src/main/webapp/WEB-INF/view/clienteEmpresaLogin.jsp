@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <style><%@include file="/css/styles.css"%></style>
-    <title>Title</title>
+    <title>Login</title>
 </head>
 <body>
 

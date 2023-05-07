@@ -232,7 +232,9 @@ public class EmpresaController {
     {
         ClienteEntity cliente = (ClienteEntity) session.getAttribute("clienteEmpresa");
 
-        ClienteEntity clienteEmpresa = this.clienteRepository.findById(cliente.getIdcliente()).orElse(null);
+        Integer idCliente = cliente.getIdcliente();
+
+        ClienteEntity clienteEmpresa = this.clienteRepository.findById(idCliente).orElse(null);
 
         session.setAttribute("clienteEmpresa", clienteEmpresa);
 
@@ -254,7 +256,9 @@ public class EmpresaController {
     {
         ClienteEntity cliente = (ClienteEntity) session.getAttribute("clienteEmpresa");
 
-        ClienteEntity clienteEmpresa = this.clienteRepository.findById(cliente.getIdcliente()).orElse(null);
+        Integer idCliente = cliente.getIdcliente();
+
+        ClienteEntity clienteEmpresa = this.clienteRepository.findById(idCliente).orElse(null);
 
         session.setAttribute("clienteEmpresa", clienteEmpresa);
 
