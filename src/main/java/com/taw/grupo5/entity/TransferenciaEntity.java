@@ -20,6 +20,7 @@ public class TransferenciaEntity {
     @Basic
     @Column(name = "fechaejecucion", nullable = true)
     private Date fechaejecucion;
+
     @Basic
     @Column(name = "idcuentadestino", nullable = false)
     private Integer idcuentadestino;

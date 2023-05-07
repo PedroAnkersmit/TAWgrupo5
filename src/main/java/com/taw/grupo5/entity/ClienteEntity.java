@@ -90,15 +90,15 @@ public class ClienteEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        ClienteEntity that = (ClienteEntity) o;
+        ClienteEntity cliente = (ClienteEntity) o;
 
-        if (idcliente != null ? !idcliente.equals(that.idcliente) : that.idcliente != null) return false;
-        if (idconversacion != null ? !idconversacion.equals(that.idconversacion) : that.idconversacion != null)
+        if (idcliente != null ? !idcliente.equals(cliente.idcliente) : cliente.idcliente != null) return false;
+        if (idconversacion != null ? !idconversacion.equals(cliente.idconversacion) : cliente.idconversacion != null)
             return false;
-        if (nombre != null ? !nombre.equals(that.nombre) : that.nombre != null) return false;
-        if (email != null ? !email.equals(that.email) : that.email != null) return false;
-        if (telefono != null ? !telefono.equals(that.telefono) : that.telefono != null) return false;
-        if (fechainicio != null ? !fechainicio.equals(that.fechainicio) : that.fechainicio != null) return false;
+        if (nombre != null ? !nombre.equals(cliente.nombre) : cliente.nombre != null) return false;
+        if (email != null ? !email.equals(cliente.email) : cliente.email != null) return false;
+        if (telefono != null ? !telefono.equals(cliente.telefono) : cliente.telefono != null) return false;
+        if (fechainicio != null ? !fechainicio.equals(cliente.fechainicio) : cliente.fechainicio != null) return false;
 
         return true;
     }

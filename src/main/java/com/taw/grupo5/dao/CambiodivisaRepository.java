@@ -12,4 +12,5 @@ import java.util.List;
 public interface CambiodivisaRepository extends JpaRepository<CambiodivisaEntity, Integer> {
     @Query("select c.operacionByIdoperacion from CambiodivisaEntity c where c.operacionByIdoperacion.idcliente = :id")
     List<OperacionEntity> BuscarPorCliente(@Param("id") Integer idCliente);
+
 }

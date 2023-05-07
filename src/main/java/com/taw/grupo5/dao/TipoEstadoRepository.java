@@ -1,6 +1,4 @@
-package com.taw.grupo5.dao;/*
-Created by Pedro Ankersmit Carrión
-*/
+package com.taw.grupo5.dao;
 
 import com.taw.grupo5.entity.TipoestadoEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
