@@ -16,6 +16,7 @@
     List<EmpleadoEntity> listaAsistentes = (List< EmpleadoEntity>) request.getAttribute("listaAsistentes");
     EmpleadoEntity empleado = (EmpleadoEntity) request.getAttribute("empleado");
     ClienteEntity cliente = (ClienteEntity) request.getAttribute("cliente");
+    String error = (String) request.getAttribute("error");
 %>
 <html>
 <head>
@@ -23,36 +24,31 @@
     <title>Chat</title>
 </head>
 <body>
-
-
+<p>
 <a href="/asistente/misconversaciones">
         <button>Volver a conversaciones</button></a><br><br>
+<p style="color: red; font-weight: bold;"><%=error%></><br>
 
 <form:form modelAttribute="mensaje" action="/asistente/crear" method="post">
-        <form:hidden path="conversacionByIdconversacion.abierto" value="1"/>
         Asunto:
         <form:input path="conversacionByIdconversacion.asunto"></form:input>
-
-    <form:hidden path="conversacionByIdconversacion.clienteByIdcliente" value="<%=cliente.getIdcliente()%>"/> <!-- PROVISIONAL HASTA TENER HTTPSESSION-->
-
-    <table border="1">
-        <tr>
-            <th>Asistente</th>
-            <th>Usted</th>
-        </tr>
-    </table>
-
-        <form:hidden path="idmensaje"/>
+        Enviar mensaje a:
+        <form:select path="conversacionByIdconversacion.empleadoByIdempleado"
+                     items="${listaAsistentes}" itemLabel="nombre" itemValue="idempleado"></form:select><br/>
+        Mensaje:
         <form:textarea path="contenido"></form:textarea>
+
+
+        <form:hidden path="conversacionByIdconversacion.abierto" value="1"/>
+        <form:hidden path="conversacionByIdconversacion.clienteByIdcliente" value="<%=cliente.getIdcliente()%>"/>
+        <form:hidden path="idmensaje"/>
         <form:hidden path="enviadoporasistente" value="<%=esAsistente%>"/>
         <form:hidden path="conversacionByIdconversacion"/>
         <form:hidden path="fechaenvio" value="<%=new Timestamp(System.currentTimeMillis())%>"/>
 
-    Enviar mensaje a:
-    <form:select path="conversacionByIdconversacion.empleadoByIdempleado"
-                 items="${listaAsistentes}" itemLabel="nombre" itemValue="idempleado"></form:select><br/>
 
     <form:button>Enviar</form:button>
  </form:form>
+</p>
 </body>
 </html>

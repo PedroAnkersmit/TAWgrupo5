@@ -80,19 +80,31 @@ public class AsistenteController {
         model.addAttribute("mensaje", nuevoMensaje);
     }
     @PostMapping("/crear")
-    public String doCrearNuevaConversacion(@ModelAttribute("mensaje")MensajeEntity mensaje) {
+    public String doCrearNuevaConversacion(Model model, HttpSession session,
+                                           @ModelAttribute("mensaje")MensajeEntity mensaje) {
         String vuelta;
 
-        conversacionRepository.save(mensaje.getConversacionByIdconversacion());
-        mensajeRepository.save(mensaje);
-        if(mensaje.getEnviadoporasistente()>0){             //si es asistente
-            vuelta = "redirect:/asistente/conversacion?id=";
-        }else{                                              //si es cliente
-            vuelta = "redirect:/asistente/conversar?id=";
+        if(mensaje.getContenido().isEmpty() || mensaje.getConversacionByIdconversacion().getAsunto().isEmpty()){
+            model.addAttribute("error", "Asunto o mensaje están vacíos");
+            if(mensaje.getEnviadoporasistente()>0){             //si es asistente
+                nuevaConverAsistente(model, session);
+                vuelta = "asistenteNuevoChatAsistente";
+            }else{                                              //si es cliente
+                nuevaConverCliente(model, session);
+                vuelta = "asistenteNuevoChatCliente";
+            }
+        }else{
+            conversacionRepository.save(mensaje.getConversacionByIdconversacion());
+            mensajeRepository.save(mensaje);
+            int idNuevaConversacion = mensaje.getConversacionByIdconversacion().getIdconversacion();
+            if(mensaje.getEnviadoporasistente()>0){             //si es asistente
+                vuelta = "redirect:/asistente/conversacion?id=" + idNuevaConversacion;
+            }else{                                              //si es cliente
+                vuelta = "redirect:/asistente/conversar?id=" + idNuevaConversacion;
+            }
         }
 
-        int idNuevaConversacion = mensaje.getConversacionByIdconversacion().getIdconversacion();
-        return vuelta + idNuevaConversacion;
+        return vuelta;
     }
 
     @PostMapping("/enviar")
@@ -101,7 +113,9 @@ public class AsistenteController {
         int id_conver = mensaje.getConversacionByIdconversacion().getIdconversacion();
         String vuelta;
 
-        mensajeRepository.save(mensaje);
+        if(!mensaje.getContenido().isEmpty()){
+            mensajeRepository.save(mensaje);
+        }
         if(mensaje.getEnviadoporasistente()>0){             //si es asistente
             vuelta = "redirect:/asistente/conversacion?id=";
         }else{                                              //si es cliente
@@ -137,8 +151,7 @@ public class AsistenteController {
         return "asistenteChat";
     }
 
-    @GetMapping("/nuevaConversacion")
-    public String doNuevaConversacionCliente(HttpSession session, Model model){
+    private void nuevaConverCliente(Model model, HttpSession session){
         doConversacion(model);
 
 
@@ -150,6 +163,12 @@ public class AsistenteController {
         model.addAttribute("empleado", null);
         ClienteEntity usuario = (ClienteEntity) session.getAttribute("user");
         model.addAttribute("cliente", usuario);
+    }
+
+    @GetMapping("/nuevaConversacion")
+    public String doNuevaConversacionCliente(HttpSession session, Model model){
+        nuevaConverCliente(model, session);
+        model.addAttribute("error", "");
         return "asistenteNuevoChatCliente";
     }
 
@@ -255,8 +274,7 @@ public class AsistenteController {
         return "asistenteChat";
     }
 
-    @GetMapping("/nuevoChat")
-    public String doNuevaConversacionAsistente(Model model, HttpSession session){
+    private void nuevaConverAsistente(Model model, HttpSession session){
         doConversacion(model);
 
         model.addAttribute("esAsistente", 1);
@@ -266,6 +284,12 @@ public class AsistenteController {
 
         model.addAttribute("empleado", session.getAttribute("usuario"));
         model.addAttribute("cliente", null);
+    }
+
+    @GetMapping("/nuevoChat")
+    public String doNuevaConversacionAsistente(Model model, HttpSession session){
+        nuevaConverAsistente(model, session);
+        model.addAttribute("error", "");
         return "asistenteNuevoChatAsistente";
     }
 }
