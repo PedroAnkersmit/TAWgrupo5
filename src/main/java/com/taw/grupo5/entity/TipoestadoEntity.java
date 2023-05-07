@@ -62,6 +62,7 @@ public class TipoestadoEntity {
         this.cuentasByIdtipoestado = cuentasByIdtipoestado;
     }
 
+    // Pablo
     public TipoestadoDTO toDTO(){
 
         TipoestadoDTO dto = new TipoestadoDTO();

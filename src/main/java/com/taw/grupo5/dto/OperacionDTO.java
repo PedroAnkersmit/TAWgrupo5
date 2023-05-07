@@ -49,34 +49,42 @@ public class OperacionDTO {
         this.cliente = cliente;
     }
 
+    // Pablo
     public Integer getCuenta() {
         return idCuenta;
     }
 
+    // Pablo
     public void setCuenta(Integer cuenta) {
         this.idCuenta = cuenta;
     }
 
+    // Pablo
     public List<SacardineroDTO> getSacardineros() {
         return sacardineros;
     }
 
+    // Pablo
     public void setSacardineros(List<SacardineroDTO> sacardineros) {
         this.sacardineros = sacardineros;
     }
 
+    // Pablo
     public List<TransferenciaDTO> getTransferencias() {
         return transferencias;
     }
 
+    // Pablo
     public void setTransferencias(List<TransferenciaDTO> transferencias) {
         this.transferencias = transferencias;
     }
 
+    // Pablo
     public List<CambioDivisaDTO> getCambiodivisas() {
         return cambiodivisas;
     }
 
+    // Pablo
     public void setCambiodivisas(List<CambioDivisaDTO> cambiodivisas) {
         this.cambiodivisas = cambiodivisas;
     }

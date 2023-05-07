@@ -108,6 +108,7 @@ public class TransferenciaEntity {
         this.operacionByIdoperacion = operacionByIdoperacion;
     }
 
+    // Pablo
     public TransferenciaDTO toDTO(){
 
         TransferenciaDTO dto = new TransferenciaDTO();

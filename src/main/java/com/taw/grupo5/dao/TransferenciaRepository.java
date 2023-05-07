@@ -8,6 +8,10 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
+/**
+ * @author Pablo
+ */
+
 public interface TransferenciaRepository extends JpaRepository<TransferenciaEntity, Integer> {
 
     @Query("select s from TransferenciaEntity s where s.operacionByIdoperacion.idoperacion = :id")

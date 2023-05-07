@@ -69,10 +69,12 @@ public class CambioDivisaDTO implements Serializable {
         this.comision = comision;
     }
 
+    // Pablo
     public Integer getOperacion() {
         return idOperacion;
     }
 
+    // Pablo
     public void setOperacion(Integer operacion) {
         this.idOperacion = operacion;
     }

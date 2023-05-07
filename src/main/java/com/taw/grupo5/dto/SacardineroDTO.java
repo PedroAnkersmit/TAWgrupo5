@@ -29,10 +29,12 @@ public class SacardineroDTO implements Serializable {
         this.cantidad = cantidad;
     }
 
+    // Pablo
     public Integer getOperacion() {
         return idOperacion;
     }
 
+    // Pablo
     public void setOperacion(Integer operacion) {
         this.idOperacion = operacion;
     }

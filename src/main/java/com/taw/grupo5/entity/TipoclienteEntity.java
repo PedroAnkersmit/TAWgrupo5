@@ -63,6 +63,7 @@ public class TipoclienteEntity {
         this.clientesByIdtipocliente = clientesByIdtipocliente;
     }
 
+    // Pablo
     public TipoclienteDTO toDTO(){
 
         TipoclienteDTO dto = new TipoclienteDTO();

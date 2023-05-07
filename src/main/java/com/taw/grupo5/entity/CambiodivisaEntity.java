@@ -117,6 +117,7 @@ public class CambiodivisaEntity {
         this.operacionByIdoperacion = operacionByIdoperacion;
     }
 
+    // Pablo
     public CambioDivisaDTO toDTO(){
 
         CambioDivisaDTO dto = new CambioDivisaDTO();

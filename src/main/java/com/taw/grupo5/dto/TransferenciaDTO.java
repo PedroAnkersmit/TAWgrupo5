@@ -59,10 +59,12 @@ public class TransferenciaDTO implements Serializable {
         this.operacion = operacion;
     }
 
+    // Pablo
     public Integer getIdCuentaDestino() {
         return idCuentaDestino;
     }
 
+    // Pablo
     public void setIdCuentaDestino(Integer idCuentaDestino) {
         this.idCuentaDestino = idCuentaDestino;
     }

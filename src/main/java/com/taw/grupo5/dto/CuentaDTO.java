@@ -82,10 +82,12 @@ public class CuentaDTO implements Serializable {
         this.tipoEstado = tipoEstado;
     }
 
+    // Pablo
     public List<OperacionDTO> getOperacionesByIdOperacion() {
         return operaciones;
     }
 
+    // Pablo
     public void setOperacionesByIdOperacion(List<OperacionDTO> operaciones) {
         this.operaciones = operaciones;
     }

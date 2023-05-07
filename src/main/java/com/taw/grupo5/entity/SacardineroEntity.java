@@ -64,6 +64,7 @@ public class SacardineroEntity {
         this.operacionByIdoperacion = operacionByIdoperacion;
     }
 
+    // Pablo
     public SacardineroDTO toDTO(){
 
         SacardineroDTO dto = new SacardineroDTO();

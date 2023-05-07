@@ -91,10 +91,12 @@ public class ClienteDTO implements Serializable {
         this.empresa = empresa;
     }
 
+    // Pablo
     public List<CuentaDTO> getCuentasByIdCliente(){
         return cuentas;
     }
 
+    // Pablo
     public void setCuentasByIdCliente(List<CuentaDTO> cuentas){
         this.cuentas = cuentas;
     }

@@ -3,6 +3,10 @@ package com.taw.grupo5.ui;
 import java.sql.Date;
 import java.time.LocalDate;
 
+/**
+ * @author Pablo
+ */
+
 public class FiltroOperacion {
 
     private String tipoOperacion;

@@ -150,6 +150,7 @@ public class ClienteEntity {
         this.cuentasByIdcliente = cuentasByIdcliente;
     }
 
+    // Pablo
     public ClienteDTO toDTO(){
 
         ClienteDTO dto = new ClienteDTO();

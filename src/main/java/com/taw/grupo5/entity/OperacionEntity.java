@@ -112,7 +112,7 @@ public class OperacionEntity {
     }
 
 
-
+    // Pablo
     public OperacionDTO toDTO(){
 
         OperacionDTO dto = new OperacionDTO();

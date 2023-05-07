@@ -153,6 +153,7 @@ public class CuentaEntity {
         return dto;
     }
 
+    // Pablo
     public CuentaDTO toDTO(ClienteDTO c){
 
         CuentaDTO dto = new CuentaDTO();
