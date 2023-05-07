@@ -11,9 +11,6 @@ public interface ClienteRepository extends JpaRepository<ClienteEntity, Integer>
     @Query("select c from ClienteEntity c where c.nombre like CONCAT('%', :filtro, '%') or c.email like CONCAT('%', :filtro, '%')")
     List<ClienteEntity> buscarPorNombre (@Param("filtro") String filtro);
 
-    @Query("select c from ClienteEntity c where c.tipoclienteByIdtipocliente.nombre like :tipo")
-    List<ClienteEntity> buscarPorTipo(@Param("tipo") String tipoCliente);
-
     @Query("select c from ClienteEntity c where c.email like CONCAT('%', :mail, '%')")
     ClienteEntity buscarCuenta(@Param("mail") String correo);
 
