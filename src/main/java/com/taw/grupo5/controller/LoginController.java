@@ -26,7 +26,7 @@ import java.text.SimpleDateFormat;
 Created by Pedro Ankersmit Carrión
 */
 @Controller
-@RequestMapping("/login")
+@RequestMapping("/cliente")
 public class LoginController {
     @Autowired
     protected ClienteRepository clienteRepository;
@@ -37,12 +37,12 @@ public class LoginController {
     @Autowired
     protected CuentaRepository cuentaRepository;
 
-    @GetMapping("/")
+    @GetMapping("/login")
     String doLogin() {
         return "clienteLogin";
     }
 
-    @PostMapping("/")
+    @PostMapping("/login")
     String doLoggear(@RequestParam("mail") String mail,
                      Model model, HttpSession session){
         return doAutenticar(mail, model, session);
@@ -53,7 +53,7 @@ public class LoginController {
         ClienteEntity usuario = clienteRepository.autenticar(mail);
         if (usuario == null) {
             model.addAttribute("error", "Credenciales incorrectas");
-            urlTo = "/";
+            urlTo = "/cliente/login";
         } else {
             session.setAttribute("user", usuario);
         }
