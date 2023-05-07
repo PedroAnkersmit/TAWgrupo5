@@ -8,7 +8,13 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
+/**
+ * @author Jesús Ariza
+ */
+
 public interface EmpresaRepository extends JpaRepository<EmpresaEntity, Integer> {
+
+    //Ignacio
     @Query("select e from EmpresaEntity e where e.nombre like CONCAT('%', :filtro, '%')")
     List<EmpresaEntity> buscarPorNombre (@Param("filtro") String filtro);
 }
