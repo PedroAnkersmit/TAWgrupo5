@@ -89,6 +89,22 @@ public class EmpresaController {
         return "redirect:/";
     }
 
+    @GetMapping("/accederdaralta")
+    public String accederDarAlta(Model model)
+    {
+        EmpresaEntity empresa = new EmpresaEntity();
+
+        model.addAttribute("empresaDaAlta", empresa);
+
+        return "empresaAccederDarAlta";
+    }
+
+    @PostMapping("/accederdaralta/ir")
+    public String irAccederDarAlta(@ModelAttribute("empresaDaAlta") EmpresaEntity empresaDaAlta, Model model)
+    {
+        return "redirect:/empresa/dardealta?id=" + empresaDaAlta.getIdempresa();
+    }
+
     @GetMapping("/dardealta")
     public String darDeAlta(@RequestParam("id") Integer idEmpresa, Model model)
     {
@@ -216,7 +232,9 @@ public class EmpresaController {
     {
         ClienteEntity cliente = (ClienteEntity) session.getAttribute("clienteEmpresa");
 
-        ClienteEntity clienteEmpresa = this.clienteRepository.findById(cliente.getIdcliente()).orElse(null);
+        Integer idCliente = cliente.getIdcliente();
+
+        ClienteEntity clienteEmpresa = this.clienteRepository.findById(idCliente).orElse(null);
 
         session.setAttribute("clienteEmpresa", clienteEmpresa);
 
@@ -238,7 +256,9 @@ public class EmpresaController {
     {
         ClienteEntity cliente = (ClienteEntity) session.getAttribute("clienteEmpresa");
 
-        ClienteEntity clienteEmpresa = this.clienteRepository.findById(cliente.getIdcliente()).orElse(null);
+        Integer idCliente = cliente.getIdcliente();
+
+        ClienteEntity clienteEmpresa = this.clienteRepository.findById(idCliente).orElse(null);
 
         session.setAttribute("clienteEmpresa", clienteEmpresa);
 
@@ -278,7 +298,7 @@ public class EmpresaController {
         CuentaEntity cuenta = this.cuentaRepository.findById(idCuenta).orElse(null);
         TipoestadoEntity estadoCuenta = new TipoestadoEntity();
 
-        estadoCuenta.setIdtipoestado(1);
+        estadoCuenta.setIdtipoestado(3);
 
         cuenta.setTipoestadoByIdestado(estadoCuenta);
 
@@ -393,4 +413,11 @@ public class EmpresaController {
 
         return "redirect:/empresa/portal";
     }
+
+    @GetMapping("/cerrarsesion")
+    public String cerrarSesionClienteEmpresa(HttpSession session){
+        session.invalidate();
+        return "redirect:/";
+    }
+
 }

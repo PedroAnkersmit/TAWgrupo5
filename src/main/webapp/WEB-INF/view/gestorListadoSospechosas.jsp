@@ -33,12 +33,13 @@
             <th>TIPO</th>
             <th>EMPRESA</th>
             <th>CONVERSACIÓN</th>
-            <th></th>
+            <th>BLOQUEAR</th>
         </tr>
 
         <%
             for(ClienteEntity clienteEntity : listadoClientesSospechosos) {
-                if(clienteEntity.getCuentasByIdcliente().get(0).getTipoestadoByIdestado().getIdtipoestado() != 4) {
+               for(CuentaEntity cuenta : clienteEntity.getCuentasByIdcliente()) {
+                   if(cuenta.getTipoestadoByIdestado().getIdtipoestado() != 4) {
         %>
             <tr>
                 <td><%=clienteEntity.getIdcliente()%></td>
@@ -66,10 +67,16 @@
                     %>
                 </td>
                 <td>
-                    <a href="/gestor/bloquearCuenta?id=<%=clienteEntity.getCuentasByIdcliente().get(0).getIdcuenta()%>">Bloquear cuenta</a>
+                    <%
+                        if(cuenta.getTipoestadoByIdestado().getIdtipoestado() == 2) {
+                    %>
+                    <a href="/gestor/bloquearCuenta?id=<%=cuenta.getIdcuenta()%>">Cuenta nº<%=cuenta.getNumerocuenta()%></a>
+                    <%
+                        }
+                    %>
                 </td>
             </tr>
-        <%
+        <%          }
                 }
             }
         %>

@@ -29,7 +29,7 @@
     </form>
 
     <a href="/gestor/listadoDarVistoBuenoAlta"><button>Solicitudes de alta</button></a>
-    <a href="/gestor/listadoInactivos"><button>Bloqueo por inactividad</button></a>
+    <a href="/gestor/listadoInactivos"><button>Desactivar por inactividad</button></a>
     <a href="/gestor/listadoSospechosas"><button>Actividades sospechosas</button></a>
     <a href="/gestor/listadoDesbloqueo"><button>Solicitudes de desbloqueo</button></a>
 
@@ -81,5 +81,6 @@
             }
         %>
     </table>
+    <a href="/"><button>Volver</button></a>
 </body>
 </html>

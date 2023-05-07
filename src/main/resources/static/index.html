@@ -120,40 +120,38 @@
 </div>
 <div class="container">
     <div class="box">
-        <a href="#">
-            <i class="icon fas fa-users"></i>
-            <span class="text">Clientes</span>
-        </a>
+        <i class="icon fas fa-users"></i>
+        <span class="text">Clientes</span>
         <div class="dropdown">
-            <div class="dropdown-item">Acceder</div>
-            <div class="dropdown-item">Editar cliente</div>
-            <div class="dropdown-item">Eliminar cliente</div>
+            <div class="dropdown-item"> <a href="/cliente/login">Login</a></div>
         </div>
     </div>
+
     <div class="box">
-            <i class="icon fas fa-building"></i>
-            <span class="text">Empresas</span>
+        <i class="icon fas fa-building"></i>
+        <span class="text">Empresas</span>
         <div class="dropdown">
            <div class="dropdown-item"> <a href="/empresa/registro">Crear empresa</a></div>
-           <div class="dropdown-item"> <a href="/empresa/dardealta">Acceder y crear empleado</a></div>
+           <div class="dropdown-item"> <a href="/empresa/accederdaralta">Acceder y crear empleado</a></div>
            <div class="dropdown-item"> <a href="/empresa/login">Acceder como cliente</a></div>
         </div>
     </div>
+
     <div class="box">
-        <a href="/gestor/">
-            <i class="icon fas fa-user-tie"></i>
-            <span class="text">Gestores</span>
-        </a>
-    </div>
-    <div class="box">
-        <a href="#">
-            <i class="icon fas fa-user-friends"></i>
-            <span class="text">Asistente</span>
-        </a>
+        <i class="icon fas fa-user-tie"></i>
+        <span class="text">Gestor</span>
         <div class="dropdown">
-            <div class="dropdown-item">Realizar transacción</div>
-            <div class="dropdown-item">Consultar historial de transacciones</div>
+            <div class="dropdown-item"> <a href="/gestor/">Acceder</a></div>
         </div>
+    </div>
+
+    <div class="box">
+
+            <i class="icon fas fa-user-friends"></i>
+            <span class="text">Asistentes</span>
+            <div class="dropdown">
+                <div class="dropdown-item"><a href="/asistente/login">Login</a></div>
+            </div>
     </div>
     <div class="box">
         <a href="#">
@@ -161,8 +159,7 @@
             <span class="text">Cajero</span>
         </a>
         <div class="dropdown">
-            <div class="dropdown-item">Realizar transacción</div>
-            <div class="dropdown-item">Consultar historial de transacciones</div>
+            <div class="dropdown-item"><a href="/cajero/login">Login</a></div>
         </div>
     </div>
 </div>

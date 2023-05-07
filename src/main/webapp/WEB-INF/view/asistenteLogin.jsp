@@ -1,6 +1,6 @@
 <%--
   Created by IntelliJ IDEA.
-  User: diamo
+  User: Hilaria Romero Bouyahia
   Date: 07/05/2023
   Time: 1:46
   To change this template use File | Settings | File Templates.
@@ -14,9 +14,12 @@
 </head>
 <body>
     <h6> Accediendo con el siguiente sessionid: <%=session.getId()%> </h6>
+
+    <h1>Iniciar sesión:</h1>
     <form action="/asistente/login" method="post">
         Nombre: <input type="text" name="nombre"> <br>
         <button>Enviar</button>
     </form>
+    <a href="/"><button>Volver al inicio</button></a>
 </body>
 </html>

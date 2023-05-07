@@ -4,7 +4,7 @@
 <%@ page import="java.util.List" %>
 <%--
   Created by IntelliJ IDEA.
-  User: Hilaria
+  User: Hilaria Romero Bouyahia
   Date: 26/04/2023
   Time: 12:56
   To change this template use File | Settings | File Templates.
@@ -48,6 +48,7 @@
             <th>Nombre del cliente</th>
             <th>Correo</th>
             <th>Conversación</th>
+            <th></th>
         </tr>
         <% for (ConversacionEntity conversacion : lista){
             if(conversacion.getEmpleadoByIdempleado().equals(empleado)){%>

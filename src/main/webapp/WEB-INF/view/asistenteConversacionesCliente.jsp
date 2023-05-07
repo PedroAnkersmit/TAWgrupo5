@@ -3,7 +3,7 @@
 <%@ page import="java.util.List" %>
 <%--
   Created by IntelliJ IDEA.
-  User: Hilaria
+  User: Hilaria Romero Bouyahia
   Date: 27/04/2023
   Time: 17:37
   To change this template use File | Settings | File Templates.
@@ -29,6 +29,7 @@
       <th>Asunto</th>
       <th>Asistente</th>
       <th>Conversacion</th>
+      <th></th>
     </tr>
 
 

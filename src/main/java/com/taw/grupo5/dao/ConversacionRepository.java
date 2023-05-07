@@ -8,7 +8,9 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
-
+/**
+ * @author Hilaria Romero Bouyahia
+ */
 public interface ConversacionRepository extends JpaRepository<ConversacionEntity, Integer> {
     @Query("select c from ConversacionEntity c where c.clienteByIdcliente = :cliente")
     List<ConversacionEntity> buscarPorCliente(@Param("cliente") ClienteEntity cliente);
