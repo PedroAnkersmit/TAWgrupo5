@@ -145,11 +145,11 @@ public class EmpresaController {
 
         for(ClienteEntity c : listaClientes)
         {
-            if(filtroClientes.getTipoCliente().equals(""))
+            if(filtroOperaciones.getFechaMinima().compareTo(c.getFechainicio()) < 0 && filtroOperaciones.getFechaMaxima().compareTo(c.getFechainicio()) > 0 && filtroOperaciones.getTipoCliente().equals(""))
                 listaClientesFiltrada.add(c);
-            else if(filtroClientes.getTipoCliente().equals("socio") && c.getTipoclienteByIdtipocliente().getIdtipocliente() == 2)
+            else if(filtroOperaciones.getFechaMinima().compareTo(c.getFechainicio()) < 0 && filtroOperaciones.getFechaMaxima().compareTo(c.getFechainicio()) > 0 && filtroOperaciones.getTipoCliente().equals("socio") && c.getTipoclienteByIdtipocliente().getIdtipocliente() == 2)
                 listaClientesFiltrada.add(c);
-            else if (filtroClientes.getTipoCliente().equals("autorizado") && c.getTipoclienteByIdtipocliente().getIdtipocliente() == 3)
+            else if (filtroOperaciones.getFechaMinima().compareTo(c.getFechainicio()) < 0 && filtroOperaciones.getFechaMaxima().compareTo(c.getFechainicio()) > 0 && filtroOperaciones.getTipoCliente().equals("autorizado") && c.getTipoclienteByIdtipocliente().getIdtipocliente() == 3)
                 listaClientesFiltrada.add(c);
         }
 
