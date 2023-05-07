@@ -1,6 +1,7 @@
 <%@ page import="com.taw.grupo5.entity.ClienteEntity" %>
 <%@ page import="java.util.List" %>
-<%@ page import="com.taw.grupo5.entity.ConversacionEntity" %><%--
+<%@ page import="com.taw.grupo5.entity.ConversacionEntity" %>
+<%@ page import="com.taw.grupo5.entity.CuentaEntity" %><%--
   Created by IntelliJ IDEA.
   User: ignam
   Date: 06/05/2023
@@ -65,7 +66,15 @@
                 %>
             </td>
             <td>
-                <a href="/gestor/desactivarCuenta?id=<%=clienteEntity.getCuentasByIdcliente().get(0).getIdcuenta()%>">Desactivar cuenta</a>
+                <%
+                    for(CuentaEntity cuenta : clienteEntity.getCuentasByIdcliente()) {
+                        if(cuenta.getTipoestadoByIdestado().getIdtipoestado() == 2) {
+                %>
+                        <a href="/gestor/desactivarCuenta?id=<%=cuenta.getIdcuenta()%>">Desactivar cuenta nº<%=cuenta.getNumerocuenta()%></a> <br/>
+                <%
+                        }
+                    }
+                %>
             </td>
         </tr>
         <%

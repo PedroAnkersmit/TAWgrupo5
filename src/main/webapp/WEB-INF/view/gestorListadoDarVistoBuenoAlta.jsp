@@ -1,6 +1,7 @@
 <%@ page import="java.util.List" %>
 <%@ page import="com.taw.grupo5.entity.ClienteEntity" %>
-<%@ page import="com.taw.grupo5.entity.ConversacionEntity" %><%--
+<%@ page import="com.taw.grupo5.entity.ConversacionEntity" %>
+<%@ page import="com.taw.grupo5.entity.CuentaEntity" %><%--
   Created by IntelliJ IDEA.
   User: ignam
   Date: 04/05/2023
@@ -65,7 +66,13 @@
                 %>
             </td>
             <td>
-                <a href="/gestor/darVistoBuenoAlta?id=<%=clienteEntity.getCuentasByIdcliente().get(0).getIdcuenta()%>">Dar visto bueno</a>
+                <%
+                    for(CuentaEntity cuenta : clienteEntity.getCuentasByIdcliente()) {
+                %>
+                        <a href="/gestor/darVistoBuenoAlta?id=<%=cuenta.getIdcuenta()%>">Dar visto bueno</a><br/>
+                <%
+                    }
+                %>
             </td>
         </tr>
         <%

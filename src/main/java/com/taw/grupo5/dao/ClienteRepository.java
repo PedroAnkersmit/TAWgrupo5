@@ -23,7 +23,7 @@ public interface ClienteRepository extends JpaRepository<ClienteEntity, Integer>
     @Query("select c.clienteByIdcliente from CuentaEntity c where c.tipoestadoByIdestado.idtipoestado = 1")
     List<ClienteEntity> listadoClientesDarAlta();
 
-    @Query("select o.cuentaByIdcuenta.clienteByIdcliente from OperacionEntity o where datediff(curdate(), o.fecha) >= 30")
+    @Query("select distinct o.cuentaByIdcuenta.clienteByIdcliente from OperacionEntity o where datediff(curdate(), o.fecha) >= 30 and o.cuentaByIdcuenta.tipoestadoByIdestado.idtipoestado = 2")
     List<ClienteEntity> listadoClientesInactivos();
 
     @Query("select c.clienteByIdcliente from CuentaEntity c where c.tipoestadoByIdestado.idtipoestado = 3")
