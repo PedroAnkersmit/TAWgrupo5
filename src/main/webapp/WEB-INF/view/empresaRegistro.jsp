@@ -10,7 +10,7 @@
 
 <html>
 <head>
-    <style><%@include file="/css/styles.css"%></style>
+    <style><%@include file="/css/registroEmpresa.css"%></style>
     <title>Registro Empresa</title>
 </head>
 <body>
