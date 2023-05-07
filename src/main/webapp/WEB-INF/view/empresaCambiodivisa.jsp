@@ -20,7 +20,7 @@
         <form:hidden path="monedaventa"/>
         <form:hidden path="monedacompra"/>
         <form:hidden path="cantidadcompra"/>
-        Dólares <form:input path="cantidadventa"/><br/>
+        <p>Dólares</p> <br/><form:input path="cantidadventa"/><br/>
         <form:hidden path="comision"/>
         <form:hidden path="operacionByIdoperacion"/>
         <form:button>Guardar cambios</form:button>

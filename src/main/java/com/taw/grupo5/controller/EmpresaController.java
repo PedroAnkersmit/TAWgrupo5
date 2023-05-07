@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
 import java.sql.Date;
 import java.time.LocalDate;
@@ -191,9 +192,11 @@ public class EmpresaController {
     }
 
     @GetMapping("/portal")
-    public String portalEmpleado(@RequestParam("id") Integer idCliente, Model model)
+    public String portalEmpleado(Model model, HttpSession session)
     {
-        return procesadorFiltrado(idCliente, null, null, model);
+        ClienteEntity clienteEmpresa = (ClienteEntity) session.getAttribute("clienteEmpresa");
+
+        return procesadorFiltrado(clienteEmpresa.getIdcliente(), null, null, model);
     }
 
     @PostMapping("/portal/filtrarClientes")
@@ -209,10 +212,15 @@ public class EmpresaController {
     }
 
     @GetMapping("/editarcliente")
-    public String editarCliente(@RequestParam("id") Integer idCliente, Model model)
+    public String editarCliente(Model model, HttpSession session)
     {
-        ClienteEntity cliente = this.clienteRepository.findById(idCliente).orElse(null);
-        model.addAttribute("clienteAEditar", cliente);
+        ClienteEntity cliente = (ClienteEntity) session.getAttribute("clienteEmpresa");
+
+        ClienteEntity clienteEmpresa = this.clienteRepository.findById(cliente.getIdcliente()).orElse(null);
+
+        session.setAttribute("clienteEmpresa", clienteEmpresa);
+
+        model.addAttribute("clienteAEditar", clienteEmpresa);
 
         return "empresaEditarCliente";
     }
@@ -222,13 +230,20 @@ public class EmpresaController {
     {
         this.clienteRepository.save(cliente);
 
-        return "redirect:/";
+        return "redirect:/empresa/portal";
     }
 
     @GetMapping("/editarempresa")
-    public String editarEmpresa(@RequestParam("id") Integer idEmpresa, Model model)
+    public String editarEmpresa(Model model, HttpSession session)
     {
-        EmpresaEntity empresa = this.empresaRepository.findById(idEmpresa).orElse(null);
+        ClienteEntity cliente = (ClienteEntity) session.getAttribute("clienteEmpresa");
+
+        ClienteEntity clienteEmpresa = this.clienteRepository.findById(cliente.getIdcliente()).orElse(null);
+
+        session.setAttribute("clienteEmpresa", clienteEmpresa);
+
+        EmpresaEntity empresa = clienteEmpresa.getEmpresaByIdempresa();
+
         model.addAttribute("empresaAEditar", empresa);
 
         return "empresaEditarEmpresa";
@@ -239,7 +254,7 @@ public class EmpresaController {
     {
         this.empresaRepository.save(empresa);
 
-        return "redirect:/";
+        return "redirect:/empresa/portal";
     }
 
     @GetMapping("/bloquear")
@@ -254,7 +269,7 @@ public class EmpresaController {
 
         this.cuentaRepository.save(cuenta);
 
-        return "redirect:/";
+        return "redirect:/empresa/portal";
     }
 
     @GetMapping("/solicitarActivacion")
@@ -269,7 +284,7 @@ public class EmpresaController {
 
         this.cuentaRepository.save(cuenta);
 
-        return "redirect:/";
+        return "redirect:/empresa/portal";
     }
 
     @GetMapping("/transferencia")
@@ -328,7 +343,7 @@ public class EmpresaController {
         this.cuentaRepository.save(cuentaDestino);
         this.transferenciaRepository.save(transferencia);
 
-        return "redirect:/";
+        return "redirect:/empresa/portal";
     }
 
     @GetMapping("/cambiodivisa")
@@ -376,6 +391,6 @@ public class EmpresaController {
         this.cuentaRepository.save(cuentaOrigen);
         this.cambiodivisaRepository.save(cambiodivisa);
 
-        return "redirect:/";
+        return "redirect:/empresa/portal";
     }
 }
