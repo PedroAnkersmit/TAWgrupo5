@@ -37,6 +37,7 @@
         <th>EMAIL</th>
         <th>TELEFONO</th>
         <th>FECHA_INICIO</th>
+        <th></th>
     </tr>
 
     <tr>
@@ -63,6 +64,8 @@
         <th>SALDO</th>
         <th>FECHA DE APERTURA</th>
         <th>FECHA DE CIERRE</th>
+        <th></th>
+        <th></th>
     </tr>
     <%
         for (CuentaEntity c : cuentas) {
@@ -96,13 +99,15 @@
 </table>
 <h1>Mis operaciones:</h1>
 <form:form action="/clienteHome/filtrar" method="post" modelAttribute="filtro">
+    <p>
     <input name="idCliente" value="<%=usuario.getIdcliente()%>" hidden>
     Tipo de Operacion:</br>
-    Transferencia <form:checkbox path="transferencia"/>
-    Cambio de Divisa <form:checkbox path="cambioDivisa"/>
-    Extraccion <form:checkbox path="sacarDinero"/> </br>
+    <form:checkbox path="transferencia"/> Transferencia
+        <form:checkbox path="cambioDivisa"/> Cambio de Divisa
+    <form:checkbox path="sacarDinero"/> Extraccion</br>
 
     <form:button>Filtrar</form:button>
+    </p>
 </form:form>
 
 <table border="1">
