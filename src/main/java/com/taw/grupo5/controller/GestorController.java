@@ -33,6 +33,9 @@ public class GestorController {
     @Autowired
     TransferenciasRepository transferenciasRepository;
 
+    @Autowired
+    TipoClienteRepository tipoClienteRepository;
+
     @GetMapping("/")
     public String mostrarClientesYEmpresas(Model model) {
         List<ClienteEntity> clienteEntityList = this.clienteRepository.findAll();
@@ -44,13 +47,13 @@ public class GestorController {
         return "gestorListar";
     }
 
-    @PostMapping("/")
-    public String mostrarClientesFiltradosPorNombre (@RequestParam("filtroNombreCliente") String nombre, Model model){
-        List<ClienteEntity> lista = this.clienteRepository.buscarPorNombre(nombre);
-        model.addAttribute("listaClientes", lista);
+    @PostMapping("/filtrarNombreCliente")
+    public String mostrarClientesFiltradosPorNombre(@RequestParam("filtroNombreCliente") String nombre, Model model){
+        List<ClienteEntity> listadoClientes = this.clienteRepository.buscarPorNombre(nombre);
+        model.addAttribute("listaClientes", listadoClientes);
 
-        List<EmpresaEntity> empresaEntityList = this.empresaRepository.findAll();
-        model.addAttribute("listaEmpresas", empresaEntityList);
+        List<EmpresaEntity> listadoEmpresas = this.empresaRepository.findAll();
+        model.addAttribute("listaEmpresas", listadoEmpresas);
 
         return "gestorListar";
     }
@@ -121,6 +124,17 @@ public class GestorController {
         model.addAttribute("listaOperaciones", operacionRepositoryList);
 
         return "gestorEmpresa";
+    }
+
+    @PostMapping("/filtrarNombreEmpresa")
+    public String mostrarEmpresasFiltradosPorNombre(@RequestParam("filtroNombreEmpresa") String nombre, Model model){
+        List<ClienteEntity> listadoClientes = this.clienteRepository.findAll();
+        model.addAttribute("listaClientes", listadoClientes);
+
+        List<EmpresaEntity> listadoEmpresas = this.empresaRepository.buscarPorNombre(nombre);
+        model.addAttribute("listaEmpresas", listadoEmpresas);
+
+        return "gestorListar";
     }
 
     @GetMapping("listadoDarVistoBuenoAlta")

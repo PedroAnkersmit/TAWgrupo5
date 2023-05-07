@@ -1,3 +1,4 @@
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page import="com.taw.grupo5.entity.ClienteEntity" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.taw.grupo5.entity.EmpresaEntity" %><%--
@@ -21,8 +22,7 @@
 <body>
     <h1>Listado de clientes y empresas</h1>
     <h2>Clientes</h2>
-    <p>Añadir filtro por nombre y por tipo</p>
-    <form action="/gestor/" method="post">
+    <form action="/gestor/filtrarNombreCliente" method="post">
         Buscar cliente: <input type="text" name="filtroNombreCliente">
         <button>Filtrar</button>
     </form>
@@ -56,7 +56,10 @@
     <button><a href="/gestor/listadoSospechosas">Actividades sospechosas</a></button>
 
     <h2>Empresas</h2>
-    <p>Añadir filtro por nombre</p>
+    <form action="/gestor/filtrarNombreEmpresa" method="post">
+        Buscar empresa: <input type="text" name="filtroNombreEmpresa">
+        <button>Filtrar</button>
+    </form>
     <!-- Empresas -->
     <table border="1">
         <tr>
