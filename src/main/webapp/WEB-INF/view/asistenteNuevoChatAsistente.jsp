@@ -19,7 +19,7 @@
 %>
 <html>
 <head>
-    <style><%@include file="/css/registroEmpresa.css"%></style>
+    <style><%@include file="/css/formularios.css"%></style>
     <title>Chat</title>
 </head>
 <body>
