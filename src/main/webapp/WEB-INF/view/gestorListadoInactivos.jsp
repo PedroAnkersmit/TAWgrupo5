@@ -34,7 +34,7 @@
             <th>TIPO</th>
             <th>EMPRESA</th>
             <th>CONVERSACIÓN</th>
-            <th></th>
+            <th>DESACTIVAR</th>
         </tr>
 
         <%
@@ -70,7 +70,7 @@
                     for(CuentaEntity cuenta : clienteEntity.getCuentasByIdcliente()) {
                         if(cuenta.getTipoestadoByIdestado().getIdtipoestado() == 2) {
                 %>
-                        <a href="/gestor/desactivarCuenta?id=<%=cuenta.getIdcuenta()%>">Desactivar cuenta nº<%=cuenta.getNumerocuenta()%></a> <br/>
+                        <a href="/gestor/desactivarCuenta?id=<%=cuenta.getIdcuenta()%>">Cuenta nº<%=cuenta.getNumerocuenta()%></a> <br/>
                 <%
                         }
                     }

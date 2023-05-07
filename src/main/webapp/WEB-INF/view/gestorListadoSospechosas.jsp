@@ -33,7 +33,7 @@
             <th>TIPO</th>
             <th>EMPRESA</th>
             <th>CONVERSACIÓN</th>
-            <th></th>
+            <th>BLOQUEAR</th>
         </tr>
 
         <%
@@ -66,7 +66,15 @@
                     %>
                 </td>
                 <td>
-                    <a href="/gestor/bloquearCuenta?id=<%=clienteEntity.getCuentasByIdcliente().get(0).getIdcuenta()%>">Bloquear cuenta</a>
+                    <%
+                        for(CuentaEntity cuenta : clienteEntity.getCuentasByIdcliente()) {
+                            if(cuenta.getTipoestadoByIdestado().getIdtipoestado() == 4) {
+                    %>
+                            <a href="/gestor/bloquearCuenta?id=<%=cuenta.getIdcuenta()%>">Cuenta nº<%=cuenta.getNumerocuenta()%></a>
+                    <%
+                            }
+                        }
+                    %>
                 </td>
             </tr>
         <%
