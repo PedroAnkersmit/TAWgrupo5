@@ -8,12 +8,15 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
   CuentaEntity cuenta = (CuentaEntity) request.getAttribute("cuenta");
+  boolean error = (boolean) request.getAttribute("error");
 %>
 <html>
 <head>
     <title>Title</title>
 </head>
 <body>
+
+<% if(error) %> <h1>ESA CUENTA NO EXISTE</h1>
 
 <form method="post" action="/cajero/transferencia">
   <input name="idCuenta" hidden="true" value="<%=cuenta.getIdcuenta()%>">

@@ -32,17 +32,37 @@
   <form:button>Filtrar</form:button>
 </form:form>
 
+<h1>NÚMERO DE CUENTA: <%=cuenta.getNumerocuenta()%></h1>
+<h2>SALDO DE LA CUENTA: <%=cuenta.getSaldo()%></h2>
+
   <table border="1">
 
     <tr>
-      <th>ID</th>
+      <th>OPERACIÓN</th>
+      <th>CANTIDAD</th>
       <th>FECHA</th>
     </tr>
 
     <% for(OperacionEntity o : listaOperaciones){ %>
 
       <tr>
-        <td><%=o.getIdoperacion()%></td>
+        <% if(!o.getSacardinerosByIdoperacion().isEmpty()){ %>
+
+        <td>EXTRACCIÓN</td>
+        <td>-<%=o.getSacardinerosByIdoperacion().get(0).getCantidad()%>€</td>
+
+        <%} else if(!o.getTransferenciasByIdoperacion().isEmpty()){ %>
+
+        <td>TRANSFERENCIA</td>
+        <td>-<%=o.getTransferenciasByIdoperacion().get(0).getCantidad()%>€ (a <%=o.getTransferenciasByIdoperacion().get(0).getIdcuentadestino()%>)</td>
+
+        <%} else if(!o.getCambiodivisasByIdoperacion().isEmpty()){ %>
+
+        <td>CAMBIO DE DIVISA</td>
+        <td>-<%=o.getCambiodivisasByIdoperacion().get(0).getCantidadventa()%>€</td>
+
+        <%}%>
+
         <td><%=o.getFecha()%></td>
       </tr>
 

@@ -98,7 +98,8 @@ public class CajeroController {
     }
 
     private String filtro(FiltroOperacion filtro, CuentaEntity cuenta, Model model){
-        List<OperacionEntity> operaciones = new ArrayList<>();
+        List<OperacionEntity> operaciones;
+        List<OperacionEntity> operacionesPorFecha = new ArrayList<>();
 
         if(filtro == null) {
             filtro = new FiltroOperacion();
@@ -109,10 +110,14 @@ public class CajeroController {
         else if (filtro.getTipoOperacion().equals("cambioDivisa")) operaciones = operacionRepository.buscarCambioDivisaPorCuenta(cuenta.getIdcuenta());
         else operaciones = cuenta.getOperacionsByIdcuenta();
 
+        for(OperacionEntity o : operaciones){
+            if(o.getFecha().before(filtro.getFechaMaxima()) && o.getFecha().after(filtro.getFechaMinima())) operacionesPorFecha.add(o);
+        }
+
         filtro.setIdCuenta(cuenta.getIdcuenta());
 
         model.addAttribute("filtro", filtro);
-        model.addAttribute("listaOperaciones", operaciones);
+        model.addAttribute("listaOperaciones", operacionesPorFecha);
         model.addAttribute("cuenta", cuenta);
 
         return "cajeroOperaciones";
@@ -169,14 +174,21 @@ public class CajeroController {
     public String doTransferencia(@RequestParam("idCuenta") Integer idCuenta, Model model){
         CuentaEntity cuenta = cuentaRepository.findById(idCuenta).orElse(null);
         model.addAttribute("cuenta", cuenta);
+        model.addAttribute("error", false);
         return "cajeroTransferencia";
     }
 
     @PostMapping("/cajero/transferencia")
-    public String doEnviarDinero(@RequestParam("cantidad") BigDecimal cantidad, @RequestParam("idCuenta") Integer idCuenta, @RequestParam("idDestino") Integer idDestino){
+    public String doEnviarDinero(@RequestParam("cantidad") BigDecimal cantidad, @RequestParam("idCuenta") Integer idCuenta, @RequestParam("idDestino") Integer idDestino, Model model){
 
         CuentaEntity cuenta = cuentaRepository.findById(idCuenta).orElse(null);
         CuentaEntity destino = cuentaRepository.findById(idDestino).orElse(null);
+
+        if(destino == null){
+            model.addAttribute("cuenta", cuenta);
+            model.addAttribute("error", true);
+            return "cajeroTransferencia";
+        }
 
         cuenta.setSaldo(cuenta.getSaldo().subtract(cantidad));
         destino.setSaldo(destino.getSaldo().add(cantidad));
