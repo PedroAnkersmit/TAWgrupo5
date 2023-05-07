@@ -94,9 +94,9 @@
     </form:form>
     <table border="1">
         <tr>
-            <td>ID</td>
-            <td>FECHA INSTRUCCIÓN</td>
-            <td>TIPO</td>
+            <th>ID</th>
+            <th>FECHA INSTRUCCIÓN</th>
+            <th>TIPO</th>
         </tr>
 
         <%for(OperacionEntity operacionEntity : operacionRepositoryList) {%>

@@ -19,19 +19,19 @@
 </head>
 <body>
     <button><a href="/gestor/">Volver</a></button>
-    <h1>Listado de clientes inactivos</h1>
-    <h2>Formado por aquellos clientes que no han realizado ninguna operación en los últimos 30 días</h2>
+    <h1>Registro de actividad</h1>
+    <h2>Clientes que no han realizado ninguna operación en los últimos 30 días</h2>
 
     <table border="1">
         <tr>
             <th>ID</th>
-            <th>Nombre</th>
-            <th>Email</th>
-            <th>Teléfono</th>
-            <th>Fecha de inicio</th>
-            <th>Tipo</th>
-            <th>Empresa</th>
-            <th>Conversación</th>
+            <th>NOMBRE</th>
+            <th>EMAIL</th>
+            <th>TELÉFONO</th>
+            <th>FECHA DE INICIO</th>
+            <th>TIPO</th>
+            <th>EMPRESA</th>
+            <th>CONVERSACIÓN</th>
             <th></th>
         </tr>
 
@@ -48,13 +48,17 @@
             <td><%=clienteEntity.getEmpresaByIdempresa() == null ? "Sin empresa" : clienteEntity.getEmpresaByIdempresa().getNombre()%></td>
             <td>
                 <%
-                    List<ConversacionEntity> listaConvers = clienteEntity.getConversacionsByIdcliente();
-                    int i = 0;
+                    List<ConversacionEntity> listadoConversaciones = clienteEntity.getConversacionsByIdcliente();
 
-                    for(ConversacionEntity conver : listaConvers) {
-                        i++;
+                    if(!listadoConversaciones.isEmpty()) {
+                        for(ConversacionEntity conversacion : listadoConversaciones) {
                 %>
-                Conversación nº<%=i%> - Asunto: <%=conver.getAsunto()%><br/>
+                Conversación <%=conversacion.getIdconversacion()%> - Asunto: <%=conversacion.getAsunto()%><br/>
+                <%
+                    }
+                } else {
+                %>
+                Sin conversaciones
                 <%
                     }
                 %>

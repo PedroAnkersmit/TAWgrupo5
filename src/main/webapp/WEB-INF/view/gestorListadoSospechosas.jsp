@@ -19,18 +19,19 @@
 </head>
 <body>
     <button><a href="/gestor/">Volver</a></button>
-    <h1>Clientes que han hecho transferencias a cuentas sospechosas</h1>
+    <h1>Registro de transferencias sospechosas</h1>
+    <h2>Clientes que han realizado alguna transferencia a cuentas sospechosas</h2>
 
     <table border="1">
         <tr>
             <th>ID</th>
-            <th>Nombre</th>
-            <th>Email</th>
-            <th>Teléfono</th>
-            <th>Fecha de inicio</th>
-            <th>Tipo</th>
-            <th>Empresa</th>
-            <th>Conversación</th>
+            <th>NOMBRE</th>
+            <th>EMAIL</th>
+            <th>TELÉFONO</th>
+            <th>FECHA DE INICIO</th>
+            <th>TIPO</th>
+            <th>EMPRESA</th>
+            <th>CONVERSACIÓN</th>
             <th></th>
         </tr>
 

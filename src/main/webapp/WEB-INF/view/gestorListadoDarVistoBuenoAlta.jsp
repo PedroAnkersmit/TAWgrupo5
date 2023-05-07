@@ -19,18 +19,19 @@
 </head>
 <body>
     <button><a href="/gestor/">Volver</a></button>
-    <h1>Clientes que han solicitado el alta</h1>
+    <h1>Solicitudes de alta en el sistema</h1>
+    <h2>Clientes a la espera de recibir el visto bueno</h2>
 
     <table border="1">
         <tr>
             <th>ID</th>
-            <th>Nombre</th>
-            <th>Email</th>
-            <th>Teléfono</th>
-            <th>Fecha de inicio</th>
-            <th>Tipo</th>
-            <th>Empresa</th>
-            <th>Conversación</th>
+            <th>NOMBRE</th>
+            <th>EMAIL</th>
+            <th>TELÉFONO</th>
+            <th>FECHA DE INICIO</th>
+            <th>TIPO</th>
+            <th>EMPRESA</th>
+            <th>CONVERSACIÓN</th>
             <th></th>
         </tr>
 
