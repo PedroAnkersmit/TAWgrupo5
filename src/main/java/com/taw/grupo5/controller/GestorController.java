@@ -184,7 +184,7 @@ public class GestorController {
         CuentaEntity cuenta = this.cuentaRepository.findById(idCuenta).orElse(null);
         TipoestadoEntity estadoCuenta = new TipoestadoEntity();
 
-        estadoCuenta.setIdtipoestado(1);
+        estadoCuenta.setIdtipoestado(4);
         cuenta.setTipoestadoByIdestado(estadoCuenta);
         this.cuentaRepository.save(cuenta);
 

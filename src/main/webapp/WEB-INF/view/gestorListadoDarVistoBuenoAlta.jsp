@@ -68,9 +68,11 @@
             <td>
                 <%
                     for(CuentaEntity cuenta : clienteEntity.getCuentasByIdcliente()) {
+                        if(cuenta.getTipoestadoByIdestado().getIdtipoestado() == 1) {
                 %>
                         <a href="/gestor/darVistoBuenoAlta?id=<%=cuenta.getIdcuenta()%>">Dar visto bueno</a><br/>
                 <%
+                        }
                     }
                 %>
             </td>
