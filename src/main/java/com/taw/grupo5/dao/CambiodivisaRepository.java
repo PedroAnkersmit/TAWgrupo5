@@ -9,6 +9,10 @@ import org.springframework.data.repository.query.Param;
 import java.math.BigDecimal;
 import java.util.List;
 
+/**
+ * @author Jesús Ariza
+ */
+
 public interface CambiodivisaRepository extends JpaRepository<CambiodivisaEntity, Integer> {
     @Query("select c.operacionByIdoperacion from CambiodivisaEntity c where c.operacionByIdoperacion.idcliente = :id")
     List<OperacionEntity> BuscarPorCliente(@Param("id") Integer idCliente);
