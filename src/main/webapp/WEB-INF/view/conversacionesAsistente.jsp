@@ -28,6 +28,7 @@
     <p>No tienes conversaciones porque no eres asistente.</p>
     <%}else{%>
     <a href="/asistente/nuevoChat?id=<%=empleado.getIdempleado()%>"><button>Crear nueva conversación</button></a>
+    <a href="/asistente/cerrarSesion"><button>Cerrar sesión</button></a>
     <p>Filtros:</p>
 
     <form:form modelAttribute="filtro" method="post" action="/asistente/filtrar">

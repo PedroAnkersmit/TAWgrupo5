@@ -15,9 +15,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.sql.Date;
 import java.util.List;
 
 @Controller
@@ -33,23 +30,24 @@ public class AsistenteController {
     @Autowired
     ClienteRepository clienteRepository;
 
-    /*
-           AMBAS PARTES
 
+    /*--------------------------------------------------------
+                   LOGIN ASISTENTE
+    ----------------------------------------------------------
      */
 
-    @GetMapping("/")
+    @GetMapping("/login")
     public String doIniciar(){
-        return "prueba";
+        return "asistenteLogin";
     }
 
     @PostMapping("/login")
-    public String doLoginASISTENTE(Model model, HttpSession session){
-        String vuelta = "prueba";
-        EmpleadoEntity empleado = empleadoRepository.getById(2);
+    public String doLoginASISTENTE(Model model, HttpSession session, @RequestParam("nombre") String nombre){
+        String vuelta = "asistenteLogin";
+        EmpleadoEntity empleado = empleadoRepository.logear(nombre);
         if(empleado!=null){
-            vuelta = "redirect:/asistente/conversaciones?id=2";
-            //session.setAttribute("usuario", empleado);
+            vuelta = "redirect:/asistente/conversaciones?id="+empleado.getIdempleado();
+            session.setAttribute("usuario", empleado);
             model.addAttribute("empleado", empleado);
         }
         return vuelta;
@@ -58,10 +56,14 @@ public class AsistenteController {
     @GetMapping("/cerrarSesion")
     public String doCerrarSesion(HttpSession session){
         session.invalidate();
-        return "prueba";
+        return "asistenteLogin";
     }
 
 
+    /*-----------------------------------------------------------
+           AMBAS PARTES
+    -------------------------------------------------------------
+     */
 
 
     public void doChatear(Model model, int id_conversacion){
@@ -110,14 +112,15 @@ public class AsistenteController {
     }
 
 
-
-
-
-    /*
+    /*------------------------------------------------------------
            LADO DEL CLIENTE
+     -------------------------------------------------------------
      */
 
-
+    /*
+    ClienteEntity usuario = (ClienteEntity) session.getAttribute("user");
+    model.addAttribute("cliente", usuario);
+    */
     @GetMapping("/misconversaciones")
     public String doListarCliente(Model model, HttpSession session) {
 
@@ -161,15 +164,10 @@ public class AsistenteController {
     }
 
 
-
-
-
-
-    /*
+    /*----------------------------------------------------------------
             LADO DEL ASISTENTE
+     -----------------------------------------------------------------
      */
-
-
 
 
     @GetMapping("/conversaciones") //CAMBIAR TRAS HACER HTTPSESSION
