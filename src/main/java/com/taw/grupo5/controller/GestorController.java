@@ -162,9 +162,10 @@ public class GestorController {
         TipoestadoEntity estadoCuenta = new TipoestadoEntity();
 
         estadoCuenta.setIdtipoestado(2);
-
         cuenta.setTipoestadoByIdestado(estadoCuenta);
-        cuenta.setNumerocuenta(generateBankNumber());
+        if(cuenta.getNumerocuenta().equals(null)) {
+            cuenta.setNumerocuenta(generateBankNumber());
+        }
         this.cuentaRepository.save(cuenta);
 
         return "redirect:/gestor/";
@@ -183,11 +184,8 @@ public class GestorController {
         CuentaEntity cuenta = this.cuentaRepository.findById(idCuenta).orElse(null);
         TipoestadoEntity estadoCuenta = new TipoestadoEntity();
 
-        estadoCuenta.setIdtipoestado(4);
-
-        if(cuenta.getNumerocuenta() == null) {
-            cuenta.setTipoestadoByIdestado(estadoCuenta);
-        }
+        estadoCuenta.setIdtipoestado(1);
+        cuenta.setTipoestadoByIdestado(estadoCuenta);
         this.cuentaRepository.save(cuenta);
 
         return "redirect:/gestor/";
@@ -223,9 +221,27 @@ public class GestorController {
         TipoestadoEntity estadoCuenta = new TipoestadoEntity();
 
         estadoCuenta.setIdtipoestado(4);
-
         cuenta.setTipoestadoByIdestado(estadoCuenta);
+        this.cuentaRepository.save(cuenta);
 
+        return "redirect:/gestor/";
+    }
+
+    @GetMapping("listadoDesbloqueo")
+    public String mostrarListadoDesbloqueo(Model model) {
+        List<ClienteEntity> listadoClientesDesbloqueo = this.clienteRepository.listadoClientesDesbloqueo();
+        model.addAttribute("listadoClientesDesbloqueo", listadoClientesDesbloqueo);
+
+        return "gestorListadoDesbloqueo";
+    }
+
+    @GetMapping("desbloquearCuenta")
+    public String desbloquearCuenta(@RequestParam("id") Integer idCuenta) {
+        CuentaEntity cuenta = this.cuentaRepository.findById(idCuenta).orElse(null);
+        TipoestadoEntity estadoCuenta = new TipoestadoEntity();
+
+        estadoCuenta.setIdtipoestado(2);
+        cuenta.setTipoestadoByIdestado(estadoCuenta);
         this.cuentaRepository.save(cuenta);
 
         return "redirect:/gestor/";

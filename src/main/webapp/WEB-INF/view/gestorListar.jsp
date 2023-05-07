@@ -54,6 +54,7 @@
     <button><a href="/gestor/listadoDarVistoBuenoAlta">Solicitudes de alta</a></button>
     <button><a href="/gestor/listadoInactivos">Bloqueo por inactividad</a></button>
     <button><a href="/gestor/listadoSospechosas">Actividades sospechosas</a></button>
+    <button><a href="/gestor/listadoDesbloqueo">Solicitudes de desbloqueo</a></button>
 
     <h2>Empresas</h2>
     <form action="/gestor/filtrarNombreEmpresa" method="post">
