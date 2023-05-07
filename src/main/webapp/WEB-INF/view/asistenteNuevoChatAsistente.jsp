@@ -24,7 +24,7 @@
 <body>
 
 
-<a href="/asistente/volver?id=< %=conversacion.getEmpleadoByIdempleado().getIdempleado()%>">
+<a href="/asistente/conversaciones">
         <button>Volver a conversaciones</button></a><br><br>
 
     <form:form modelAttribute="mensaje" action="/asistente/crear" method="post">
