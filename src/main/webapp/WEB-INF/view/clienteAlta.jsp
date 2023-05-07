@@ -16,7 +16,7 @@
 <body>
 <h6> Accediendo con el siguiente sessionid: <%= session.getId() %> </h6>
  <h1>Crear cuenta nueva</h1>
- <form action="/alta" method="post">
+ <form action="/cliente/alta" method="post">
      <table>
          <tr>
              <td>Nombre:</td> <td><input type="text" name="name"></td>
