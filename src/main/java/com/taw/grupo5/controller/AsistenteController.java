@@ -127,7 +127,7 @@ public class AsistenteController {
         ClienteEntity usuario = (ClienteEntity) session.getAttribute("user");
         model.addAttribute("cliente", usuario);
         model.addAttribute("lista", conversacionRepository.findAll());
-        return "conversacionesCliente";
+        return "asistenteConversacionesCliente";
     }
 
     @GetMapping("/conversar")
@@ -176,7 +176,7 @@ public class AsistenteController {
 
         model.addAttribute("lista", conversacionRepository.findAll());
         model.addAttribute("filtro", new FiltroAsistente());
-        return "conversacionesAsistente";
+        return "asistenteConversacionesAsistente";
     }
 
     @GetMapping("/moderar")
@@ -186,7 +186,7 @@ public class AsistenteController {
         doChatear(model, id);
 
         model.addAttribute("conversacionFiltrada", mensajeRepository.moderarMensajesCliente(conversacion));
-        return "chatModeracion";
+        return "asistenteChatModeracion";
     }
 
     @PostMapping("/filtrar")
@@ -245,7 +245,7 @@ public class AsistenteController {
         model.addAttribute("lista", lista);
         model.addAttribute("empleado", session.getAttribute("usuario"));
         model.addAttribute("filtro", filtro);
-        return "conversacionesAsistente";
+        return "asistenteConversacionesAsistente";
     }
 
     @GetMapping("/conversacion")
