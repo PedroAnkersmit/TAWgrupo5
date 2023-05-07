@@ -1,4 +1,4 @@
-package com.taw.grupo5.uiCajero;
+package com.taw.grupo5.ui;
 
 import java.sql.Date;
 import java.time.LocalDate;

@@ -24,6 +24,8 @@
 </head>
 <body>
 
+<h2>Ir a mis conversaciones:</h2> <a href="/asistente/misconversaciones"><button>Mis conversaciones</button></a>
+
 <h1>Mis datos: </h1>
 
 <table border="1">
