@@ -1,11 +1,9 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ page import="com.taw.grupo5.entity.ClienteEntity" %>
 <%@ page import="java.util.List" %>
-<%@ page import="com.taw.grupo5.entity.OperacionEntity" %>
 <%@ page import="com.taw.grupo5.dao.OperacionRepository" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="com.taw.grupo5.entity.CuentaEntity" %>
-<%@ page import="com.taw.grupo5.entity.ConversacionEntity" %><%--
+<%@ page import="com.taw.grupo5.dao.EmpresaRepository" %>
+<%@ page import="com.taw.grupo5.entity.*" %><%--
   Created by IntelliJ IDEA.
   User: jesus
   Date: 25/04/2023
@@ -98,7 +96,7 @@
     <title>Portal empleado</title>
 </head>
 <body>
-<h1>Bienvenido <%=cliente.getNombre()%></h1>
+<h1>Bienvenid@ <%=cliente.getNombre()%></h1>
 <h2>Modificar datos</h2>
 <a href="./editarcliente?id=<%=cliente.getIdcliente()%>"><button>Modificar mis datos</button></a>
 <a href="./editarempresa?id=<%=cliente.getEmpresaByIdempresa().getIdempresa()%>"><button>Modificar datos de mi empresa</button></a>
@@ -135,6 +133,8 @@
     </tr>
 <%
     List<CuentaEntity> cuentasCliente = new ArrayList<>();
+    EmpresaEntity empresaEntity;
+    TipoclienteEntity tipoclienteEntity;
 
     for(ClienteEntity c : listaClientesDeLaEmpresa)
     {
@@ -159,8 +159,10 @@
         <td><%= c.getEmail() %></td>
         <td><%= c.getTelefono() %></td>
         <td><%= c.getFechainicio() %></td>
-        <td><%= c.getTipoclienteByIdtipocliente().getIdtipocliente() %></td>
-        <td><%= c.getEmpresaByIdempresa().getIdempresa() %></td>
+        <td><% tipoclienteEntity = c.getTipoclienteByIdtipocliente(); %>
+            <%=tipoclienteEntity.getNombre()%></td>
+        <td><% empresaEntity = c.getEmpresaByIdempresa(); %>
+            <%=empresaEntity.getNombre()%></td>
         <td>
             <%
                 cuentasCliente = c.getCuentasByIdcliente();
@@ -169,7 +171,23 @@
                 {
                     i++;
             %>
-            <a href="/empresa/bloquear?id=<%=cuenta.getIdcuenta()%>">Bloquear cuenta nº<%=i%></a><br/>
+                <%
+                    if(cuenta.getTipoestadoByIdestado().getIdtipoestado() == 2)
+                    {
+                %>
+                <a href="/empresa/bloquear?id=<%=cuenta.getIdcuenta()%>">
+                Bloquear cuenta nº<%=i%></a><br/>
+            <%
+                } else if (cuenta.getTipoestadoByIdestado().getIdtipoestado() == 4) {
+                    %>
+                Cuenta nº<%=i%> ya bloqueada<br/>
+            <%
+                } else {
+            %>
+                No se puede bloquear la cuenta nº<%=i%>
+            <%
+                    }
+            %>
             <%
                 }
             %>
