@@ -10,6 +10,7 @@
 
 <%
   EmpresaEntity empresaEntity = (EmpresaEntity) request.getAttribute("empresa");
+  List<ClienteEntity> clienteEntityList = (List<ClienteEntity>) request.getAttribute("listadoClientes");
   List<OperacionEntity> operacionRepositoryList = (List<OperacionEntity>) request.getAttribute("listaOperaciones");
 %>
 
@@ -18,9 +19,10 @@
     <title>Empresa</title>
 </head>
 <body>
-    <h1>Datos de la empresa: <%=empresaEntity.getNombre()%></h1>
+    <button><a href="/gestor/">Volver</a></button>
+    <h1>Información de la empresa: <%=empresaEntity.getNombre()%></h1>
 
-    <h2>Información</h2>
+    <h2>Datos</h2>
     <table border="1">
         <tr>
             <th>ID</th>
@@ -33,6 +35,49 @@
             <td><%=empresaEntity.getNombre()%></td>
             <td><%=empresaEntity.getFechacierre()%></td>
         </tr>
+    </table>
+
+    <h2>Clientes</h2>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>NOMBRE</th>
+            <th>EMAIL</th>
+            <th>TELÉFONO</th>
+            <th>FECHA DE INICIO</th>
+            <th>TIPO</th>
+            <th>EMPRESA</th>
+            <th>CONVERSACIÓN</th>
+        </tr>
+
+        <%
+            for(ClienteEntity clienteEntity : clienteEntityList) {
+        %>
+        <tr>
+            <td><%=clienteEntity.getIdcliente()%></td>
+            <td><%=clienteEntity.getNombre()%></td>
+            <td><%=clienteEntity.getEmail()%></td>
+            <td><%=clienteEntity.getTelefono()%></td>
+            <td><%=clienteEntity.getFechainicio()%></td>
+            <td><%=clienteEntity.getTipoclienteByIdtipocliente().getNombre()%></td>
+            <td><%=clienteEntity.getEmpresaByIdempresa() == null ? "Sin empresa" : clienteEntity.getEmpresaByIdempresa().getNombre()%></td>
+            <td>
+                <%
+                    List<ConversacionEntity> listaConvers = clienteEntity.getConversacionsByIdcliente();
+                    int i = 0;
+
+                    for(ConversacionEntity conver : listaConvers) {
+                        i++;
+                %>
+                Conversación nº<%=i%> - Asunto: <%=conver.getAsunto()%><br/>
+                <%
+                    }
+                %>
+            </td>
+        </tr>
+        <%
+            }
+        %>
     </table>
 
     <h2>Operaciones bancarias</h2>
