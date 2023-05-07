@@ -145,31 +145,45 @@ public class EmpresaController {
 
         for(ClienteEntity c : listaClientes)
         {
-            if(filtroOperaciones.getFechaMinima().compareTo(c.getFechainicio()) < 0 && filtroOperaciones.getFechaMaxima().compareTo(c.getFechainicio()) > 0 && filtroOperaciones.getTipoCliente().equals(""))
+
+            if(filtroClientes.getFechaMinima().before(c.getFechainicio()) && filtroClientes.getFechaMaxima().after(c.getFechainicio()) && filtroClientes.getTipoCliente().equals(""))
                 listaClientesFiltrada.add(c);
-            else if(filtroOperaciones.getFechaMinima().compareTo(c.getFechainicio()) < 0 && filtroOperaciones.getFechaMaxima().compareTo(c.getFechainicio()) > 0 && filtroOperaciones.getTipoCliente().equals("socio") && c.getTipoclienteByIdtipocliente().getIdtipocliente() == 2)
+            else if(filtroClientes.getFechaMinima().before(c.getFechainicio()) && filtroClientes.getFechaMaxima().after(c.getFechainicio()) && filtroClientes.getTipoCliente().equals("socio") && c.getTipoclienteByIdtipocliente().getIdtipocliente() == 2)
                 listaClientesFiltrada.add(c);
-            else if (filtroOperaciones.getFechaMinima().compareTo(c.getFechainicio()) < 0 && filtroOperaciones.getFechaMaxima().compareTo(c.getFechainicio()) > 0 && filtroOperaciones.getTipoCliente().equals("autorizado") && c.getTipoclienteByIdtipocliente().getIdtipocliente() == 3)
+            else if (filtroClientes.getFechaMinima().before(c.getFechainicio()) && filtroClientes.getFechaMaxima().after(c.getFechainicio()) && filtroClientes.getTipoCliente().equals("autorizado") && c.getTipoclienteByIdtipocliente().getIdtipocliente() == 3)
                 listaClientesFiltrada.add(c);
         }
 
         for(ClienteEntity c : listaClientes)
         {
-            if(filtroOperaciones.getFechaMinima().compareTo(c.getFechainicio()) < 0 && filtroOperaciones.getFechaMaxima().compareTo(c.getFechainicio()) > 0 && filtroOperaciones.getTipoCliente().equals(""))
-                lista.add(c.getIdcliente());
-            else if(filtroOperaciones.getFechaMinima().compareTo(c.getFechainicio()) < 0 && filtroOperaciones.getFechaMaxima().compareTo(c.getFechainicio()) > 0 && filtroOperaciones.getTipoCliente().equals("socio") && c.getTipoclienteByIdtipocliente().getIdtipocliente() == 2)
-                lista.add(c.getIdcliente());
-            else if (filtroOperaciones.getFechaMinima().compareTo(c.getFechainicio()) < 0 && filtroOperaciones.getFechaMaxima().compareTo(c.getFechainicio()) > 0 && filtroOperaciones.getTipoCliente().equals("autorizado") && c.getTipoclienteByIdtipocliente().getIdtipocliente() == 3)
                 lista.add(c.getIdcliente());
         }
 
         List<OperacionEntity> listaOperaciones = this.operacionRepository.buscarPorEmpresa(lista);
+        List<OperacionEntity> listaOperacionesFiltrada = new ArrayList<>();
+        ClienteEntity clienteOperacionFiltrada;
+
+        Integer idTipoCliente;
+
+        for(OperacionEntity op : listaOperaciones)
+        {
+            clienteOperacionFiltrada = this.clienteRepository.findById(op.getIdcliente()).orElse(null);
+            idTipoCliente = clienteOperacionFiltrada.getTipoclienteByIdtipocliente().getIdtipocliente();
+
+            if(filtroOperaciones.getFechaMinima().before(op.getFecha()) && filtroOperaciones.getFechaMaxima().after(op.getFecha()) && filtroOperaciones.getTipoCliente().equals(""))
+                listaOperacionesFiltrada.add(op);
+            else if(filtroOperaciones.getFechaMinima().before(op.getFecha()) && filtroOperaciones.getFechaMaxima().after(op.getFecha()) && filtroOperaciones.getTipoCliente().equals("socio") && idTipoCliente == 2)
+                listaOperacionesFiltrada.add(op);
+            else if (filtroOperaciones.getFechaMinima().before(op.getFecha()) && filtroOperaciones.getFechaMaxima().after(op.getFecha()) && filtroOperaciones.getTipoCliente().equals("autorizado") && idTipoCliente == 3)
+                listaOperacionesFiltrada.add(op);
+        }
+
         filtroClientes.setIdClienteDelPortal(idCliente);
         filtroOperaciones.setIdClienteDelPortal(idCliente);
 
         model.addAttribute("clientePortal", cliente);
         model.addAttribute("listaClientes", listaClientesFiltrada);
-        model.addAttribute("listaOperaciones", listaOperaciones);
+        model.addAttribute("listaOperaciones", listaOperacionesFiltrada);
         model.addAttribute("filtroClientes", filtroClientes);
         model.addAttribute("filtroOperaciones", filtroOperaciones);
 
