@@ -215,7 +215,12 @@ public class EmpresaController {
     public String editarCliente(Model model, HttpSession session)
     {
         ClienteEntity cliente = (ClienteEntity) session.getAttribute("clienteEmpresa");
-        model.addAttribute("clienteAEditar", cliente);
+
+        ClienteEntity clienteEmpresa = this.clienteRepository.findById(cliente.getIdcliente()).orElse(null);
+
+        session.setAttribute("clienteEmpresa", clienteEmpresa);
+
+        model.addAttribute("clienteAEditar", clienteEmpresa);
 
         return "empresaEditarCliente";
     }
@@ -231,8 +236,14 @@ public class EmpresaController {
     @GetMapping("/editarempresa")
     public String editarEmpresa(Model model, HttpSession session)
     {
-        ClienteEntity clienteEmpresa = (ClienteEntity) session.getAttribute("clienteEmpresa");
+        ClienteEntity cliente = (ClienteEntity) session.getAttribute("clienteEmpresa");
+
+        ClienteEntity clienteEmpresa = this.clienteRepository.findById(cliente.getIdcliente()).orElse(null);
+
+        session.setAttribute("clienteEmpresa", clienteEmpresa);
+
         EmpresaEntity empresa = clienteEmpresa.getEmpresaByIdempresa();
+
         model.addAttribute("empresaAEditar", empresa);
 
         return "empresaEditarEmpresa";
