@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
+
+<!--@author Pedro-->
+
 <head>
     <style><%@include file="/css/styles.css"%></style>
     <title>Title</title>

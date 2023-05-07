@@ -12,6 +12,8 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public interface SacarDineroRepository extends JpaRepository<SacardineroEntity, Integer> {
+
+    //Pedro
     @Query("select s.operacionByIdoperacion from SacardineroEntity s where s.operacionByIdoperacion.idcliente = :id and s.cantidad >= :quantity")
     List<OperacionEntity> BuscarPorCliente(@Param("id") Integer idCliente, @Param("quantity")BigDecimal cantidad);
 

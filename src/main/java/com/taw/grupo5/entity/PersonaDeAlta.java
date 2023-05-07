@@ -1,5 +1,9 @@
 package com.taw.grupo5.entity;
 
+/**
+ * @author Jesús Ariza
+ */
+
 public class PersonaDeAlta {
     private ClienteEntity cliente;
     private CuentaEntity cuenta;

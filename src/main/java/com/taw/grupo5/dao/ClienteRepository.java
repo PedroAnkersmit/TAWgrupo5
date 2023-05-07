@@ -24,15 +24,15 @@ public interface ClienteRepository extends JpaRepository<ClienteEntity, Integer>
     @Query("select c from ClienteEntity c where c.empresaByIdempresa.idempresa = :filtro")
     List<ClienteEntity> buscarPorEmpresa(@Param("filtro") Integer filtro);
 
-    //Ignacio
+    //Ignacio Martínez Gallardo
     @Query("select c.clienteByIdcliente from CuentaEntity c where c.tipoestadoByIdestado.idtipoestado = 1")
     List<ClienteEntity> listadoClientesDarAlta();
 
-    //Ignacio
+    //Ignacio Martínez Gallardo
     @Query("select distinct o.cuentaByIdcuenta.clienteByIdcliente from OperacionEntity o where datediff(curdate(), o.fecha) >= 30 and o.cuentaByIdcuenta.tipoestadoByIdestado.idtipoestado = 2")
     List<ClienteEntity> listadoClientesInactivos();
 
-    //Ignacio
+    //Ignacio Martínez Gallardo
     @Query("select c.clienteByIdcliente from CuentaEntity c where c.tipoestadoByIdestado.idtipoestado = 3")
     List<ClienteEntity> listadoClientesDesbloqueo();
 }

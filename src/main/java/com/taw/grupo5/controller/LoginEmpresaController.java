@@ -24,7 +24,6 @@ import java.text.SimpleDateFormat;
 /**
  * @author Jesús Ariza Pomares
  */
-
 @Controller
 @RequestMapping("/empresa")
 public class LoginEmpresaController {

@@ -10,8 +10,6 @@ import org.springframework.data.repository.query.Param;
 import java.math.BigDecimal;
 import java.util.List;
 
-
-
 public interface CambiodivisaRepository extends JpaRepository<CambiodivisaEntity, Integer> {
 
     //Jesús Ariza

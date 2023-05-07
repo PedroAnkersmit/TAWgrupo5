@@ -10,9 +10,12 @@ import java.util.List;
 Created by Pedro Ankersmit Carrión
 */
 public interface CuentaRepository extends JpaRepository<CuentaEntity, Integer> {
+
+    //Pedro
     @Query("select c from CuentaEntity c where c.clienteByIdcliente.idcliente = :id")
     List<CuentaEntity> buscarPorCLiente(@Param("id") Integer idcliente);
 
+    //Ignacio Martínez Gallardo
     @Query("select c from CuentaEntity c where c.tipoestadoByIdestado.idtipoestado = 5")
     List<CuentaEntity> listadoCuentasSospechosas();
 }
