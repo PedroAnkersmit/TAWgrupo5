@@ -25,8 +25,8 @@
 <body>
 <h1>Bienvenid@ <%=cliente.getNombre()%></h1>
 <h2>Modificar datos</h2>
-<a href="./editarcliente?id=<%=cliente.getIdcliente()%>"><button>Modificar mis datos</button></a>
-<a href="./editarempresa?id=<%=cliente.getEmpresaByIdempresa().getIdempresa()%>"><button>Modificar datos de mi empresa</button></a>
+<a href="/empresa/editarcliente?id=<%=cliente.getIdcliente()%>"><button>Modificar mis datos</button></a>
+<a href="/empresa/editarempresa?id=<%=cliente.getEmpresaByIdempresa().getIdempresa()%>"><button>Modificar datos de mi empresa</button></a>
 <%
     if(cliente.getTipoclienteByIdtipocliente().getIdtipocliente() == 2)
     {
@@ -58,14 +58,14 @@
         <th>EMPRESA</th>
         <th>BLOQUEAR</th>
     </tr>
-<%
-    List<CuentaEntity> cuentasCliente = new ArrayList<>();
-    EmpresaEntity empresaEntity;
-    TipoclienteEntity tipoclienteEntity;
+    <%
+        List<CuentaEntity> cuentasCliente = new ArrayList<>();
+        EmpresaEntity empresaEntity;
+        TipoclienteEntity tipoclienteEntity;
 
-    for(ClienteEntity c : listaClientesDeLaEmpresa)
-    {
-%>
+        for(ClienteEntity c : listaClientesDeLaEmpresa)
+        {
+    %>
     <tr>
         <td><%= c.getIdcliente() %></td>
         <td>
@@ -98,32 +98,32 @@
                 {
                     i++;
             %>
-                <%
-                    if(cuenta.getTipoestadoByIdestado().getIdtipoestado() == 2)
-                    {
-                %>
-                <a href="/empresa/bloquear?id=<%=cuenta.getIdcuenta()%>">
+            <%
+                if(cuenta.getTipoestadoByIdestado().getIdtipoestado() == 2)
+                {
+            %>
+            <a href="/empresa/bloquear?id=<%=cuenta.getIdcuenta()%>">
                 Bloquear cuenta nº<%=i%></a><br/>
             <%
-                } else if (cuenta.getTipoestadoByIdestado().getIdtipoestado() == 4) {
-                    %>
-                Cuenta nº<%=i%> ya bloqueada<br/>
-            <%
-                } else {
+            } else if (cuenta.getTipoestadoByIdestado().getIdtipoestado() == 4) {
             %>
-                No se puede bloquear la cuenta nº<%=i%>
+            Cuenta nº<%=i%> ya bloqueada<br/>
             <%
-                    }
+            } else {
+            %>
+            No se puede bloquear la cuenta nº<%=i%>
+            <%
+                }
             %>
             <%
                 }
             %>
         </td>
     </tr>
-<%
+    <%
+            }
         }
-    }
-%>
+    %>
 </table border="1">
 
 <h2>Movimientos bancarios</h2>
@@ -180,19 +180,19 @@
     for(CuentaEntity cuenta : cuentasCliente)
     {
         i++;
-    if(cuenta.getTipoestadoByIdestado().getIdtipoestado() == 4)
-    {
+        if(cuenta.getTipoestadoByIdestado().getIdtipoestado() == 4)
+        {
 %>
 <a href="/empresa/solicitarActivacion?id=<%=cuenta.getIdcuenta()%>"><button>Solicitar activación/desbloqueo cuenta nº<%=i%></button></a><br/>
 <%
-    } else if (cuenta.getTipoestadoByIdestado().getIdtipoestado() == 1)
-    {
+} else if (cuenta.getTipoestadoByIdestado().getIdtipoestado() == 1)
+{
 %>
 
 <h2>Su cuenta nº<%=i%> esta pendiente de activación/desbloqueo</h2>
 
 <%
-    }
+        }
     }
 %>
 <a href="/empresa/cerrarsesion"><button style="margin-bottom: 20px; background-color: red">Cerrar sesión</button></a><br/>

@@ -173,7 +173,7 @@ public class EmpresaController {
 
         for(ClienteEntity c : listaClientes)
         {
-                lista.add(c.getIdcliente());
+            lista.add(c.getIdcliente());
         }
 
         List<OperacionEntity> listaOperaciones = this.operacionRepository.buscarPorEmpresa(lista);

@@ -293,7 +293,7 @@ public class CajeroController {
 
         CuentaDTO cuenta = cuentaService.buscarPorId(idCuenta);
 
-        cuenta.setTipoEstado(tioTipoEstadoService.buscarPorId(idCuenta));
+        cuenta.setTipoEstado(tioTipoEstadoService.buscarPorId(3));
 
         cuentaService.guardar(cuenta);
 
