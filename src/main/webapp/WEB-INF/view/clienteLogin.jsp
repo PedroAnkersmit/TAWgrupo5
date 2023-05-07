@@ -7,7 +7,7 @@
 <body>
 
 <h6> Accediendo con el siguiente sessionid: <%= session.getId() %> </h6>
-<form action="/" method="post">
+<form action="/cliente/login" method="post">
     <table>
         <tr>
             <td>Email:</td> <td><input type="text" name="mail"> </td>
@@ -18,6 +18,6 @@
     </table>
     </form>
 <h5>No tienes cuenta?</h5>
-<a href="/alta"> <button>Darse de Alta</button></a>
+<a href="/cliente/alta"> <button>Darse de Alta</button></a>
 </body>
 </html>
