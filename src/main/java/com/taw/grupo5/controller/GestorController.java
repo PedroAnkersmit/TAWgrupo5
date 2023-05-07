@@ -12,6 +12,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+/**
+ * @author Ignacio Martínez Gallardo
+ * */
+
 @Controller
 @RequestMapping("/gestor")
 public class GestorController {
