@@ -48,6 +48,7 @@
             <th>Nombre del cliente</th>
             <th>Correo</th>
             <th>Conversación</th>
+            <th></th>
         </tr>
         <% for (ConversacionEntity conversacion : lista){
             if(conversacion.getEmpleadoByIdempleado().equals(empleado)){%>

@@ -14,9 +14,12 @@
 </head>
 <body>
     <h6> Accediendo con el siguiente sessionid: <%=session.getId()%> </h6>
+
+    <h1>Iniciar sesión:</h1>
     <form action="/asistente/login" method="post">
         Nombre: <input type="text" name="nombre"> <br>
         <button>Enviar</button>
     </form>
+    <a href="/"><button>Volver al inicio</button></a>
 </body>
 </html>
